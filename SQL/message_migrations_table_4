@@ -1,0 +1,9 @@
+CREATE TABLE message (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	relation_id INT NOT NULL,
+	sender_id INT NOT NULL,
+	content MEDIUMTEXT NOT NULL,
+	sent_at DATETIME NOT NULL,
+	FOREIGN KEY (relation_id) REFERENCES relation(id),
+	FOREIGN KEY (sender_id) REFERENCES user(id)
+);

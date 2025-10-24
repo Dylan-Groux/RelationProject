@@ -1,0 +1,10 @@
+CREATE TABLE relation (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	user_id_1 INT NOT NULL,
+	user_id_2 INT NOT NULL,
+	statut SMALLINT NOT NULL,
+	created_at DATETIME NOT NULL,
+	updated_at DATETIME NOT NULL,
+	FOREIGN KEY (user_id_1) REFERENCES user(id),
+	FOREIGN KEY (user_id_2) REFERENCES user(id)
+);
