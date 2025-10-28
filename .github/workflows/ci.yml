@@ -25,6 +25,6 @@ jobs:
       - name: Run RelationEntityTest tests
         run: ./vendor/bin/phpunit tests/domain/Entity/RelationEntityTest.php
       - name: Run BookManager tests
-        run: ./vendor/bin/phpunit tests/infrastructure/BookManagerTest.php
+        run: ./vendor/bin/phpunit tests/application/BookManagerTest.php
       - name: Run RelationService tests
-        run: ./vendor/bin/phpunit tests/application/Service/RelationServiceTest.php
+        run: ./vendor/bin/phpunit tests/application/BookHelperTest.php
