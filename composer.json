@@ -7,7 +7,8 @@
             "App\\Domain\\": "src/domain/",
             "App\\Application\\": "src/application/",
             "App\\Infrastructure\\": "src/infrastructure/",
-            "App\\Interface\\": "src/interface/"
+            "App\\Interface\\": "src/interface/",
+            "App\\Library\\": "src/lib/"
         }
     },
     "require": {
