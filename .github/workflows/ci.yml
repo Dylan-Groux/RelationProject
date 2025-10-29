@@ -28,3 +28,5 @@ jobs:
         run: ./vendor/bin/phpunit tests/application/BookManagerTest.php
       - name: Run RelationService tests
         run: ./vendor/bin/phpunit tests/application/BookHelperTest.php
+      - name: Run AbstractController tests
+        run: ./vendor/bin/phpunit tests/interface/Controller/AbstractControllerTest.php
