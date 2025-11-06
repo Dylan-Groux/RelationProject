@@ -104,4 +104,19 @@ class BookRepository
         $stmt->bindValue(':id', $book->getId(), PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+    public function getLastBooks(int $limit = 4): array
+    {
+        $sql = "SELECT * FROM book ORDER BY created_at DESC LIMIT :limit";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $booksData = [];
+        while ($book = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $booksData[] = new Book($book);
+        }
+
+        return $booksData;
+    }
 }

@@ -1,7 +1,12 @@
 <?php
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use App\Models\Database\DBManager;
+
+$dotenv = new Symfony\Component\Dotenv\Dotenv();
+$dotenv->usePutenv();
+$dotenv->loadEnv(__DIR__ . '/../../../.env.tests', true, true);
+var_dump(__DIR__ . '/../../../.env.tests');
 
 try {
     $dbManager = DBManager::getInstance();

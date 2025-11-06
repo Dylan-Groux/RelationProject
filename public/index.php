@@ -2,16 +2,27 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../lib/Router.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = new Symfony\Component\Dotenv\Dotenv();
+$dotenv->usePutenv();
+$dotenv->loadEnv(__DIR__ . '/../.env', true, true);
 
 use App\Library\Route;
 
 // Récupère l'URL demandée
 $requestUri = strtok($_SERVER['REQUEST_URI'], '?');
+// Normalise le chemin pour ne garder que la partie après /public
+$basePath = str_replace('/public', '', dirname($_SERVER['SCRIPT_NAME']));
+$requestUri = str_replace($basePath . '/public', '', $requestUri);
+if ($requestUri === '') $requestUri = '/';
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
 // Route pour la page d'accueil
 if ($requestUri === '/' || $requestUri === '/home') {
-    include __DIR__ . '/../src/Views/home.php';
+    // Appelle le contrôleur pour injecter les données
+    $controller = new \App\Controllers\HomeController();
+    $controller->index();
     exit;
 }
 

@@ -1,0 +1,62 @@
+-- Insertion de 5 utilisateurs
+INSERT INTO user (picture, created_at, updated_at, password, nickname, mail) VALUES
+('public/assets/utils/user1.png', NOW(), NOW(), 'pass1', 'Alice', 'alice@example.com'),
+('public/assets/utils/user2.png', NOW(), NOW(), 'pass2', 'Bob', 'bob@example.com'),
+('public/assets/utils/user3.png', NOW(), NOW(), 'pass3', 'Charlie', 'charlie@example.com'),
+('public/assets/utils/user4.png', NOW(), NOW(), 'pass4', 'Diana', 'diana@example.com'),
+('public/assets/utils/user5.png', NOW(), NOW(), 'pass5', 'Eve', 'eve@example.com');
+
+-- Insertion de 15 livres répartis sur les 5 utilisateurs
+INSERT INTO book (title, author, comment, availability, created_at, updated_at, user_id, picture) VALUES
+('Livre 1', 'Auteur 1', 'Commentaire 1', 1, NOW(), NOW(), 1, 'public/assets/book/book1.png'),
+('Livre 2', 'Auteur 2', 'Commentaire 2', 1, NOW(), NOW(), 2, 'public/assets/book/book2.png'),
+('Livre 3', 'Auteur 3', 'Commentaire 3', 1, NOW(), NOW(), 3, 'public/assets/book/book3.png'),
+('Livre 4', 'Auteur 4', 'Commentaire 4', 1, NOW(), NOW(), 4, 'public/assets/book/book4.png'),
+('Livre 5', 'Auteur 5', 'Commentaire 5', 1, NOW(), NOW(), 5, 'public/assets/book/book5.png'),
+('Livre 6', 'Auteur 6', 'Commentaire 6', 1, NOW(), NOW(), 1, 'public/assets/book/book6.png'),
+('Livre 7', 'Auteur 7', 'Commentaire 7', 1, NOW(), NOW(), 2, 'public/assets/book/book7.png'),
+('Livre 8', 'Auteur 8', 'Commentaire 8', 1, NOW(), NOW(), 3, 'public/assets/book/book8.png'),
+('Livre 9', 'Auteur 9', 'Commentaire 9', 1, NOW(), NOW(), 4, 'public/assets/book/book9.png'),
+('Livre 10', 'Auteur 10', 'Commentaire 10', 1, NOW(), NOW(), 5, 'public/assets/book/book10.png'),
+('Livre 11', 'Auteur 11', 'Commentaire 11', 1, NOW(), NOW(), 1, 'public/assets/book/book11.png'),
+('Livre 12', 'Auteur 12', 'Commentaire 12', 1, NOW(), NOW(), 2, 'public/assets/book/book12.png'),
+('Livre 13', 'Auteur 13', 'Commentaire 13', 1, NOW(), NOW(), 3, 'public/assets/book/book13.png'),
+('Livre 14', 'Auteur 14', 'Commentaire 14', 1, NOW(), NOW(), 4, 'public/assets/book/book14.png'),
+('Livre 15', 'Auteur 15', 'Commentaire 15', 1, NOW(), NOW(), 5, 'public/assets/book/book15.png');
+
+-- Insertion de 5 relations entre utilisateurs
+INSERT INTO relation (first_user, second_user, created_at) VALUES
+(1, 2, NOW()),
+(2, 3, NOW()),
+(3, 4, NOW()),
+(4, 5, NOW()),
+(5, 1, NOW());
+
+-- Insertion de 10 messages liés aux relations et utilisateurs
+INSERT INTO message (relation_id, sender_id, statut, content, sent_at) VALUES
+(1, 1, 1, 'Salut Bob, tu veux échanger un livre ?', NOW()),
+(1, 2, 1, 'Oui Alice, lequel ?', NOW()),
+(2, 2, 1, 'Charlie, tu as vu mon dernier livre ?', NOW()),
+(2, 3, 1, 'Oui Bob, il m’intéresse !', NOW()),
+(3, 3, 1, 'Diana, tu veux échanger ?', NOW()),
+(3, 4, 1, 'Avec plaisir Charlie !', NOW()),
+(4, 4, 1, 'Eve, tu as des nouveautés ?', NOW()),
+(4, 5, 1, 'Oui Diana, regarde mon profil.', NOW()),
+(5, 5, 1, 'Alice, tu veux échanger ?', NOW()),
+(5, 1, 1, 'Oui Eve, je suis partante !', NOW());
+INSERT INTO book (title, author, comment, availability, created_at, updated_at, user_id, picture) VALUES
+('Livre 1', 'Auteur 1', 'Commentaire 1', 1, NOW(), NOW(), 1, 'public/assets/book/book1.png'),
+('Livre 2', 'Auteur 2', 'Commentaire 2', 1, NOW(), NOW(), 1, 'public/assets/book/book2.png'),
+('Livre 3', 'Auteur 3', 'Commentaire 3', 1, NOW(), NOW(), 1, 'public/assets/book/book3.png'),
+('Livre 4', 'Auteur 4', 'Commentaire 4', 1, NOW(), NOW(), 1, 'public/assets/book/book4.png'),
+('Livre 5', 'Auteur 5', 'Commentaire 5', 1, NOW(), NOW(), 1, 'public/assets/book/book5.png'),
+('Livre 6', 'Auteur 6', 'Commentaire 6', 1, NOW(), NOW(), 1, 'public/assets/book/book6.png'),
+('Livre 7', 'Auteur 7', 'Commentaire 7', 1, NOW(), NOW(), 1, 'public/assets/book/book7.png'),
+('Livre 8', 'Auteur 8', 'Commentaire 8', 1, NOW(), NOW(), 1, 'public/assets/book/book8.png'),
+('Livre 9', 'Auteur 9', 'Commentaire 9', 1, NOW(), NOW(), 1, 'public/assets/book/book9.png'),
+('Livre 10', 'Auteur 10', 'Commentaire 10', 1, NOW(), NOW(), 1, 'public/assets/book/book10.png'),
+('Livre 11', 'Auteur 11', 'Commentaire 11', 1, NOW(), NOW(), 1, 'public/assets/book/book11.png'),
+('Livre 12', 'Auteur 12', 'Commentaire 12', 1, NOW(), NOW(), 1, 'public/assets/book/book12.png'),
+('Livre 13', 'Auteur 13', 'Commentaire 13', 1, NOW(), NOW(), 1, 'public/assets/book/book13.png'),
+('Livre 14', 'Auteur 14', 'Commentaire 14', 1, NOW(), NOW(), 1, 'public/assets/book/book14.png'),
+('Livre 15', 'Auteur 15', 'Commentaire 15', 1, NOW(), NOW(), 1, 'public/assets/book/book15.png');

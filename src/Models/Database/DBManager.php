@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Models\Database;
-
-use Symfony\Component\Dotenv\Dotenv;
 use PDO;
 use PDOStatement;
 
@@ -27,12 +25,6 @@ class DBManager
      */
     private function __construct()
     {
-        // Chargement des variables d'environnement avec Dotenv
-        $dotenvPath = dirname(__DIR__, 2) . '/.env';
-        if (file_exists($dotenvPath)) {
-            $dotenv = new Dotenv();
-            $dotenv->loadEnv($dotenvPath);
-        }
         $host = getenv('DB_HOST') ?: 'localhost';
         $dbname = getenv('DB_NAME') ?: '';
         $user = getenv('DB_USER') ?: '';
@@ -80,5 +72,4 @@ class DBManager
         }
         return $query;
     }
-    
 }
