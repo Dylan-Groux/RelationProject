@@ -119,4 +119,21 @@ class BookRepository
 
         return $booksData;
     }
+
+    public function getBooksPaginated(int $limit, int $offset): array
+    {
+        $sql = "SELECT * FROM book ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $booksData = [];
+
+        while ($book = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $booksData[] = new Book($book);
+        }
+
+        return $booksData;
+    }
 }

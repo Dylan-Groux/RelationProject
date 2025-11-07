@@ -9,6 +9,7 @@ $dotenv->usePutenv();
 $dotenv->loadEnv(__DIR__ . '/../.env', true, true);
 
 use App\Library\Route;
+use PhpParser\Node\Stmt\ElseIf_;
 
 // Récupère l'URL demandée
 $requestUri = strtok($_SERVER['REQUEST_URI'], '?');
@@ -22,6 +23,11 @@ $requestMethod = $_SERVER['REQUEST_METHOD'];
 if ($requestUri === '/' || $requestUri === '/home') {
     // Appelle le contrôleur pour injecter les données
     $controller = new \App\Controllers\HomeController();
+    $controller->index();
+    exit;
+} elseif($requestUri === '/books.php') {
+    // Appelle le contrôleur pour injecter les données
+    $controller = new \App\Controllers\BookController();
     $controller->index();
     exit;
 }

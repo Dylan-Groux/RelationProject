@@ -2,7 +2,7 @@
     <img class="header-logo" src="/Openclassroom/RELATION/public/assets/utils/logo.png" alt="Logo" width="78px" height="24px">
     <div class="header-firstline">
         <span class="header-title">Accueil</span>
-        <span class="header-title">Nos livres à l'échange</span>
+        <a href="books.php" class="header-title">Nos livres à l'échange</a>
     </div>
     <div class="header-secondline">
         <span class="header-title"><img src="/Openclassroom/RELATION/public/assets/icon/icon-msg.svg" alt="Messagerie" width="10px" height="10px"> Messagerie</span>

@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'accueil</title>
     <link rel="stylesheet" href="/Openclassroom/RELATION/public/css/home.css">
+    <link rel="stylesheet" href="/Openclassroom/RELATION/public/css/navbar.css">
+    <link rel="stylesheet" href="/Openclassroom/RELATION/public/css/footer.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -94,11 +96,6 @@
             <img class="vectorlove-img" src="/Openclassroom/RELATION/public/assets/utils/lovevector.svg" alt="Nos valeurs" width="370px" height="573px">
         </section>
     </main>
-    <footer>
-        <a href="#">Politique de confidentialité</a>
-        <a href="#">Mentions légales</a>
-        <p>Tom Troc©<p>
-        <img src="/Openclassroom/RELATION/public/assets/utils/smallogo.png" alt="Nos valeurs" width="22px" height="17px">
-    </footer>
+    <?php include 'footer.php'; ?>
 </body>
 </html>

@@ -1,0 +1,37 @@
+footer {
+    color: #292929;
+    display: grid;
+    grid-template-rows: 35px 35px 35px 1fr;
+    justify-items: center;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 16px 0;
+    font-family: "Inter", sans-serif;
+    font-weight: 300;
+    font-style: Light;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+@media (min-width: 768px) {
+    footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: end; /* ou space-between, selon l'espacement voulu */
+        align-items: center;
+        gap: 24px; /* espace entre chaque élément */
+        height: 80px; /* ajuste la hauteur si besoin */
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 16px 16px 16px 16px;
+        font-family: "Inter", sans-serif;
+        font-weight: 300;
+        font-size: 12px;
+        background: #F5F3EF; /* optionnel */
+    }
+}
