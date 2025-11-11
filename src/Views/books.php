@@ -18,7 +18,7 @@
     <main class="main-content">
         <section class="search-section">
             <h2 class="search-title">Nos livres à l'échange</h2>
-            <div class="search-bar-container">
+            <form method="GET" action="" class="search-bar-container">
                  <span class="search-icon">
                     <!-- SVG loupe -->
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -26,8 +26,8 @@
                         <line x1="17" y1="17" x2="22" y2="22" stroke="#A6A6A6" stroke-width="2"/>
                     </svg>
                 </span>
-                <input type="text" class="search-input" placeholder="Rechercher un livre">
-            </div>
+                <input type="text" name="search" class="search-input" placeholder="Rechercher un livre" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+            </form>
         </section>
         <section class="books-section">
             <div class="books-container">
@@ -43,8 +43,10 @@
                 </div>
             </div>
             <div class="pagination-container">
-                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <a class="pagination-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                <?php
+                $searchParam = isset($_GET['search']) ? '&search=' . urlencode($_GET['search']) : '';
+                for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <a class="pagination-link" href="?page=<?= $i . $searchParam ?>"><?= $i ?></a>
                 <?php endfor; ?>
             </div>
         </section>

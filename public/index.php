@@ -61,9 +61,3 @@ if (preg_match('#^/css/(.+)$#', $requestUri, $matches)) {
         exit;
     }
 }
-
-// Ajoute ici d'autres routes dynamiques avec Route si besoin
-
-// 404 par défaut
-http_response_code(404);
-echo 'Page non trouvée';

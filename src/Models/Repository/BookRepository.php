@@ -26,7 +26,9 @@ class BookRepository
         $booksData = [];
 
         while ($book = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($book) {
             $booksData[] = new Book($book);
+            }
         }
 
         return $booksData;
@@ -79,6 +81,9 @@ class BookRepository
      */
     public function deleteBook(int $id): bool
     {
+        if (!is_int($id) || $id <= 0) {
+            return false;
+        }
         $sql = "DELETE FROM book WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -135,5 +140,52 @@ class BookRepository
         }
 
         return $booksData;
+    }
+
+    public function searchBookByTitle(string $title): array
+    {
+        $sql = "SELECT * FROM book WHERE title LIKE :title";
+        $stmt = $this->pdo->prepare($sql);
+        $likeTitle = '%' . $title . '%';
+        $stmt->bindValue(':title', $likeTitle, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $booksData = [];
+
+        while ($book = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $booksData[] = new Book($book);
+        }
+
+        return $booksData;
+    }
+
+    public function searchBookByTitlePaginated(string $title, int $limit, int $offset): array
+    {
+        $sql = "SELECT * FROM book WHERE title LIKE :title ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+        $stmt = $this->pdo->prepare($sql);
+        $likeTitle = '%' . $title . '%';
+        $stmt->bindValue(':title', $likeTitle, PDO::PARAM_STR);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $booksData = [];
+        while ($book = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $booksData[] = new Book($book);
+        }
+        return $booksData;
+    }
+
+    public function searchBookByTitleFuzzy(string $title, int $maxDistance = 4): array
+    {
+        $allBooks = $this->getAllBooks();
+        $results = [];
+        foreach ($allBooks as $book) {
+            $distance = levenshtein(mb_strtolower($title), mb_strtolower($book->getTitle()));
+            if ($distance <= $maxDistance) {
+                $results[] = $book;
+            }
+        }
+        return $results;
     }
 }

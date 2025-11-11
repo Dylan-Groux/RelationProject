@@ -1,6 +1,6 @@
 <?php
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
-use App\Application\BookManager;
 use PHPUnit\Framework\TestCase;
 use App\Models\Repository\BookRepository;
 
@@ -45,7 +45,7 @@ class BookRepositoryTest extends TestCase
     public function testGetAllBooksReturnsArray()
     {
         $statementMock = $this->createMock(PDOStatement::class);
-        $statementMock->method('fetchAll')
+        $statementMock->method('fetch')
             ->willReturn(
                 [
                     [
@@ -100,8 +100,8 @@ class BookRepositoryTest extends TestCase
         $this->assertEquals('Auteur Test', $book->getAuthor());
         $this->assertEquals(1, $book->getAvailability());
         $this->assertEquals('Ceci est un commentaire de test', $book->getComment());
-        $this->assertEquals('2023-01-01 10:00:00', $book->getCreatedAt());
-        $this->assertEquals('2023-01-01 10:00:00', $book->getUpdatedAt());
+        $this->assertEquals(new \DateTimeImmutable('2023-01-01 10:00:00'), $book->getCreatedAt());
+        $this->assertEquals(new \DateTimeImmutable('2023-01-01 10:00:00'), $book->getUpdatedAt());
     }
 
     public function testGetOneBookReturnNullForNonExistentId()
@@ -161,7 +161,7 @@ class BookRepositoryTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testDeleteBookIfFalseRedirects()
+    public function testDeleteBookWhitNoIdReturnFalse()
     {
         $statementMock = $this->createMock(PDOStatement::class);
         $statementMock->method('execute')->willReturn(false);
@@ -171,6 +171,50 @@ class BookRepositoryTest extends TestCase
 
         $bookRepository = new BookRepository($pdoMock);
         $bookRedirect = $bookRepository->deleteBook(9874);
-        $this->assertMatchesRegularExpression('/Location: \/Books/', $bookRedirect);
+        $this->assertFalse($bookRedirect);
+    }
+
+    public function testSearchBookByTitleReturnBook()
+    {
+        $statementMock = $this->createMock(PDOStatement::class);
+        $statementMock->method('fetch')
+            ->willReturn(
+                [
+                    [
+                        'id' => 1,
+                        'user_id' => 1,
+                        'title' => 'Livre de test',
+                        'picture' => 'test.jpg',
+                        'author' => 'Auteur Test',
+                        'availability' => 1,
+                        'comment' => 'Ceci est un commentaire de test',
+                        'created_at' => '2023-01-01 10:00:00',
+                        'updated_at' => '2023-01-01 10:00:00'
+                    ]
+                ],
+                []
+            );
+        
+        $pdoMock = $this->createMock(PDO::class);
+        $pdoMock->method('prepare')->willReturn($statementMock);
+
+        $bookRepository = new BookRepository($pdoMock);
+        $books = $bookRepository->searchBookByTitle('test');
+        $this->assertIsArray($books);
+        $this->assertInstanceOf(\App\Models\Entity\Book::class, $books[0]);
+    }
+
+    public function testSearchBookByTitleWithNoResultReturnsEmptyArray()
+    {
+        $statementMock = $this->createMock(PDOStatement::class);
+        $statementMock->method('fetchAll')->willReturn([]);
+
+        $pdoMock = $this->createMock(PDO::class);
+        $pdoMock->method('prepare')->willReturn($statementMock);
+
+        $bookRepository = new BookRepository($pdoMock);
+        $books = $bookRepository->searchBookByTitle('nonexistenttitle');
+        $this->assertIsArray($books);
+        $this->assertEmpty($books);
     }
 }

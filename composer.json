@@ -8,6 +8,7 @@
             "App\\Views\\": "src/Views/",
             "App\\Models\\": "src/Models/",
             "App\\Library\\": "lib/",
+            "App\\Services\\": "src/Services/",
             "Tests\\": "tests/"
         }
     },
