@@ -33,12 +33,12 @@
             <div class="books-container">
                 <div class="books-grid">
                 <?php foreach ($books as $book): ?>
-                    <div class="book">
+                    <a class="book" href="/Openclassroom/RELATION/public/book/<?= htmlspecialchars($book->getId()) ?>">
                         <img src="/Openclassroom/RELATION/<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre">
                         <p class="book-title"><?= htmlspecialchars($book->getTitle()) ?></p>
                         <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
                         <p class="book-seller">Vendu par <?= htmlspecialchars($book->getUserId()) ?></p>
-                    </div>
+                    </a>
                 <?php endforeach; ?>
                 </div>
             </div>

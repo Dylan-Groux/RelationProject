@@ -25,4 +25,20 @@ class BookController
         $view = new View('books');
         $view->render(['books' => $books, 'totalPages' => $totalPages]);
     }
+
+    #[Router('/book/{id}', 'GET')]
+    public function showBookDetail(int $id): void
+    {
+        $bookRepository = new BookRepository();
+        $book = $bookRepository->getBookById($id);
+
+        if ($book === null) {
+            http_response_code(404);
+            echo 'Livre non trouvé';
+            return;
+        }
+
+        $view = new View('book');
+        $view->render(['book' => $book]);
+    }
 }

@@ -17,6 +17,7 @@ $dotenv->loadEnv(__DIR__ . '/../.env', true, true);
 $routes = [
     ['pattern' => '/', 'controller' => HomeController::class, 'action' => 'index', 'method' => 'GET'],
     ['pattern' => '/books', 'controller' => BookController::class, 'action' => 'showBooks', 'method' => 'GET'],
+    ['pattern' => '/book/{id}', 'controller' => BookController::class, 'action' => 'showBookDetail', 'method' => 'GET'],
     // Ajoute ici d'autres routes si besoin
 ];
 
