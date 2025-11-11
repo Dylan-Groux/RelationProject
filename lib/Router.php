@@ -3,7 +3,7 @@
 namespace App\Library;
 
 #[\Attribute(\Attribute::TARGET_METHOD)]
-class Route
+class Router
 {
     public string $path;
     public string $method;

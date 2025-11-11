@@ -4,10 +4,12 @@ namespace App\Controllers;
 
 use App\Models\Repository\BookRepository;
 use App\Views\View;
+use App\Library\Router;
 
 class BookController
 {
-    public function index(): void
+    #[Router('/books', 'GET')]
+    public function showBooks(): void
     {
         $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
         $limit = 16;

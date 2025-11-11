@@ -1,35 +1,51 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../lib/Router.php';
-require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Library\Router;
+use App\Controllers\BookController;
+use App\Controllers\HomeController;
 
 $dotenv = new Symfony\Component\Dotenv\Dotenv();
 $dotenv->usePutenv();
 $dotenv->loadEnv(__DIR__ . '/../.env', true, true);
 
-use App\Library\Route;
-use PhpParser\Node\Stmt\ElseIf_;
+// Liste des routes (pattern, contrôleur, méthode)
+$routes = [
+    ['pattern' => '/', 'controller' => HomeController::class, 'action' => 'index', 'method' => 'GET'],
+    ['pattern' => '/books', 'controller' => BookController::class, 'action' => 'showBooks', 'method' => 'GET'],
+    // Ajoute ici d'autres routes si besoin
+];
 
 // Récupère l'URL demandée
 $requestUri = strtok($_SERVER['REQUEST_URI'], '?');
-// Normalise le chemin pour ne garder que la partie après /public
-$basePath = str_replace('/public', '', dirname($_SERVER['SCRIPT_NAME']));
-$requestUri = str_replace($basePath . '/public', '', $requestUri);
-if ($requestUri === '') $requestUri = '/';
+if (strpos($requestUri, '/public') !== false) {
+    $requestUri = substr($requestUri, strpos($requestUri, '/public') + 7);
+}
+if ($requestUri === '' || $requestUri === false) {
+    $requestUri = '/';
+}
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-// Route pour la page d'accueil
-if ($requestUri === '/' || $requestUri === '/home') {
-    // Appelle le contrôleur pour injecter les données
-    $controller = new \App\Controllers\HomeController();
-    $controller->index();
-    exit;
-} elseif($requestUri === '/books.php') {
-    // Appelle le contrôleur pour injecter les données
-    $controller = new \App\Controllers\BookController();
-    $controller->index();
-    exit;
+// Dispatch
+$routeFound = false;
+foreach ($routes as $route) {
+    $router = new Router($route['pattern'], $route['method']);
+    if ($route['method'] === $requestMethod && $router->matchRoute($route['pattern'], $requestUri) !== false) {
+        $params = $router->matchRoute($route['pattern'], $requestUri);
+        $controllerInstance = new $route['controller']();
+        call_user_func_array([$controllerInstance, $route['action']], $params);
+        $routeFound = true;
+        break;
+    }
+}
+
+if (!$routeFound) {
+    http_response_code(404);
+    echo 'Page non trouvée';
 }
 
 // Route pour le CSS (fix chemin)
