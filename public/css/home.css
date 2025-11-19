@@ -126,7 +126,7 @@ a {
 
 .book-img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -315,6 +315,10 @@ a {
   .intro-section {
     align-self: start;
     flex: 1 1 0;
+  }
+  .intro-section img {
+    object-fit: cover;
+    width: 100%;
   }
   .info-section {
     align-self: center;

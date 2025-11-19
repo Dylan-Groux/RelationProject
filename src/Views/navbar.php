@@ -7,13 +7,26 @@
     <div class="header-secondline">
         <a class="header-title"><img src="/Openclassroom/RELATION/public/assets/icon/icon-msg.svg" alt="Messagerie" width="10px" height="10px"> Messagerie</a>
         <a class="header-title"><img src="/Openclassroom/RELATION/public/assets/icon/icon-compte.svg" alt="Messagerie" width="10px" height="10px">Mon compte</a>
-        <a class="header-title">Connexion</a>
+        <?php if (isset($_SESSION['user'])): ?>
+            <a class="header-title" href="/Openclassroom/RELATION/public/logout">Déconnexion</a>
+        <?php else: ?>
+            <a class="header-title" href="/Openclassroom/RELATION/public/login">Connexion</a>
+        <?php endif; ?>
     </div>
-    <button class="header-btn" aria-label="Menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="false" focusable="false">
-        <rect x="3" y="4" width="4" height="16" rx="2" fill="currentColor"/>
-        <rect x="10" y="4" width="4" height="16" rx="2" fill="currentColor"/>
-        <rect x="17" y="4" width="4" height="16" rx="2" fill="currentColor"/>
-        </svg>
-    </button>
+    <div class="header-menu-mobile">
+        <button class="header-btn" aria-label="Menu">
+            <img class="header-menu-icon" src="/Openclassroom/RELATION/public/assets/utils/menu.png" alt="Menu" width="24px" height="12px">
+        </button>
+        <div class="header-menu-mobile-content">
+            <a href="http://localhost/Openclassroom/RELATION/public/" class="header-title">Accueil</a>
+            <a href="http://localhost/Openclassroom/RELATION/public/books" class="header-title">Nos livres</a>
+            <a class="header-title"><img src="/Openclassroom/RELATION/public/assets/icon/icon-msg.svg" alt="Messagerie" width="10px" height="10px"> Messagerie</a>
+            <a class="header-title"><img src="/Openclassroom/RELATION/public/assets/icon/icon-compte.svg" alt="Messagerie" width="10px" height="10px">Mon compte</a>
+            <?php if (isset($_SESSION['user'])): ?>
+                <a class="header-title" href="/Openclassroom/RELATION/public/logout">Déconnexion</a>
+            <?php else: ?>
+                <a class="header-title" href="/Openclassroom/RELATION/public/login">Connexion</a>
+            <?php endif; ?>
+        </div>
+    </div>
 </header>

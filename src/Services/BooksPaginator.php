@@ -12,6 +12,14 @@ class BooksPaginator
         $this->bookRepository = $bookRepository;
     }
 
+    /**
+     * Méthode qui permet de paginer les livres avec une recherche fuzzy si nécessaire.
+     * @param array $books
+     * @param int $page
+     * @param int $limit
+     * @param string $search
+     * @return array tableau avec les livres paginés et le nombre total de pages
+     */
     public function paginate(array $books, int $page, int $limit, string $search): array
     {
         $limit = 16;
@@ -27,7 +35,7 @@ class BooksPaginator
                 $totalPages = max(1, ceil(count($exactBooks) / $limit));
             } else {
                 // Recherche fuzzy
-                $results = $this->bookRepository->searchBookByTitleFuzzy($search, 3);
+                $results = $this->bookRepository->searchBookByTitleFuzzy($search, 4);
                 $books = array_slice($results, $offset, $limit);
                 $totalPages = max(1, ceil(count($results) / $limit));
             }

@@ -4,7 +4,7 @@ footer {
     grid-template-rows: 35px 35px 35px 1fr;
     justify-items: center;
     align-items: center;
-    height: 200px;
+    height: 10%;
     width: 100%;
     box-sizing: border-box;
     text-align: center;

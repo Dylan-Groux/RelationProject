@@ -1,20 +1,14 @@
 <?php
+use App\Services\Path;
+use App\Library\EasyHeader;
+EasyHeader::addHeader(
+    'Page d\'accueil',
+    ['css/home.css', 'css/books.css', 'css/footer.css', 'css/navbar.css'],
+    ['js/navbar.js']
+);
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page d'accueil</title>
-    <link rel="stylesheet" href="/Openclassroom/RELATION/public/css/home.css">
-    <link rel="stylesheet" href="/Openclassroom/RELATION/public/css/books.css">
-    <link rel="stylesheet" href="/Openclassroom/RELATION/public/css/footer.css">
-    <link rel="stylesheet" href="/Openclassroom/RELATION/public/css/navbar.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-</head>
 <body>
-    <?php include __DIR__ . '/navbar.php'; ?>
+    <?php include_once __DIR__ . '/navbar.php'; ?>
     <main class="main-content">
         <section class="search-section">
             <h2 class="search-title">Nos livres à l'échange</h2>
@@ -33,8 +27,8 @@
             <div class="books-container">
                 <div class="books-grid">
                 <?php foreach ($books as $book): ?>
-                    <a class="book" href="/Openclassroom/RELATION/public/book/<?= htmlspecialchars($book->getId()) ?>">
-                        <img src="/Openclassroom/RELATION/<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre">
+                    <a class="book" href="<?= Path::url('/public/book/' . htmlspecialchars($book->getId())) ?>">
+                        <img src="<?= Path::url(htmlspecialchars($book->getPicture())) ?>" class="book-img" alt="Couverture du livre">
                         <p class="book-title"><?= htmlspecialchars($book->getTitle()) ?></p>
                         <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
                         <p class="book-seller">Vendu par <?= htmlspecialchars($book->getUserId()) ?></p>
@@ -51,6 +45,6 @@
             </div>
         </section>
     </main>
-    <?php include 'footer.php'; ?>
+    <?php include_once __DIR__ . '/footer.php'; ?>
 </body>
 </html>

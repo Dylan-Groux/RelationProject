@@ -9,6 +9,10 @@ use App\Services\BooksPaginator;
 
 class BookController
 {
+    /**
+     * Affiche la liste des livres avec pagination et recherche.
+     * @return void
+     */
     #[Router('/books', 'GET')]
     public function showBooks(): void
     {
@@ -26,6 +30,11 @@ class BookController
         $view->render(['books' => $books, 'totalPages' => $totalPages]);
     }
 
+    /**
+     * Affiche les détails d'un livre spécifique.
+     * @param int $id
+     * @return void
+     */
     #[Router('/book/{id}', 'GET')]
     public function showBookDetail(int $id): void
     {

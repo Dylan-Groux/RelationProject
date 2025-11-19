@@ -110,6 +110,11 @@ class BookRepository
         return $stmt->execute();
     }
 
+    /**
+     * Récupère les derniers livres ajoutés.
+     * @param int $limit
+     * @return Book[] array liste des derniers livres ajoutés
+     */
     public function getLastBooks(int $limit = 4): array
     {
         $sql = "SELECT * FROM book ORDER BY created_at DESC LIMIT :limit";
@@ -125,6 +130,12 @@ class BookRepository
         return $booksData;
     }
 
+    /**
+     * Récupère les livres paginés.
+     * @param int $limit
+     * @param int $offset
+     * @return Book[] array liste des livres paginés
+     */
     public function getBooksPaginated(int $limit, int $offset): array
     {
         $sql = "SELECT * FROM book ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
@@ -142,6 +153,11 @@ class BookRepository
         return $booksData;
     }
 
+    /**
+     * Recherche de livres par titre avec une correspondance exacte.
+     * @param string $title
+     * @return Book[] array liste des livres trouvés
+     */
     public function searchBookByTitle(string $title): array
     {
         $sql = "SELECT * FROM book WHERE title LIKE :title";
@@ -159,6 +175,13 @@ class BookRepository
         return $booksData;
     }
 
+    /**
+     * Recherche de livres par titre avec une correspondance exacte et pagination.
+     * @param string $title
+     * @param int $limit
+     * @param int $offset
+     * @return Book[] array liste des livres trouvés
+     */
     public function searchBookByTitlePaginated(string $title, int $limit, int $offset): array
     {
         $sql = "SELECT * FROM book WHERE title LIKE :title ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
@@ -176,6 +199,12 @@ class BookRepository
         return $booksData;
     }
 
+    /**
+     * Recherche de livres par titre avec une correspondance fuzzy.
+     * @param string $title
+     * @param int $maxDistance
+     * @return Book[] array liste des livres trouvés
+     */
     public function searchBookByTitleFuzzy(string $title, int $maxDistance = 4): array
     {
         $allBooks = $this->getAllBooks();

@@ -8,6 +8,8 @@ require_once __DIR__ . '/../lib/Router.php';
 use App\Library\Router;
 use App\Controllers\BookController;
 use App\Controllers\HomeController;
+use App\Controllers\UserController;
+use App\Controllers\RegisterController;
 
 $dotenv = new Symfony\Component\Dotenv\Dotenv();
 $dotenv->usePutenv();
@@ -18,6 +20,10 @@ $routes = [
     ['pattern' => '/', 'controller' => HomeController::class, 'action' => 'index', 'method' => 'GET'],
     ['pattern' => '/books', 'controller' => BookController::class, 'action' => 'showBooks', 'method' => 'GET'],
     ['pattern' => '/book/{id}', 'controller' => BookController::class, 'action' => 'showBookDetail', 'method' => 'GET'],
+    ['pattern' => '/user/{id}', 'controller' => UserController::class, 'action' => 'showUser', 'method' => 'GET'],
+    ['pattern' => '/register', 'controller' => RegisterController::class, 'action' => 'showRegisterForm', 'method' => 'GET'],
+    ['pattern' => '/login', 'controller' => RegisterController::class, 'action' => 'showLoginForm', 'method' => 'GET'],
+    ['pattern' => '/logout', 'controller' => RegisterController::class, 'action' => 'logout', 'method' => 'GET'],
     // Ajoute ici d'autres routes si besoin
 ];
 

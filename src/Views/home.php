@@ -1,24 +1,19 @@
 <?php
+use App\Services\Path;
+use App\Library\EasyHeader;
+EasyHeader::addHeader(
+    'Page d\'accueil',
+    ['css/home.css', 'css/navbar.css', 'css/footer.css'],
+    ['js/navbar.js']
+);
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page d'accueil</title>
-    <link rel="stylesheet" href="/Openclassroom/RELATION/public/css/home.css">
-    <link rel="stylesheet" href="/Openclassroom/RELATION/public/css/navbar.css">
-    <link rel="stylesheet" href="/Openclassroom/RELATION/public/css/footer.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-</head>
 <body>
-    <?php include __DIR__ . '/navbar.php'; ?>
+    <?php include_once __DIR__ . '/navbar.php'; ?>
     <main class="main-content">
         <div class="header-container">
             <div class="header-flex">
             <section class="intro-section">
-                <img class="start_img" src="/Openclassroom/RELATION/public/assets/home/header.png" alt="Échange de livres" width="425px" height="503px">
+                <img class="start_img" src="<?= Path::url('/public/assets/home/header.png') ?>" alt="Échange de livres" width="425px" height="503px">
                 <p class="author_name">Hamza</p>
             </section>
             <section class="info-section">
@@ -36,7 +31,7 @@
                 <?php foreach ($books as $book): ?>
                     <?php if ($count >= 4) break; ?>
                     <div class="book">
-                        <img src="/Openclassroom/RELATION/<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre">
+                        <img src="<?= Path::url(htmlspecialchars($book->getPicture())) ?>" class="book-img" alt="Couverture du livre">
                         <p class="book-title"><?= htmlspecialchars($book->getTitle()) ?></p>
                         <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
                         <p class="book-seller">Vendu par user <?= htmlspecialchars($book->getUserId()) ?></p>
@@ -71,8 +66,8 @@
             </div>
         </section>
         <section class="value-section">
-            <img class="value-img-mobile" src="/Openclassroom/RELATION/public/assets/home/sectionbar_mobile.png" alt="Nos valeurs" width="375px" height="425px">
-            <img class="value-img-desktop" src="/Openclassroom/RELATION/public/assets/home/sectionbar_desktop.png" alt="Nos valeurs" width="1440px" height="230px">
+            <img class="value-img-mobile" src="<?= Path::url('/public/assets/home/sectionbar_mobile.png') ?>" alt="Nos valeurs" width="375px" height="425px">
+            <img class="value-img-desktop" src="<?= Path::url('/public/assets/home/sectionbar_desktop.png') ?>" alt="Nos valeurs" width="1440px" height="230px">
             <div class="value-content">
                 <h2 class="value-title">Nos valeurs</h2>
                 <p class="value-description">
@@ -93,9 +88,9 @@
                 </p>
                 <p class="author_name">L'équipe Tom Troc</p>
             </div>
-            <img class="vectorlove-img" src="/Openclassroom/RELATION/public/assets/utils/lovevector.svg" alt="Nos valeurs" width="370px" height="573px">
+            <img class="vectorlove-img" src="<?= Path::url('/public/assets/utils/lovevector.svg') ?>" alt="Nos valeurs" width="370px" height="573px">
         </section>
     </main>
-    <?php include 'footer.php'; ?>
+    <?php include_once __DIR__ . '/footer.php'; ?>
 </body>
 </html>
