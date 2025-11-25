@@ -27,6 +27,7 @@ class UserRepository
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
+        //PDO::FETCH_CLASS: retourne une nouvelle instance de la classe demandée. L'objet est initialisé en mappan
         $userData = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($userData) {
             return new User($userData);
