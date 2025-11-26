@@ -1,3 +1,94 @@
+/* Layout desktop : user à gauche (30%), livres à droite (70%) */
+.main-content {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap: 32px;
+    align-items: start;
+    width: 100%;
+    box-sizing: border-box;
+}
+/* Section utilisateur */
+.user-section {
+    grid-column: 1;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    margin-top: 0;
+    display: grid;
+    grid-template-rows: auto auto auto auto auto;
+    padding: 15%;
+}
+.user-avatar {
+    width: 135px;
+    height: 135px;
+    border-radius: 50%;
+    object-fit: cover;
+    justify-self: center;
+    margin-bottom: 40%;
+    margin-top: 25%;
+}
+.user-title {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+}
+.user-member {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #A6A6A6;
+}
+
+/** Section livres utilisateur */
+.biblio-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.biblio-info-title {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 10px;
+    line-height: 100%;
+    letter-spacing: 8%;
+    text-align: center;
+}
+.livre-info {
+    margin-top: -12px;
+    display: flex;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+}
+.livre-info img {
+    margin-right: 8px;
+}
+.message-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.user-books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    padding: 0 15%;
+}
+
 /* Carte livre moderne : image à droite, texte à gauche, description en dessous */
 .modern-book-card {
     display: flex;
@@ -22,13 +113,7 @@
     align-items: flex-start;
     flex: 1;
 }
-.user-book-image {
-    width: 100px !important;
-    height: 100px !important;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-}
+
 .user-book-title {
     font-family: "Inter", sans-serif;
     font-weight: 400;
@@ -42,7 +127,6 @@
     font-size: 14px;
     line-height: 100%;
     letter-spacing: 0%;
-    margin-top: -5%;
 }
 .user-book-description {
     font-size: 0.98rem;
@@ -51,87 +135,153 @@
     padding-top: 8px;
     border-top: 1px solid #eee;
 }
-
-.user-section {
-    display: grid;
-    grid-template-rows: auto auto auto auto auto;
-    padding: 15%;
+.user-books-section-desktop {
+    display: none;
 }
 
-.user-avatar {
-    width: 135px;
-    height: 135px;
-    border-radius: 50%;
-    object-fit: cover;
-    justify-self: center;
-    margin-bottom: 40%;
-    margin-top: 25%;
+/* Tableur livres desktop */
+.user-books-table-wrapper {
+    display: block;
 }
-
-.user-title {
-    font-family: "Playfair Display", serif;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    text-align: center;
+.user-books-table {
+    max-width: 1500px;
+    min-width: 300px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    overflow: hidden;
 }
-
-.user-member {
-    font-family: "Inter", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 14px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    text-align: center;
-    color: #A6A6A6;
-}
-
-.biblio-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.biblio-info-title {
+.user-books-table th:nth-child(1) { 
+    width: 25%;
     font-family: "Inter", sans-serif;
     font-weight: 600;
     font-style: Semi Bold;
-    font-size: 10px;
+    font-size: 8px;
     line-height: 100%;
     letter-spacing: 8%;
-    text-align: center;
+    padding-left: 32px;
 }
-
-.livre-info {
-    margin-top: -12px;
-    display: flex;
-    align-items: center;
+.user-books-table th:nth-child(2) { 
+    width: 25%;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 8px;
+    line-height: 100%;
+    letter-spacing: 8%;
+}
+.user-books-table th:nth-child(3) { 
+    width: 25%;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 8px;
+    line-height: 100%;
+    letter-spacing: 8%;
+}
+.user-books-table th:nth-child(4) {
+    width: 25%;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 8px;
+    line-height: 100%;
+    letter-spacing: 8%;
+    padding-right: 32px;
+}
+.user-books-table td {
     font-family: "Inter", sans-serif;
     font-weight: 400;
-    font-style: Regular;
-    font-size: 14px;
+    font-style: normal;
+    font-size: 12px;
     line-height: 100%;
     letter-spacing: 0%;
-    text-align: center;
+    color: #292929;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding-left: 52px;
+    padding-right: 52px;
+    text-align: left;
+}
+.user-books-table-header th {
+    padding-top: 25px;
+    padding-bottom: 6px;
+    text-align: left;
+}
+.user-books-table th {
+    background: #f7f7f7;
+    font-weight: 600;
+    font-size: 1rem;
+    text-indent: 50px;
+    border-bottom: 1px solid #eee;
 }
 
-.livre-info img {
-    margin-right: 8px;
+/** Image livre dans tableau */
+.user-book-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }
-
-.message-section {
+.user-book-image-cell {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    margin-left: 18px;
 }
 
-/** Books list section **/
-.user-books-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 20px;
-    padding: 0 15%;
+/* Zebra striping: une ligne sur deux plus claire (blanc/mauve) */
+.user-books-table tbody tr:nth-child(even) {
+    background: #EDF2F6;
+}
+.user-books-table tbody tr:nth-child(odd) {
+    background: #fff;
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .user-section {
+        padding: 10%;
+        margin-bottom: 24px;
+    }
+    .user-books-section {
+        margin-bottom: 24px;
+    }
+    .user-books-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+        padding: 0 5% !important;
+    }
+    .user-book-author {
+        margin-top: -5px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .user-books-section-mobile {
+        display: none;
+    }
+    .user-books-section-desktop {
+        display: block;
+    }
+    .user-books-table-wrapper {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    .user-books-grid {
+        display: grid;
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+        padding: 0 5% !important;
+    }
+    .main-content {
+        padding-left: 10%;
+        padding-right: 10%;
+        padding-top: 5%;
+        padding-bottom: 5%;
+    }
+    /* Retiré pour éviter conflit, on utilise une classe dédiée */
 }

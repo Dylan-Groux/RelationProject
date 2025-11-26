@@ -6,7 +6,7 @@
     </div>
     <div class="header-secondline">
         <a class="header-title"><img src="/Openclassroom/RELATION/public/assets/icon/icon-msg.svg" alt="Messagerie" width="10px" height="10px"> Messagerie</a>
-        <a class="header-title"><img src="/Openclassroom/RELATION/public/assets/icon/icon-compte.svg" alt="Messagerie" width="10px" height="10px">Mon compte</a>
+        <a href="http://localhost/Openclassroom/RELATION/public/user/1" class="header-title"><img src="/Openclassroom/RELATION/public/assets/icon/icon-compte.svg" alt="Messagerie" width="10px" height="10px">Mon compte</a>
         <?php if (isset($_SESSION['user'])): ?>
             <a class="header-title" href="/Openclassroom/RELATION/public/logout">Déconnexion</a>
         <?php else: ?>
@@ -21,7 +21,7 @@
             <a href="http://localhost/Openclassroom/RELATION/public/" class="header-title">Accueil</a>
             <a href="http://localhost/Openclassroom/RELATION/public/books" class="header-title">Nos livres</a>
             <a class="header-title"><img src="/Openclassroom/RELATION/public/assets/icon/icon-msg.svg" alt="Messagerie" width="10px" height="10px"> Messagerie</a>
-            <a class="header-title"><img src="/Openclassroom/RELATION/public/assets/icon/icon-compte.svg" alt="Messagerie" width="10px" height="10px">Mon compte</a>
+            <a href="http://localhost/Openclassroom/RELATION/public/user/1" class="header-title"><img src="/Openclassroom/RELATION/public/assets/icon/icon-compte.svg" alt="Messagerie" width="10px" height="10px">Mon compte</a>
             <?php if (isset($_SESSION['user'])): ?>
                 <a class="header-title" href="/Openclassroom/RELATION/public/logout">Déconnexion</a>
             <?php else: ?>
