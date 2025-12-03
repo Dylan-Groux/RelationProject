@@ -24,6 +24,8 @@ $routes = [
     ['pattern' => '/register', 'controller' => RegisterController::class, 'action' => 'showRegisterForm', 'method' => 'GET'],
     ['pattern' => '/login', 'controller' => RegisterController::class, 'action' => 'showLoginForm', 'method' => 'GET'],
     ['pattern' => '/logout', 'controller' => RegisterController::class, 'action' => 'logout', 'method' => 'GET'],
+    ['pattern' => '/messagerie', 'controller' => \App\Controllers\MessageController::class, 'action' => 'showMessages', 'method' => 'GET'],
+    ['pattern' => '/user/account/{id}', 'controller' => UserController::class, 'action' => 'showUserAccount', 'method' => 'GET'],
     // Ajoute ici d'autres routes si besoin
 ];
 

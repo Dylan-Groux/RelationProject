@@ -35,4 +35,19 @@ class UserRepository
             return null;
         }
     }
+
+    /**
+     * Récupère l'utilisateur connecté via la session.
+     * @return User|null
+     */
+    public function getUserBySession(): ?User
+    {
+        session_start();
+        if (!isset($_SESSION['user_id'])) {
+            return null;
+        }
+
+        $userId = $_SESSION['user_id'];
+        return $this->getUserById($userId);
+    }
 }

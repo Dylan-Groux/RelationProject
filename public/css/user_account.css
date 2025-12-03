@@ -1,0 +1,428 @@
+.main-title {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-bottom: 40px;
+    margin-left: 10%;
+}
+
+.main {
+    display: grid;
+    grid-template-rows: 451px 519px;
+    gap: 55px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.user-section {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-rows: 223px 8px 220px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.user-avatar {
+    border-radius: 50%;
+    width: 135px;
+    height: 135px;
+    object-fit: cover;
+}
+
+.modifier {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 0%;
+    cursor: pointer;
+    color: #A6A6A6;
+}
+
+.user-title {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+}
+.user-member {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #A6A6A6;
+}
+
+/** Section livres utilisateur */
+.biblio-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.biblio-info-title {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 10px;
+    line-height: 100%;
+    letter-spacing: 8%;
+    text-align: center;
+}
+.livre-info {
+    margin-top: -12px;
+    display: flex;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+}
+.livre-info img {
+    margin-right: 8px;
+}
+
+/** Section infos personnelles utilisateur */
+.personal-info-section {
+    display: grid;
+    grid-template-rows: 40px auto;
+    gap: 10px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.personal-info-section h3 {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-rows: 12px 65px 12px 65px 12px 65px auto;
+    gap: 15px 20px;
+}
+
+.edit-link {
+    width: 100%;
+    opacity: 1;
+    border-radius: 10px;
+    padding-top: 22px;
+    padding-right: 38px;
+    padding-bottom: 22px;
+    padding-left: 38px;
+    gap: 10px;
+    color: #00AC66;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    border: 2px solid #00AC66;
+    margin-bottom: 1%;
+}
+
+.info-email, .info-mdp, .info-value {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #A6A6A6;
+}
+
+.info-grid input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #F0F0F0;
+    margin-top: 2px;
+    margin-bottom: 10px;
+}
+
+/** Section livres utilisateur */
+.modern-book-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    padding: 16px;
+    margin-bottom: 18px;
+}
+.modern-book-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.modern-book-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+}
+
+.user-book-title {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.user-book-author {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-top: -10px;
+}
+.user-book-status {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 8.88px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    padding: 6px 16px;
+    border-radius: 8px;
+}
+.user-book-description {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: Italic;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    font-size: 0.98rem;
+    color: #333;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+}
+
+.user-book-status.available {
+    background-color: #6DC5A1;
+    color: white;
+}
+.user-book-status.unavailable {
+    background-color: #D9534F;
+    color: white;
+}
+
+.user-books-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.edit-button, .delete-button {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 0%;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-button {
+    color: #C56D6D;
+    margin-left: 30px;
+}
+
+.edit-button {
+    color: #292929;
+}
+
+.liste-books-section-desktop {
+    display: none;
+}
+
+@media (min-width: 1440px) {
+    .main {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: none;
+        gap: 32px;
+    }
+
+    .user-section {
+        grid-row: 1;
+        grid-column: 1;
+        margin-left: 0;
+        margin-right: 0;
+        height: 100%;
+    }
+
+    .personal-info-section {
+        grid-row: 1;
+        grid-column: 2;
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 0;
+        height: 91.5%;
+    }
+    .liste-books-section-desktop {
+        display: block;
+        grid-row: 2;
+        grid-column: 1 / span 2;
+        background-color: white;
+        padding: 20px;
+    }
+    .liste-books-section-mobile {
+        display: none;
+    }
+
+    /* Tableur livres desktop */
+    .user-books-table-wrapper {
+        display: block;
+    }
+    .user-books-table {
+        margin: 0 auto;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        overflow: hidden;
+    }
+    .user-books-table th:nth-child(1) { 
+        width: 15%;
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-style: Semi Bold;
+        font-size: 6.4px; /* 8px -> 6.4px */
+        line-height: 100%;
+        letter-spacing: 6.4%;
+        padding-left: 25.6px; /* 32px -> 25.6px */
+    }
+    .user-books-table th:nth-child(2) { 
+        width: 15%;
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-style: Semi Bold;
+        font-size: 6.4px;
+        line-height: 100%;
+        letter-spacing: 6.4%;
+    }
+    .user-books-table th:nth-child(3) { 
+        width: 15%;
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-style: Semi Bold;
+        font-size: 6.4px;
+        line-height: 100%;
+        letter-spacing: 6.4%;
+    }
+    .user-books-table th:nth-child(4) {
+        width: 15%;
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-style: Semi Bold;
+        font-size: 6.4px;
+        line-height: 100%;
+        letter-spacing: 6.4%;
+        padding-right: 25.6px;
+    }
+    .user-books-table th:nth-child(5) {
+        width: 15%;
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-style: Semi Bold;
+        font-size: 6.4px;
+        line-height: 100%;
+        letter-spacing: 6.4%;
+        padding-right: 25.6px;
+    }
+    .user-books-table th:nth-child(6) {
+        width: 25%;
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-style: Semi Bold;
+        font-size: 6.4px;
+        line-height: 100%;
+        letter-spacing: 6.4%;
+        padding-right: 25.6px;
+    }
+    .user-books-table td {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 9.6px; /* 12px -> 9.6px */
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: #292929;
+        margin-top: 20px;    /* 25px -> 20px */
+        margin-bottom: 20px; /* 25px -> 20px */
+        padding-left: 41.6px; /* 52px -> 41.6px */
+        padding-right: 41.6px;
+        text-align: left;
+    }
+    .user-books-table-header th {
+        padding-top: 20px;    /* 25px -> 20px */
+        padding-bottom: 4.8px; /* 6px -> 4.8px */
+        text-align: left;
+    }
+    .user-books-table th {
+        background: #f7f7f7;
+        font-weight: 600;
+        font-size: 0.8rem; /* 1rem -> 0.8rem */
+        text-indent: 40px; /* 50px -> 40px */
+        border-bottom: 1px solid #eee;
+    }
+
+    /** Image livre dans tableau */
+    .user-book-image {
+        width: 80px;  /* 100px -> 80px */
+        height: 80px; /* 100px -> 80px */
+        object-fit: cover;
+    }
+    .user-book-image-cell {
+        display: flex;
+        margin-left: 14.4px; /* 18px -> 14.4px */
+    }
+
+    /* Zebra striping: une ligne sur deux plus claire (blanc/mauve) */
+    .user-books-table tbody tr:nth-child(even) {
+        background: #EDF2F6;
+    }
+    .user-books-table tbody tr:nth-child(odd) {
+        background: #fff;
+    }
+
+    .user-book-status {
+        font-size: 6.88px;
+    }
+    .edit-button, .delete-button {
+        font-size: 10.8px;
+    }
+}

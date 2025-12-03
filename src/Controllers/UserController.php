@@ -25,4 +25,21 @@ class UserController
         $view = new View('user');
         $view->render(['user' => $user]);
     }
+
+    /**
+     * Affiche les détails de l'utilisateur connecté.
+     */
+    #[Router('/user/account/{id}', 'GET')]
+    public function showUserAccount(int $id): void
+    {
+        $userRepository = new UserRepository();
+        $user = $userRepository->getUserById($id);
+        if ($user === null) {
+            http_response_code(404);
+            echo 'Utilisateur non trouvé';
+            return;
+        }
+        $view = new View('user_account');
+        $view->render(['user' => $user]);
+    }
 }
