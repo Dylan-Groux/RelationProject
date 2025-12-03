@@ -1,0 +1,51 @@
+<?php
+use App\Services\Path;
+use App\Library\EasyHeader;
+EasyHeader::addHeader(
+    'Page du livre',
+    ['css/home.css', 'css/edit-book.css', 'css/navbar.css', 'css/footer.css'],
+    ['js/navbar.js']
+);
+?>
+<body>
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <div class="route-path">
+        <a href="<?= Path::url('/public/books') ?>" class="back-link">
+            &#8592; retour
+        </a>
+    </div>
+    <h1 class="main-title"> Modifier les informations </h1>
+    <main class="main-content">
+        <div class="book-img-container">
+            <p>Photo</p>
+            <img src="<?= Path::url(htmlspecialchars($book->getPicture())) ?>" class="book-img" alt="Couverture du livre" width="720px" height="863px">
+            <form class="edit-picture-form" action="<?= Path::url('/public/book/' . $book->getId() . '/edit-picture') ?>" method="post" enctype="multipart/form-data">
+                <label for="picture" class="edit-picture-label">Modifier la photo</label>
+                <input type="file" id="picture" name="picture" accept="image/*" required style="display:none;">
+            </form>
+        </div>
+        <div class="books-all-container">
+            <section class="books-section">
+                <form class="book-info-container" method="post" action="">
+                    <label for="title">Titre</label>
+                    <input class="info-title" type="text" id="title" name="title" value="<?= htmlspecialchars($book->getTitle()) ?>" required>
+
+                    <label for="author">Auteur</label>
+                    <input class="info-author" type="text" id="author" name="author" value="<?= htmlspecialchars($book->getAuthor()) ?>" required>
+                    <label for="comment">Commentaire</label>
+                    <textarea class="info-comment" id="comment" name="comment" rows="5" required><?= htmlspecialchars($book->getComment()) ?></textarea>
+
+                    <label for="disponibilite">Disponibilité</label>
+                    <select class="info-disponibility" id="disponibilite" name="disponibilite">
+                        <option value="disponible">Disponible</option>
+                        <option value="non disponible">Non disponible</option>
+                    </select>
+
+                    <button type="submit" class="signup-btn">Valider</button>
+                </form>
+            </section>
+        </div>
+    </main>
+    <?php include 'footer.php'; ?>
+</body>
+</html>

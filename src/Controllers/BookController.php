@@ -50,4 +50,24 @@ class BookController
         $view = new View('book');
         $view->render(['book' => $book]);
     }
+
+    /**Affiche l'édition d'un livre spécifique 
+     * @param int $id
+     * @return void
+     */
+    #[Router('/book/edit/{id}', 'GET')]
+    public function editBook(int $id): void
+    {
+        $bookRepository = new BookRepository();
+        $book = $bookRepository->getBookById($id);
+
+        if ($book === null) {
+            http_response_code(404);
+            echo 'Livre non trouvé';
+            return;
+        }
+
+        $view = new View('edit-book');
+        $view->render(['book' => $book]);
+    }
 }
