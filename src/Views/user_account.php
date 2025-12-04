@@ -22,7 +22,11 @@ EasyHeader::addHeader(
                 }
                 ?>
                 <img class="user-avatar" src="<?= $userPicture ?>" alt="Avatar utilisateur" width="150px" height="150px">
-                <p class="modifier">modifier</p>
+                //TODO : revoir cette partie pour le upload de l'avatar
+               <form class="avatar-form" method="post" action="/Openclassroom/RELATION/public/user/avatar/update/<?= htmlspecialchars($userData['user']->getId()) ?>" enctype="multipart/form-data">
+                    <label class="modifier" for="user-avatar-upload" style="cursor:pointer;">modifier</label>
+                    <input type="file" id="user-avatar-upload" name="user_avatar" accept=".jpeg,.jpg,.png" style="display:none;">
+                </form>
             </div>
             <div>
                 <div style="height:1px; width:242px; background-color:#F5F3EF; margin:20px auto;"></div>
@@ -150,6 +154,24 @@ EasyHeader::addHeader(
             </div>
         </section>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        form.addEventListener('submit', function(e) {
+            submitBtn.disabled = true;
+            let seconds = 15;
+            timerDiv.textContent = 'Veuillez patienter : ' + seconds + 's';
+            const interval = setInterval(function() {
+                seconds--;
+                timerDiv.textContent = 'Veuillez patienter : ' + seconds + 's';
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    timerDiv.textContent = '';
+                    submitBtn.disabled = false;
+                }
+            }, 1000);
+        });
+    });
+    </script>
 </body>
 <?php include_once __DIR__ . '/footer.php'; ?>
 </html>

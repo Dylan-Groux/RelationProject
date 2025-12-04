@@ -1,26 +1,42 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models\Entity;
 
-use DateTime;
-use DateTimeImmutable;
-use DateTimeInterface;
+enum BookAvailability: string {
+    case AVAILABLE = 'disponible';
+    case UNAVAILABLE = 'non dispo.';
+    case UNKNOWN = 'inconnu';
+}
 
-/**
- * Class Book
- * Représente un livre dans le système.
- */
-class Book
+final class Book
 {
-    private int $id;
+    /** @var int */
+    public readonly int $id;
+
+    /** @var string */
     private string $title;
+
+    /** @var string */
     private string $picture;
+
+    /** @var string */
     private string $author;
-    private int $availability;
+
+    /** @var BookAvailability */
+    private BookAvailability $availability;
+
+    /** @var string */
     private string $comment;
-    private DateTimeInterface $createdAt;
-    private ?DateTimeInterface $updatedAt = null;
-    private int $userId;
+    
+    /** @var \DateTimeImmutable */
+    public readonly \DateTimeImmutable $createdAt;
+
+    /** @var \DateTimeImmutable */ /** "\" Pour utiliser la classe native de PHP */
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    /** @var int */
+    public readonly int $userId;
 
     public function __construct(array $data = [])
     {
@@ -35,171 +51,76 @@ class Book
      */
     public function hydrate(array $data): void
     {
-        $this->id = $data['id'] ?? 0;
-        $this->title = $data['title'] ?? '';
-        $this->picture = $data['picture'] ?? '';
-        $this->author = $data['author'] ?? '';
-        $this->availability = $data['availability'] ?? 0;
-        $this->comment = $data['comment'] ?? '';
-        $this->createdAt = isset($data['created_at'])
-            ? ($data['created_at'] instanceof DateTimeInterface
-                ? $data['created_at']
-                : new DateTimeImmutable($data['created_at']))
-            : new DateTimeImmutable();
-
-        $this->updatedAt = isset($data['updated_at'])
-            ? ($data['updated_at'] instanceof DateTimeInterface
-                ? $data['updated_at']
-                : new DateTimeImmutable($data['updated_at']))
-            : new DateTimeImmutable();
-        $this->userId = $data['user_id'] ?? 0;
+        $this->id = (int)($data['id'] ?? 0);
+        $this->title = (string)($data['title'] ?? '');
+        $this->picture = (string)($data['picture'] ?? '');
+        $this->author = (string)($data['author'] ?? '');
+        $this->availability = BookAvailability::tryFrom($this->mapAvailability($data['availability'] ?? 'inconnu')) ?? BookAvailability::UNKNOWN;
+        $this->comment = (string)($data['comment'] ?? '');
+        $this->createdAt = $this->toDateTimeImmutable($data['created_at'] ?? null);
+        $this->updatedAt = $this->toDateTimeImmutable($data['updated_at'] ?? null);
+        $this->userId = (int)($data['user_id'] ?? 0);
     }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
+    /** Getters */
+    public function getId(): int { return $this->id; }
+    public function getTitle(): string { return $this->title; }
+    public function getPicture(): string { return $this->picture; }
+    public function getAuthor(): string { return $this->author; }
+    public function getComment(): string { return $this->comment; }
+    public function getCreatedAt(): \DateTimeImmutable { return $this->createdAt; }
+    public function getUpdatedAt(): ?\DateTimeImmutable { return $this->updatedAt; }
+    public function getUserId(): int { return $this->userId; }
 
     /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPicture(): string
-    {
-        return $this->picture;
-    }
-
-    /**
-     * @param string $picture
-     */
-    public function setPicture(string $picture): void
-    {
-        $this->picture = $picture;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAuthor(): string
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param string $author
-     */
-    public function setAuthor(string $author): void
-    {
-        $this->author = $author;
-    }
-
-    /**
-     * @return string
+     * @return string fonction qui retourne la disponibilité sous forme de chaîne de caractères
      */
     public function getAvailability(): string
     {
         return match ($this->availability) {
-            1 => 'disponible',
-            2 => 'non disponible',
+            BookAvailability::AVAILABLE => 'disponible',
+            BookAvailability::UNAVAILABLE => 'non disponible',
             default => 'inconnu',
         };
     }
 
+    /** Setters */
+    public function setId(int $id): void { $this->id = $id; }
+    public function setTitle(string $title): void { $this->title = $title; }
+    public function setPicture(string $picture): void { $this->picture = $picture; }
+    public function setAuthor(string $author): void { $this->author = $author; }
+    public function setComment(string $comment): void { $this->comment = $comment; }
+    public function setUserId(int $userId): void { $this->userId = $userId; }
+    public function setAvailability(BookAvailability $availability): void { $this->availability = $availability; }
+
     /**
-     * @param int $availability
+     * @param mixed $value
+     * @return \DateTimeImmutable
+     * fonction qui convertit une valeur en DateTimeImmutable
      */
-    public function setAvailability(int $availability): void
+    private function toDateTimeImmutable(mixed $value): \DateTimeImmutable
     {
-        $this->availability = $availability;
+        if ($value instanceof \DateTimeImmutable) {
+            return $value;
+        }
+        if (is_string($value) && !empty($value)) {
+        return new \DateTimeImmutable($value);
+        }
+
+        return new \DateTimeImmutable();
     }
 
     /**
+     * @param mixed $value
      * @return string
+     * fonction qui mappe la disponibilité depuis la base de données vers l'enum BookAvailability
      */
-    public function getComment(): string
+    private function mapAvailability(mixed $value): string
     {
-        return $this->comment;
-    }
-
-    /**
-     * @param string $comment
-     */
-    public function setComment(string $comment): void
-    {
-        $this->comment = $comment;
-    }
-
-    /**
-     * @return DateTimeImmutable
-     */
-    public function getCreatedAt(): DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTimeImmutable $createdAt
-     */
-    public function setCreatedAt(DateTimeImmutable $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return DateTimeImmutable
-     */
-    public function getUpdatedAt(): DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTimeImmutable $updatedAt
-     */
-    public function setUpdatedAt(DateTimeImmutable $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUserId(): int
-    {
-        return $this->userId;
-    }
-
-    /**
-     * @param int $userId
-     */
-    public function setUserId(int $userId): void
-    {
-        $this->userId = $userId;
+        return match ($value) {
+            1 => 'disponible',
+            2 => 'non dispo.',
+            default => 'inconnu',
+        };
     }
 }
