@@ -120,11 +120,15 @@ class Book
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getAvailability(): int
+    public function getAvailability(): string
     {
-        return $this->availability;
+        return match ($this->availability) {
+            1 => 'disponible',
+            2 => 'non disponible',
+            default => 'inconnu',
+        };
     }
 
     /**

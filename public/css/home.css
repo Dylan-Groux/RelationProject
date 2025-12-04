@@ -6,6 +6,14 @@ body {
   background-color: #F5F3EF;
 }
 
+.signup-btn, .cta-btn, .books-btn {
+  transition: background 0.2s;
+  }
+
+.signup-btn:hover, .cta-btn:hover, .books-btn:hover {
+  cursor: pointer;
+}
+
 h2 {
   margin: 0;
   padding: 0;

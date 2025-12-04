@@ -17,11 +17,38 @@ class User
     private string $password;
     private string $nickname;
     private string $mail;
+    private string $name;
 
-    public function __construct()
+    /**
+     * Initialise l'utilisateur à partir d'un tableau associatif.
+     * @param array $data
+     */
+    public function __construct(array $data = [])
     {
-        $this->createdAt = new DateTime();
-        $this->updatedAt = new DateTime();
+        $this->id = isset($data['id']) ? (int)$data['id'] : 0;
+        $this->picture = $data['picture'] ?? '';
+        $this->password = $data['password'] ?? '';
+        $this->nickname = $data['nickname'] ?? '';
+        $this->mail = $data['mail'] ?? '';
+        $this->name = $data['name'] ?? '';
+        $this->createdAt = isset($data['created_at']) ? new DateTime($data['created_at']) : new DateTime();
+        $this->updatedAt = isset($data['updated_at']) ? new DateTime($data['updated_at']) : new DateTime();
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     /**
@@ -135,4 +162,21 @@ class User
     {
         $this->mail = $mail;
     }
+
+    /**
+     * Retourne le nombre d'années depuis la création du compte (ex: '1 an', '2 ans').
+     */
+    public function getMembershipDuration(): string
+    {
+        $now = new \DateTime();
+        $interval = $now->diff($this->createdAt);
+        if ($interval->y > 0) {
+            return $interval->y . ' ' . ($interval->y > 1 ? 'ans' : 'an');
+        } elseif ($interval->m > 0) {
+            return $interval->m . ' ' . ($interval->m > 1 ? 'mois' : 'mois');
+        } else {
+            return $interval->d . ' ' . ($interval->d > 1 ? 'jours' : 'jour');
+        }
+    }
+
 }

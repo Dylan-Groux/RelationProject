@@ -6,8 +6,9 @@ use App\Models\Repository\BookRepository;
 use App\Views\View;
 use App\Library\Router;
 use App\Services\BooksPaginator;
+use App\Controllers\Abstract\AbstractController;
 
-class BookController
+class BookController extends AbstractController
 {
     /**
      * Affiche la liste des livres avec pagination et recherche.

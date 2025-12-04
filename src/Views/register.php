@@ -13,18 +13,18 @@ EasyHeader::addHeader(
         <div class="main-content">
             <section class="register-form-section">
                 <h2 class="register-title">Inscription</h2>
-                <form class="register-form" method="POST" action="">
-                    <div id="user-label">
-                        <label for="username" class="register-label">Pseudo</label>
-                        <input type="text" id="username" name="username" class="register-input" required>
+                <form class="register-form" method="POST" action="/OPENCLASSROOM/RELATION/public/register/userRegister">
+                    <div id="nickname-label">
+                        <label for="nickname" class="register-label">Pseudo</label>
+                        <input type="text" id="nickname" name="nickname" class="register-input" required>
                     </div>
                     <div id="name-label">
                         <label for="name" class="register-label">Nom</label>
                         <input type="text" id="name" name="name" class="register-input" required>
                     </div>
                     <div id="email-label">
-                        <label for="email" class="register-label">Adresse email</label>
-                        <input type="email" id="email" name="email" class="register-input" required>
+                        <label for="mail" class="register-label">Adresse email</label>
+                        <input type="mail" id="mail" name="mail" class="register-input" required>
                     </div>
                     <div id="password-label">
                         <label for="password" class="register-label">Mot de passe</label>

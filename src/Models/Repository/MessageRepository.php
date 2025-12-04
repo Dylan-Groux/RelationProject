@@ -14,6 +14,7 @@ class MessageRepository
         $this->pdo = $pdo ?? DBManager::getInstance()->getPdo();
     }
 
+    //TODO : mieux classer , ordre du dernier message. A revoir, avoir le bon résultat dès la requête
     public function getAllMessageWithUserId(int $userId)
     {
         $sql = "SELECT r.id AS relation_id,

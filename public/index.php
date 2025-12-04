@@ -15,18 +15,24 @@ $dotenv = new Symfony\Component\Dotenv\Dotenv();
 $dotenv->usePutenv();
 $dotenv->loadEnv(__DIR__ . '/../.env', true, true);
 
+//TODO : session start moved to AbstractController
+
 // Liste des routes (pattern, contrôleur, méthode)
 $routes = [
     ['pattern' => '/', 'controller' => HomeController::class, 'action' => 'index', 'method' => 'GET'],
     ['pattern' => '/books', 'controller' => BookController::class, 'action' => 'showBooks', 'method' => 'GET'],
     ['pattern' => '/book/{id}', 'controller' => BookController::class, 'action' => 'showBookDetail', 'method' => 'GET'],
-    ['pattern' => '/user/{id}', 'controller' => UserController::class, 'action' => 'showUser', 'method' => 'GET'],
+    ['pattern' => '/user/{id}', 'controller' => UserController::class, 'action' => 'showPublicUser', 'method' => 'GET'],
     ['pattern' => '/register', 'controller' => RegisterController::class, 'action' => 'showRegisterForm', 'method' => 'GET'],
     ['pattern' => '/login', 'controller' => RegisterController::class, 'action' => 'showLoginForm', 'method' => 'GET'],
     ['pattern' => '/logout', 'controller' => RegisterController::class, 'action' => 'logout', 'method' => 'GET'],
     ['pattern' => '/messagerie', 'controller' => \App\Controllers\MessageController::class, 'action' => 'showMessages', 'method' => 'GET'],
     ['pattern' => '/user/account/{id}', 'controller' => UserController::class, 'action' => 'showUserAccount', 'method' => 'GET'],
     ['pattern' => '/book/edit/{id}', 'controller' => BookController::class, 'action' => 'editBook', 'method' => 'GET'],
+    ['pattern' => '/my-account', 'controller' => HomeController::class, 'action' => 'myAccount', 'method' => 'GET'],
+    ['pattern' => '/login/userLogin', 'controller' => RegisterController::class, 'action' => 'loginUser', 'method' => 'POST'],
+    ['pattern' => '/register/userRegister', 'controller' => RegisterController::class, 'action' => 'registerUser', 'method' => 'POST'],
+    ['pattern' => '/user/update/{id}', 'controller' => UserController::class, 'action' => 'updateUser', 'method' => 'POST'],
     // Ajoute ici d'autres routes si besoin
 ];
 

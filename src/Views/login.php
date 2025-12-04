@@ -13,10 +13,10 @@ EasyHeader::addHeader(
         <div class="main-content">
             <section class="register-form-section">
                 <h2 class="register-title">Connexion</h2>
-                <form class="register-form" method="POST" action="">
+                <form class="register-form" method="POST" action="/Openclassroom/RELATION/public/login/userLogin">
                     <div id="email-label">
-                        <label for="email" class="register-label">Adresse email</label>
-                        <input type="email" id="email" name="email" class="register-input" required>
+                        <label for="mail" class="register-label">Adresse email</label>
+                        <input type="mail" id="mail" name="mail" class="register-input" required>
                     </div>
                     <div id="password-label">
                         <label for="password" class="register-label">Mot de passe</label>

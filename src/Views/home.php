@@ -19,7 +19,9 @@ EasyHeader::addHeader(
             <section class="info-section">
                 <h2 class="info-title">Rejoignez nos lecteurs passionnés </h2>
                 <p class="info-description">Donnez une nouvelle vie à vos livres en les échangeant avec d'autres amoureux de la lecture. Nous croyons en la magie du partage de connaissances et d'histoires à travers les livres. </p>
-                <button class="signup-btn">Découvrir</button>
+                <form action="<?= Path::url('/public/register') ?>" method="get">
+                    <button type="submit" class="signup-btn">Découvrir</button>
+                </form>
             </section>
             </div>
         </div>
@@ -39,9 +41,9 @@ EasyHeader::addHeader(
                     <?php $count++; ?>
                 <?php endforeach; ?>
                 </div>
-                <div class="btn-container">
-                    <button class="books-btn">Voir tous les livres</button>
-                </div>
+                <form  class="btn-container" action="<?= Path::url('/public/books') ?>" method="get">
+                    <button type="submit" class="books-btn">Voir tous les livres</button>
+                </form>
             </div>
         </section>
         <section class="cta-section">
@@ -61,9 +63,9 @@ EasyHeader::addHeader(
                     <p>Proposez un échange et discutez avec <br> d'autres passionnés de lecture.</p>
                 </div>
             </div>
-            <div class="btn-container">
-                <button class="cta-btn">Voir tous les livres</button>
-            </div>
+            <form  class="btn-container" action="<?= Path::url('/public/books') ?>" method="get">
+                <button type="submit" class="cta-btn">Voir tous les livres</button>
+            </form>
         </section>
         <section class="value-section">
             <img class="value-img-mobile" src="<?= Path::url('/public/assets/home/sectionbar_mobile.png') ?>" alt="Nos valeurs" width="375px" height="425px">
