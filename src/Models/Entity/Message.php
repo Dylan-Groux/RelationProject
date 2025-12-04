@@ -9,10 +9,19 @@ namespace App\Models\Entity;
  */
 class Message
 {
+    /** @var int */
     public readonly int $id;
+
+    /** @var int */
     public readonly int $relationId;
+
+    /** @var int */
     public readonly int $senderId;
+
+    /** @var string */
     public readonly string $content;
+
+    /** @var \DateTimeImmutable */
     public readonly \DateTimeImmutable $sentAt;
 
     public function __construct(
@@ -23,10 +32,10 @@ class Message
         \DateTimeImmutable $sentAt = new \DateTimeImmutable()
     )
     {
-        $this->id = (int)$id;
-        $this->relationId = (int)$relationId;
-        $this->senderId = (int)$senderId;
-        $this->content = (string)$content;
+        $this->id = $id;
+        $this->relationId = $relationId;
+        $this->senderId = $senderId;
+        $this->content = $content;
         $this->sentAt = $sentAt;
     }
 
