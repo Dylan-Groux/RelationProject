@@ -2,21 +2,34 @@
 
 namespace App\Models\Entity;
 
-use DateTime;
-
 /**
  * Class User
  * Représente un utilisateur de l'application.
  */
 class User
 {
-    private int $id;
-    private string $picture;
-    private DateTime $createdAt;
-    private DateTime $updatedAt;
+    /** @var int */
+    public readonly int $id;
+
+    /** @var string */
+    private string $picture = '';
+
+    /** @var \DateTimeImmutable */
+    public readonly \DateTimeImmutable $createdAt;
+
+    /** @var \DateTimeImmutable */
+    private \DateTimeImmutable $updatedAt;
+
+    /** @var string */
     private string $password;
+
+    /** @var string */
     private string $nickname;
+
+    /** @var string */
     private string $mail;
+
+    /** @var string */
     private string $name;
 
     /**
@@ -25,158 +38,73 @@ class User
      */
     public function __construct(array $data = [])
     {
-        $this->id = isset($data['id']) ? (int)$data['id'] : 0;
-        $this->picture = $data['picture'] ?? '';
-        $this->password = $data['password'] ?? '';
-        $this->nickname = $data['nickname'] ?? '';
-        $this->mail = $data['mail'] ?? '';
-        $this->name = $data['name'] ?? '';
-        $this->createdAt = isset($data['created_at']) ? new DateTime($data['created_at']) : new DateTime();
-        $this->updatedAt = isset($data['updated_at']) ? new DateTime($data['updated_at']) : new DateTime();
+        if (!empty($data)) {
+            $this->hydrate($data);
+        }
     }
 
     /**
-     * @return string
+     * @param array $data
+     * @return void l'ensemble des propriétés de l'entité User
      */
-    public function getName(): string
+    public function hydrate(array $data): void
     {
-        return $this->name;
+        $this->id = (int)($data['id'] ?? 0);
+        if (isset($data['name'])) {
+            $this->name = (string)($data['name'] ?? '');
+        }
+        if (isset($data['picture'])) {
+            $this->picture = (string)($data['picture'] ?? '');
+        }
+        if (isset($data['updated_at'])) {
+            $this->updatedAt = new \DateTimeImmutable($data['updated_at']);
+        }
+        if (isset($data['created_at'])) {
+            $this->createdAt = new \DateTimeImmutable($data['created_at']);
+        } else {
+            $this->createdAt = new \DateTimeImmutable();
+        }
+        if (isset($data['password'])) {
+            $this->password = (string)($data['password'] ?? '');
+        }
+        if (isset($data['nickname'])) {
+            $this->nickname = (string)($data['nickname'] ?? '');
+        }
+        if (isset($data['mail'])) {
+            $this->mail = (string)($data['mail'] ?? '');
+        }
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
+    /** Getters */
+    public function getName(): string { return $this->name; }
+    public function getId(): int { return $this->id; }
+    public function getPicture(): string { return $this->picture; }
+    public function getCreatedAt(): \DateTimeImmutable { return $this->createdAt; }
+    public function getUpdatedAt(): \DateTimeImmutable { return $this->updatedAt; }
+    public function getPassword(): string { return $this->password; }
+    public function getNickname(): string { return $this->nickname; }
+    public function getMail(): string { return $this->mail; }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPicture(): string
-    {
-        return $this->picture;
-    }
-
-    /**
-     * @param string $picture
-     */
-    public function setPicture(string $picture): void
-    {
-        $this->picture = $picture;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt(): DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTime $createdAt
-     */
-    public function setCreatedAt(DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt(): DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTime $updatedAt
-     */
-    public function setUpdatedAt(DateTime $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNickname(): string
-    {
-        return $this->nickname;
-    }
-
-    /**
-     * @param string $nickname
-     */
-    public function setNickname(string $nickname): void
-    {
-        $this->nickname = $nickname;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMail(): string
-    {
-        return $this->mail;
-    }
-
-    /**
-     * @param string $mail
-     */
-    public function setMail(string $mail): void
-    {
-        $this->mail = $mail;
-    }
+    /** Setters */
+    public function setName(string $name): void { $this->name = $name; }
+    public function setPicture(string $picture): void { $this->picture = $picture; }
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): void { $this->updatedAt = $updatedAt; }
+    public function setPassword(string $password): void { $this->password = $password; }
+    public function setNickname(string $nickname): void { $this->nickname = $nickname; }
+    public function setMail(string $mail): void { $this->mail = $mail; }
 
     /**
      * Retourne le nombre d'années depuis la création du compte (ex: '1 an', '2 ans').
      */
     public function getMembershipDuration(): string
     {
-        $now = new \DateTime();
+        $now = new \DateTimeImmutable();
         $interval = $now->diff($this->createdAt);
-        if ($interval->y > 0) {
-            return $interval->y . ' ' . ($interval->y > 1 ? 'ans' : 'an');
-        } elseif ($interval->m > 0) {
-            return $interval->m . ' ' . ($interval->m > 1 ? 'mois' : 'mois');
-        } else {
-            return $interval->d . ' ' . ($interval->d > 1 ? 'jours' : 'jour');
-        }
+        
+        return match (true) {
+        $interval->y > 0 => $interval->y . ' ' . ($interval->y > 1 ? 'ans' : 'an'),
+        $interval->m > 0 => $interval->m . ' ' . ($interval->m > 1 ? 'mois' : 'mois'),
+        default          => $interval->d . ' ' . ($interval->d > 1 ? 'jours' : 'jour'),
+        };
     }
-
 }
