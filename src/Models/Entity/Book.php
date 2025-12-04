@@ -3,12 +3,20 @@ declare(strict_types=1);
 
 namespace App\Models\Entity;
 
+/**
+ * enum BookAvailability
+ * Représente la disponibilité d'un livre.
+ */
 enum BookAvailability: string {
     case AVAILABLE = 'disponible';
     case UNAVAILABLE = 'non dispo.';
     case UNKNOWN = 'inconnu';
 }
 
+/**
+ * Class Book
+ * Représente un livre dans le système.
+ */
 final class Book
 {
     /** @var int */

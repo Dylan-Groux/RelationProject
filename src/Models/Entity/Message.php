@@ -1,8 +1,7 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models\Entity;
-
-use DateTime;
 
 /**
  * Class Message
@@ -10,94 +9,31 @@ use DateTime;
  */
 class Message
 {
-    private int $id;
-    private int $relationId;
-    private int $senderId;
-    private string $content;
-    private DateTime $sentAt;
+    public readonly int $id;
+    public readonly int $relationId;
+    public readonly int $senderId;
+    public readonly string $content;
+    public readonly \DateTimeImmutable $sentAt;
 
-    public function __construct()
+    public function __construct(
+        int $id,
+        int $relationId,
+        int $senderId,
+        string $content,
+        \DateTimeImmutable $sentAt = new \DateTimeImmutable()
+    )
     {
-        $this->sentAt = new DateTime();
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getRelationId(): int
-    {
-        return $this->relationId;
-    }
-
-    /**
-     * @param int $relationId
-     */
-    public function setRelationId(int $relationId): void
-    {
-        $this->relationId = $relationId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSenderId(): int
-    {
-        return $this->senderId;
-    }
-
-    /**
-     * @param int $senderId
-     */
-    public function setSenderId(int $senderId): void
-    {
-        $this->senderId = $senderId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param string $content
-     */
-    public function setContent(string $content): void
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSentAt(): DateTime
-    {
-        return $this->sentAt;
-    }
-
-    /**
-     * @param DateTime $sentAt
-     */
-    public function setSentAt(DateTime $sentAt): void
-    {
+        $this->id = (int)$id;
+        $this->relationId = (int)$relationId;
+        $this->senderId = (int)$senderId;
+        $this->content = (string)$content;
         $this->sentAt = $sentAt;
     }
+
+    /** Getters */
+    public function getId(): int { return $this->id; }
+    public function getRelationId(): int { return $this->relationId; }
+    public function getSenderId(): int { return $this->senderId; }
+    public function getContent(): string { return $this->content; }
+    public function getSentAt(): \DateTimeImmutable { return $this->sentAt; }
 }
