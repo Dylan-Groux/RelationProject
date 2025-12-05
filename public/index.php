@@ -33,6 +33,8 @@ $routes = [
     ['pattern' => '/login/userLogin', 'controller' => RegisterController::class, 'action' => 'loginUser', 'method' => 'POST'],
     ['pattern' => '/register/userRegister', 'controller' => RegisterController::class, 'action' => 'registerUser', 'method' => 'POST'],
     ['pattern' => '/user/update/{id}', 'controller' => UserController::class, 'action' => 'updateUser', 'method' => 'POST'],
+    ['pattern' => '/book/update/{id}', 'controller' => BookController::class, 'action' => 'updateBook', 'method' => 'POST'],
+    ['pattern' => '/book/delete/{id}', 'controller' => BookController::class, 'action' => 'deleteBook', 'method' => 'GET'],
     // Ajoute ici d'autres routes si besoin
 ];
 

@@ -87,8 +87,8 @@ EasyHeader::addHeader(
                         </div>
                         <p class="user-book-description"><?= htmlspecialchars($shortDesc) ?></p>
                         <div class="user-book-actions">
-                            <button class="edit-button">Editer</button>
-                            <button class="delete-button">Supprimer</button>
+                            <a href="/Openclassroom/RELATION/public/book/edit/<?= $book->getId() ?>" class="edit-button">Editer</a>
+                            <a href="/Openclassroom/RELATION/public/book/delete/<?= $book->getId() ?>" class="delete-button">Supprimer</a>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -128,7 +128,6 @@ EasyHeader::addHeader(
                                 ?>
                             </td>
                             <td>
-                                //TODO : revoir cette partie pour translate la disponibilité dans une auter fichier
                                 <?php
                                 $statusAvailable = $book->getAvailability();
                                 if ($statusAvailable === 'disponible') {
@@ -143,8 +142,8 @@ EasyHeader::addHeader(
                                 <span class="user-book-status <?= $class ?>"><?= htmlspecialchars($status) ?></span>
                             </td>
                             <td>
-                                <button class="edit-button">Editer</button>
-                                <button class="delete-button">Supprimer</button>
+                                <a href="/Openclassroom/RELATION/public/book/edit/<?= $book->getId() ?>" class="edit-button">Editer</a>
+                                <a href="/Openclassroom/RELATION/public/book/delete/<?= $book->getId() ?>" class="delete-button">Supprimer</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

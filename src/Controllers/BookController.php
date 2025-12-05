@@ -71,4 +71,61 @@ class BookController extends AbstractController
         $view = new View('edit-book');
         $view->render(['book' => $book]);
     }
+
+    /**
+     * Met à jour un livre spécifique.
+     * @param int $id
+     * @return void
+     */
+    #[Router('/book/update/{id}', 'POST')]
+    public function updateBook(int $id): void
+    {
+        $bookRepository = new BookRepository();
+
+        $data = [
+            'title' => $_POST['title'] ?? null,
+            'picture' => $_POST['picture'] ?? null,
+            'author' => $_POST['author'] ?? null,
+            'availability' => isset($_POST['availability']) ? intval($_POST['availability']) : null,
+            'comment' => $_POST['comment'] ?? null,
+            'user_id' => isset($_POST['user_id']) ? intval($_POST['user_id']) : null,
+            'id' => $id
+        ];
+
+        if ($data['id'] === null) {
+            http_response_code(404);
+            echo 'Livre non trouvé';
+            return;
+        }
+        
+        $book = $bookRepository->updateBook($data);
+
+        if ($book) {
+            header('Location: /Openclassroom/RELATION/public/book/' . $id);
+            exit;
+        } else {
+            http_response_code(500);
+            echo 'Erreur lors de la mise à jour du livre';
+        }
+    }
+
+    /**
+     * Supprime un livre spécifique.
+     * @param int $id
+     * @return void
+     */
+    #[Router('/book/delete/{id}', 'GET')]
+    public function deleteBook(int $id): void
+    {
+        $bookRepository = new BookRepository();
+        $success = $bookRepository->deleteBook($id);
+
+        if ($success) {
+            header('Location: /Openclassroom/RELATION/public/books');
+            exit;
+        } else {
+            http_response_code(500);
+            echo 'Erreur lors de la suppression du livre';
+        }
+    }
 }

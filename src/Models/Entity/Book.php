@@ -92,6 +92,15 @@ final class Book
         };
     }
 
+    public function getAvailailityInt(): int
+    {
+        return match ($this->availability) {
+            BookAvailability::AVAILABLE => 1,
+            BookAvailability::UNAVAILABLE => 2,
+            default => 0,
+        };
+    }
+
     /** Setters */
     public function setId(int $id): void { $this->id = $id; }
     public function setTitle(string $title): void { $this->title = $title; }

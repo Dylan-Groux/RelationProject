@@ -26,7 +26,7 @@ EasyHeader::addHeader(
         </div>
         <div class="books-all-container">
             <section class="books-section">
-                <form class="book-info-container" method="post" action="">
+                <form class="book-info-container" method="post" action="/Openclassroom/RELATION/public/book/update/<?= $book->getId() ?>">
                     <label for="title">Titre</label>
                     <input class="info-title" type="text" id="title" name="title" value="<?= htmlspecialchars($book->getTitle()) ?>" required>
 

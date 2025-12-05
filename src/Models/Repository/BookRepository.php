@@ -1,16 +1,20 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models\Repository;
 
-use App\Models\Entity\Book;
 use App\Models\Database\DBManager;
-use PDO;
+use App\Models\Entity\Book;
 
+/**
+ * Class BookRepository
+ * Gère les opérations de base de données pour les entités Book.
+ */
 class BookRepository
 {
-    private PDO $pdo;
+    private \PDO $pdo;
 
-    public function __construct(?PDO $pdo = null)
+    public function __construct(?\PDO $pdo = null)
     {
         $this->pdo = $pdo ?? DBManager::getInstance()->getPdo();
     }
@@ -25,7 +29,7 @@ class BookRepository
         $stmt = $this->pdo->query($sql);
         $booksData = [];
 
-        while ($book = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($book = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             if ($book) {
             $booksData[] = new Book($book);
             }
@@ -43,10 +47,10 @@ class BookRepository
     {
         $sql = "SELECT * FROM book WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         $stmt->execute();
 
-        $bookData = $stmt->fetch(PDO::FETCH_ASSOC);
+        $bookData = $stmt->fetch(\PDO::FETCH_ASSOC);
         if ($bookData) {
             return new Book($bookData);
         } else {
@@ -63,11 +67,11 @@ class BookRepository
     {
         $sql = "SELECT * FROM book WHERE user_id = :userId";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':userId', $userId, \PDO::PARAM_INT);
         $stmt->execute();
 
         $booksData = [];
-        while ($book = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($book = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $booksData[] = new Book($book);
         }
 
@@ -86,28 +90,76 @@ class BookRepository
         }
         $sql = "DELETE FROM book WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         return $stmt->execute();
     }
 
     /**
-     * Met à jour un livre.
+     * Update d'une entité en ignorant les champs null.
      * @param Book $book
      * @return bool
+     * @throws \InvalidArgumentException si l'entité n'a pas d'ID défini.
      */
-    //TODO : RETURN 1 TRUE 
-    public function updateBook(Book $book): bool
+    public function updateBook(array $data): bool
     {
-        $sql = "UPDATE book SET title = :title, picture = :picture, author = :author, availability = :availability, comment = :comment, updated_at = NOW(), user_id = :user_id WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':title', $book->getTitle());
-        $stmt->bindValue(':picture', $book->getPicture());
-        $stmt->bindValue(':author', $book->getAuthor());
-        $stmt->bindValue(':availability', $book->getAvailability(), PDO::PARAM_INT);
-        $stmt->bindValue(':comment', $book->getComment());
-        $stmt->bindValue(':user_id', $book->getUserId(), PDO::PARAM_INT);
-        $stmt->bindValue(':id', $book->getId(), PDO::PARAM_INT);
-        return $stmt->execute();
+        if (empty($data['id'])) {
+            throw new \InvalidArgumentException("Impossible d'update : l'entité n'a pas d'ID.");
+        }
+
+        // Mapping des champs → getters
+        $fields = [
+            'title' => $data['title'] ?? null,
+            'picture' => $data['picture'] ?? null,
+            'author' => $data['author'] ?? null,
+            'availability' => $data['availability'] ?? null,
+            'comment' => $data['comment'] ?? null,
+            'user_id' => $data['user_id'] ?? null,
+            'id' => $data['id']
+        ];
+
+        // On filtre tout champ null : on NE L’UPDATE PAS
+        $fields = array_filter(
+            $fields,
+            fn ($value) => $value !== null
+        );
+
+        if (empty($fields)) {
+            // Rien à mettre à jour
+            return false;
+        }
+
+        // Construction dynamique des SET field = :field
+        $setParts = [];
+        foreach ($fields as $column => $_) {
+            $setParts[] = "$column = :$column";
+        }
+        $setClause = implode(", ", $setParts);
+
+        // On met aussi à jour le updated_at
+        $setClause .= ", updated_at = :updated_at";
+
+        $sql = "
+            UPDATE book
+            SET $setClause
+            WHERE id = :id
+        ";
+
+        try {
+            $stmt = $this->pdo->prepare($sql);
+
+            foreach ($fields as $column => $value) {
+                $stmt->bindValue(":$column", $value);
+            }
+
+            $stmt->bindValue(':updated_at', (new \DateTimeImmutable())->format('Y-m-d H:i:s'));
+            $stmt->bindValue(':id', $data['id'], \PDO::PARAM_INT);
+
+            return $stmt->execute();
+
+        } catch (\PDOException $e) {
+            // Logger ici si besoin
+            return false;
+        }
     }
 
     /**
@@ -119,11 +171,11 @@ class BookRepository
     {
         $sql = "SELECT * FROM book ORDER BY created_at DESC LIMIT :limit";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
         $stmt->execute();
 
         $booksData = [];
-        while ($book = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($book = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $booksData[] = new Book($book);
         }
 
@@ -140,13 +192,13 @@ class BookRepository
     {
         $sql = "SELECT * FROM book ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, \PDO::PARAM_INT);
         $stmt->execute();
 
         $booksData = [];
 
-        while ($book = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($book = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $booksData[] = new Book($book);
         }
 
@@ -163,12 +215,12 @@ class BookRepository
         $sql = "SELECT * FROM book WHERE title LIKE :title";
         $stmt = $this->pdo->prepare($sql);
         $likeTitle = '%' . $title . '%';
-        $stmt->bindValue(':title', $likeTitle, PDO::PARAM_STR);
+        $stmt->bindValue(':title', $likeTitle, \PDO::PARAM_STR);
         $stmt->execute();
 
         $booksData = [];
 
-        while ($book = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($book = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $booksData[] = new Book($book);
         }
 
@@ -187,13 +239,13 @@ class BookRepository
         $sql = "SELECT * FROM book WHERE title LIKE :title ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($sql);
         $likeTitle = '%' . $title . '%';
-        $stmt->bindValue(':title', $likeTitle, PDO::PARAM_STR);
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindValue(':title', $likeTitle, \PDO::PARAM_STR);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, \PDO::PARAM_INT);
         $stmt->execute();
 
         $booksData = [];
-        while ($book = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($book = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $booksData[] = new Book($book);
         }
         return $booksData;
