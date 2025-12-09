@@ -4,7 +4,7 @@ use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page de connexion',
     ['css/home.css', 'css/footer.css', 'css/navbar.css', 'css/user_account.css'],
-    ['js/navbar.js']
+    ['js/navbar.js', 'js/button.js']
 );
 ?>
 <body>
@@ -22,10 +22,9 @@ EasyHeader::addHeader(
                 }
                 ?>
                 <img class="user-avatar" src="<?= $userPicture ?>" alt="Avatar utilisateur" width="150px" height="150px">
-                //TODO : revoir cette partie pour le upload de l'avatar
-               <form class="avatar-form" method="post" action="/Openclassroom/RELATION/public/user/avatar/update/<?= htmlspecialchars($userData['user']->getId()) ?>" enctype="multipart/form-data">
+               <form class="avatar-form" id='user-avatar-form' method="post" action="/Openclassroom/RELATION/public/user/picture/update/<?= htmlspecialchars($userData['user']->getId()) ?>" enctype="multipart/form-data">
                     <label class="modifier" for="user-avatar-upload" style="cursor:pointer;">modifier</label>
-                    <input type="file" id="user-avatar-upload" name="user_avatar" accept=".jpeg,.jpg,.png" style="display:none;">
+                    <input type="file" id="user-avatar-upload" name="picture" accept=".jpeg,.jpg,.png" style="display:none;">
                 </form>
             </div>
             <div>

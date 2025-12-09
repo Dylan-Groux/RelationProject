@@ -86,4 +86,37 @@ class UserController extends AbstractController
         $userRepository->updateUser($sanitizedData);
         header('Location: /Openclassroom/RELATION/public/user/account/' . $id);
     }
+
+    /**
+     * Met à jour l'image de profil de l'utilisateur.
+     * @param int $id
+     */
+    #[Router('/user/picture/update/{id}', 'POST')]
+    public function updateUserPicture(int $id): void
+    {
+        // Vérifie que l'utilisateur est connecté et que l'ID correspond
+        if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != $id) {
+            http_response_code(403);
+            echo 'Accès refusé.';
+            return;
+        }
+
+        $userRepository = new UserRepository();
+        if (!isset($_FILES['picture'])) {
+            http_response_code(400);
+            echo 'Aucun fichier envoyé.';
+            return;
+        }
+
+        $result = $userRepository->uploadUserPicture($id, $_FILES['picture']);
+        if ($result === false) {
+            http_response_code(400);
+            echo "Échec de l'upload de l'image.";
+            return;
+        }
+
+        // Redirection vers le compte utilisateur après succès
+        header('Location: /Openclassroom/RELATION/public/user/account/' . $id);
+        exit;
+    }
 }

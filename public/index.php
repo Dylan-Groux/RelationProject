@@ -35,6 +35,7 @@ $routes = [
     ['pattern' => '/user/update/{id}', 'controller' => UserController::class, 'action' => 'updateUser', 'method' => 'POST'],
     ['pattern' => '/book/update/{id}', 'controller' => BookController::class, 'action' => 'updateBook', 'method' => 'POST'],
     ['pattern' => '/book/delete/{id}', 'controller' => BookController::class, 'action' => 'deleteBook', 'method' => 'GET'],
+    ['pattern' => '/user/picture/update/{id}', 'controller' => UserController::class, 'action' => 'updateUserPicture', 'method' => 'POST'],
     // Ajoute ici d'autres routes si besoin
 ];
 
