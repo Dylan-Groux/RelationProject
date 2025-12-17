@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models\Entity;
 
+//TODO : 1 enum = 1 fichier pour une meilleure lisibilité
 /**
  * enum BookAvailability
  * Représente la disponibilité d'un livre.

@@ -101,7 +101,7 @@ class BookController extends AbstractController
         $book = $bookRepository->updateBook($data);
 
         if ($book) {
-            header('Location: /Openclassroom/RELATION/public/book/' . $id);
+            header('Location: /public/book/' . $id);
             exit;
         } else {
             http_response_code(500);
@@ -121,7 +121,7 @@ class BookController extends AbstractController
         $success = $bookRepository->deleteBook($id);
 
         if ($success) {
-            header('Location: /Openclassroom/RELATION/public/books');
+            header('Location: /public/books');
             exit;
         } else {
             http_response_code(500);

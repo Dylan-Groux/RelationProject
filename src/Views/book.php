@@ -1,5 +1,4 @@
 <?php
-use App\Services\Path;
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page du livre',
@@ -14,7 +13,7 @@ EasyHeader::addHeader(
     </div>
     <main class="main-content">
         <div class="book-img-container">
-            <img src="<?= Path::url(htmlspecialchars($book->getPicture())) ?>" class="book-img" alt="Couverture du livre" width="720px" height="863px">
+            <img src="<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre" width="720px" height="863px">
         </div>
         <div class="books-all-container">
             <section class="books-section">

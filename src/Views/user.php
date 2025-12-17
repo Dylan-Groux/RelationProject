@@ -1,5 +1,4 @@
 <?php
-use App\Services\Path;
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page utilisateur',
@@ -11,13 +10,13 @@ EasyHeader::addHeader(
     <?php include_once __DIR__ . '/navbar.php'; ?>
     <main class="main-content">
         <section class="user-section">
-            <img class="user-avatar" src="<?= Path::url('/public/assets/utils/user-avatar.png') ?>" alt="Avatar utilisateur" width="150px" height="150px">
+            <img class="user-avatar" src="/public/assets/utils/user-avatar.png" alt="Avatar utilisateur" width="150px" height="150px">
             <h2 class="user-title">Alexlecture</h2>
             <p class="user-member">Membre depuis 1 an</p>
             <div class="biblio-info">
                 <p class="biblio-info-title"><strong>BIBLIOTHEQUE</strong></p>
                 <div class="livre-info">
-                    <img src="<?= Path::url('/public/assets/utils/biblio.svg') ?>" alt="Icone livre" width="12px" height="12px">
+                    <img src="/public/assets/utils/biblio.svg" alt="Icone livre" width="12px" height="12px">
                     <p> <?php // Afficher le nombre de livres de l'utilisateur
                         $bookCount = 5; // Exemple de valeur
                         echo $bookCount . ' livres';
@@ -41,7 +40,7 @@ EasyHeader::addHeader(
                 foreach ($userBooks as $book): ?>
                     <div class="user-book-card modern-book-card">
                         <div class="modern-book-content">
-                            <img src="<?= Path::url($book['image']) ?>" alt="<?= htmlspecialchars($book['title']) ?>" class="user-book-image" width="100" height="100">
+                            <img src="<?= htmlspecialchars($book['image']) ?>" alt="<?= htmlspecialchars($book['title']) ?>" class="user-book-image" width="100" height="100">
                             <div class="modern-book-text">
                                 <h3 class="user-book-title"><?= htmlspecialchars($book['title']) ?></h3>
                                 <p class="user-book-author"><?= htmlspecialchars($book['author']) ?></p>
@@ -73,7 +72,7 @@ EasyHeader::addHeader(
                     ];
                     foreach ($userBooks as $book): ?>
                         <tr>
-                            <td class="user-book-image-cell"><img src="<?= Path::url($book['image']) ?>" alt="<?= htmlspecialchars($book['title']) ?>" class="user-book-image" width="70" height="70"></td>
+                            <td class="user-book-image-cell"><img src="<?= htmlspecialchars($book['image']) ?>" alt="<?= htmlspecialchars($book['title']) ?>" class="user-book-image" width="70" height="70"></td>
                             <td><?= htmlspecialchars($book['title']) ?></td>
                             <td><?= htmlspecialchars($book['author']) ?></td>
                             <td>

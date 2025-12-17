@@ -1,5 +1,4 @@
 <?php
-use App\Services\Path;
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page d\'accueil',
@@ -27,8 +26,8 @@ EasyHeader::addHeader(
             <div class="books-container">
                 <div class="books-grid">
                 <?php foreach ($books as $book): ?>
-                    <a class="book" href="<?= Path::url('/public/book/' . htmlspecialchars($book->getId())) ?>">
-                        <img src="<?= Path::url(htmlspecialchars($book->getPicture())) ?>" class="book-img" alt="Couverture du livre">
+                    <a class="book" href="<?= '/public/book/' . htmlspecialchars($book->getId()) ?>">
+                        <img src="<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre">
                         <p class="book-title"><?= htmlspecialchars($book->getTitle()) ?></p>
                         <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
                         <p class="book-seller">Vendu par <?= htmlspecialchars($book->getUserId()) ?></p>

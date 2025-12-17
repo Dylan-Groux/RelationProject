@@ -38,14 +38,14 @@ class UserController extends AbstractController
         }
         // Redirige si l'ID n'est pas numérique ou ne correspond pas à la session
         if (!isset($_SESSION['user_id']) || !is_numeric($id) || $_SESSION['user_id'] != $id) {
-            header('Location: /Openclassroom/RELATION/public/user/account/' . $_SESSION['user_id']);
+            header('Location: /public/user/account/' . $_SESSION['user_id']);
             exit;
         }
         $userRepository = new UserRepository();
         $user = $userRepository->getUserById($id);
         if ($user === null) {
             // Redirige aussi si l'utilisateur n'existe pas
-            header('Location: /Openclassroom/RELATION/public/user/account/' . $_SESSION['user_id']);
+            header('Location: /public/user/account/' . $_SESSION['user_id']);
             exit;
         }
 
@@ -58,7 +58,7 @@ class UserController extends AbstractController
     /**
      * Gère la modification des informations utilisateur.
      * @param int $id
-     */
+     */ 
     #[Router('/user/update/{id}', 'POST')]
     public function updateUser(int $id): void
     {
@@ -84,7 +84,7 @@ class UserController extends AbstractController
         }
 
         $userRepository->updateUser($sanitizedData);
-        header('Location: /Openclassroom/RELATION/public/user/account/' . $id);
+        header('Location: /public/user/account/' . $id);
     }
 
     /**
@@ -116,7 +116,7 @@ class UserController extends AbstractController
         }
 
         // Redirection vers le compte utilisateur après succès
-        header('Location: /Openclassroom/RELATION/public/user/account/' . $id);
+        header('Location: /public/user/account/' . $id);
         exit;
     }
 }

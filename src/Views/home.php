@@ -1,5 +1,4 @@
 <?php
-use App\Services\Path;
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page d\'accueil',
@@ -13,13 +12,13 @@ EasyHeader::addHeader(
         <div class="header-container">
             <div class="header-flex">
             <section class="intro-section">
-                <img class="start_img" src="<?= Path::url('/public/assets/home/header.png') ?>" alt="Échange de livres" width="425px" height="503px">
+                <img class="start_img" src="<?= '/public/assets/home/header.png' ?>" alt="Échange de livres" width="425px" height="503px">
                 <p class="author_name">Hamza</p>
             </section>
             <section class="info-section">
                 <h2 class="info-title">Rejoignez nos lecteurs passionnés </h2>
                 <p class="info-description">Donnez une nouvelle vie à vos livres en les échangeant avec d'autres amoureux de la lecture. Nous croyons en la magie du partage de connaissances et d'histoires à travers les livres. </p>
-                <form action="<?= Path::url('/public/register') ?>" method="get">
+                <form action="<?= '/public/register' ?>" method="get">
                     <button type="submit" class="signup-btn">Découvrir</button>
                 </form>
             </section>
@@ -33,7 +32,7 @@ EasyHeader::addHeader(
                 <?php foreach ($books as $book): ?>
                     <?php if ($count >= 4) break; ?>
                     <div class="book">
-                        <img src="<?= Path::url(htmlspecialchars($book->getPicture())) ?>" class="book-img" alt="Couverture du livre">
+                        <img src="<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre">
                         <p class="book-title"><?= htmlspecialchars($book->getTitle()) ?></p>
                         <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
                         <p class="book-seller">Vendu par user <?= htmlspecialchars($book->getUserId()) ?></p>
@@ -41,7 +40,7 @@ EasyHeader::addHeader(
                     <?php $count++; ?>
                 <?php endforeach; ?>
                 </div>
-                <form  class="btn-container" action="<?= Path::url('/public/books') ?>" method="get">
+                <form  class="btn-container" action="/public/books" method="get">
                     <button type="submit" class="books-btn">Voir tous les livres</button>
                 </form>
             </div>
@@ -63,13 +62,13 @@ EasyHeader::addHeader(
                     <p>Proposez un échange et discutez avec <br> d'autres passionnés de lecture.</p>
                 </div>
             </div>
-            <form  class="btn-container" action="<?= Path::url('/public/books') ?>" method="get">
+            <form  class="btn-container" action="/public/books" method="get">
                 <button type="submit" class="cta-btn">Voir tous les livres</button>
             </form>
         </section>
         <section class="value-section">
-            <img class="value-img-mobile" src="<?= Path::url('/public/assets/home/sectionbar_mobile.png') ?>" alt="Nos valeurs" width="375px" height="425px">
-            <img class="value-img-desktop" src="<?= Path::url('/public/assets/home/sectionbar_desktop.png') ?>" alt="Nos valeurs" width="1440px" height="230px">
+            <img class="value-img-mobile" src="/public/assets/home/sectionbar_mobile.png" alt="Nos valeurs" width="375px" height="425px">
+            <img class="value-img-desktop" src="/public/assets/home/sectionbar_desktop.png" alt="Nos valeurs" width="1440px" height="230px">
             <div class="value-content">
                 <h2 class="value-title">Nos valeurs</h2>
                 <p class="value-description">
@@ -90,7 +89,7 @@ EasyHeader::addHeader(
                 </p>
                 <p class="author_name">L'équipe Tom Troc</p>
             </div>
-            <img class="vectorlove-img" src="<?= Path::url('/public/assets/utils/lovevector.svg') ?>" alt="Nos valeurs" width="370px" height="573px">
+            <img class="vectorlove-img" src="/public/assets/utils/lovevector.svg" alt="Nos valeurs" width="370px" height="573px">
         </section>
     </main>
     <?php include_once __DIR__ . '/footer.php'; ?>

@@ -1,5 +1,4 @@
 <?php
-use App\Services\Path;
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page de connexion',
@@ -10,13 +9,13 @@ EasyHeader::addHeader(
 <body>
     <?php include_once __DIR__ . '/navbar.php'; ?>
     <main class="main">
-        <?php foreach ($messages as $conv): ?>
+        <?php foreach ($conversations as $conv): ?>
             <div class="conversation">
-                <img src="<?= Path::url(htmlspecialchars($conv['picture'])) ?>" alt="Photo de profil" />
+                <img class="conversation-picture" src="<?= htmlspecialchars($conv['picture']) ?>" alt="Photo de profil" />
                 <span><?= htmlspecialchars($conv['nickname']) ?></span>
                 <span><?= htmlspecialchars($conv['last_message']) ?></span>
                 <span><?= htmlspecialchars($conv['last_date']) ?></span>
-                <a href="?conversation_id=<?= $conv['relation_id'] ?>">Ouvrir</a>
+                <a href="/public/conversation/<?= htmlspecialchars($conv['relation_id']) ?>">Ouvrir</a>
             </div>
         <?php endforeach; ?>
     </main>

@@ -1,5 +1,4 @@
 <?php
-use App\Services\Path;
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page de connexion',
@@ -16,19 +15,19 @@ EasyHeader::addHeader(
                 <?php
                 $userPicture = $userData['user']->getPicture();
                 if (empty($userPicture)) {
-                    $userPicture = Path::url('/public/assets/utils/user-avatar.png'); // image par défaut
+                    $userPicture = '/public/assets/utils/user-avatar.png'; // image par défaut
                 } else {
                     $userPicture = htmlspecialchars($userPicture);
                 }
                 ?>
                 <img class="user-avatar" src="<?= $userPicture ?>" alt="Avatar utilisateur" width="150px" height="150px">
-               <form class="avatar-form" id='user-avatar-form' method="post" action="/Openclassroom/RELATION/public/user/picture/update/<?= htmlspecialchars($userData['user']->getId()) ?>" enctype="multipart/form-data">
-                    <label class="modifier" for="user-avatar-upload" style="cursor:pointer;">modifier</label>
-                    <input type="file" id="user-avatar-upload" name="picture" accept=".jpeg,.jpg,.png" style="display:none;">
+               <form class="avatar-form" id='user-avatar-form' method="post" action="/public/user/picture/update/<?= htmlspecialchars($userData['user']->getId()) ?>" enctype="multipart/form-data">
+                    <label class="modifier" for="user-avatar-upload">modifier</label>
+                    <input type="file" id="user-avatar-upload" name="picture" accept=".jpeg,.jpg,.png">
                 </form>
             </div>
             <div>
-                <div style="height:1px; width:242px; background-color:#F5F3EF; margin:20px auto;"></div>
+                <div class="line-bar"></div>
             </div>
             <div>
                 <h2 class="user-title"><?= htmlspecialchars($userData['user']->getNickName()); ?></h2>
@@ -36,7 +35,7 @@ EasyHeader::addHeader(
                 <div class="biblio-info">
                     <p class="biblio-info-title"><strong>BIBLIOTHEQUE</strong></p>
                     <div class="livre-info">
-                        <img src="<?= Path::url('/public/assets/utils/biblio.svg') ?>" alt="Icone livre" width="12px" height="12px">
+                        <img src="/public/assets/utils/biblio.svg" alt="Icone livre" width="12px" height="12px">
                         <p>
                             <?php
                             $availableBooks = array_filter($userData['books'], fn($book) => $book->getAvailability() === 'disponible' || $book->getAvailability() === "non disponible");
@@ -49,7 +48,7 @@ EasyHeader::addHeader(
         </section>
         <section class="personal-info-section">
             <h3>Vos informations personnelles</h3>
-            <form class="info-form" method="post" action="/Openclassroom/RELATION/public/user/update/<?= htmlspecialchars($userData['user']->getId()) ?>">
+            <form class="info-form" method="post" action="/public/user/update/<?= htmlspecialchars($userData['user']->getId()) ?>">
                 <div class="info-grid">
                     <label class="info-email" for="mail">Email</label>
                     <input type="mail" id="mail" name="mail" value="<?= htmlspecialchars($userData['user']->getMail()) ?>">
@@ -77,7 +76,7 @@ EasyHeader::addHeader(
                 ?>
                     <div class="user-book-card modern-book-card">
                         <div class="modern-book-content">
-                            <img src="<?= Path::url($book->getPicture()) ?>" alt="<?= htmlspecialchars($book->getTitle()) ?>" class="user-book-image" width="100" height="100">
+                            <img src="<?= htmlspecialchars($book->getPicture()) ?>" alt="<?= htmlspecialchars($book->getTitle()) ?>" class="user-book-image" width="100" height="100">
                             <div class="modern-book-text">
                                 <h3 class="user-book-title"><?= htmlspecialchars($book->getTitle()) ?></h3>
                                 <p class="user-book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
@@ -86,8 +85,8 @@ EasyHeader::addHeader(
                         </div>
                         <p class="user-book-description"><?= htmlspecialchars($shortDesc) ?></p>
                         <div class="user-book-actions">
-                            <a href="/Openclassroom/RELATION/public/book/edit/<?= $book->getId() ?>" class="edit-button">Editer</a>
-                            <a href="/Openclassroom/RELATION/public/book/delete/<?= $book->getId() ?>" class="delete-button">Supprimer</a>
+                            <a href="/public/book/edit/<?= $book->getId() ?>" class="edit-button">Editer</a>
+                            <a href="/public/book/delete/<?= $book->getId() ?>" class="delete-button">Supprimer</a>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -110,14 +109,14 @@ EasyHeader::addHeader(
                     <?php if (empty($userData['books'])): ?>
                         <tr>
                             <td class="user-book-image-cell">
-                                <img src="<?= Path::url('/public/assets/utils/mystery-book.jpeg') ?>" alt="Aucun livre" class="user-book-image" width="70" height="70">
+                                <img src="/public/assets/utils/mystery-book.jpeg" alt="Aucun livre" class="user-book-image" width="70" height="70">
                             </td>
-                            <td colspan="5" style="text-align:center;">Aucun livre ajouté</td>
+                            <td colspan="5">Aucun livre ajouté</td>
                         </tr>
                     <?php else: ?>
                     <?php foreach ($userData['books'] as $book): ?>
                         <tr>
-                            <td class="user-book-image-cell"><img src="<?= Path::url($book->getPicture()) ?>" alt="<?= htmlspecialchars($book->getTitle()) ?>" class="user-book-image" width="70" height="70"></td>
+                            <td class="user-book-image-cell"><img src="<?= htmlspecialchars($book->getPicture()) ?>" alt="<?= htmlspecialchars($book->getTitle()) ?>" class="user-book-image" width="70" height="70"></td>
                             <td><?= htmlspecialchars($book->getTitle()) ?></td>
                             <td><?= htmlspecialchars($book->getAuthor()) ?></td>
                             <td>
@@ -141,8 +140,8 @@ EasyHeader::addHeader(
                                 <span class="user-book-status <?= $class ?>"><?= htmlspecialchars($status) ?></span>
                             </td>
                             <td>
-                                <a href="/Openclassroom/RELATION/public/book/edit/<?= $book->getId() ?>" class="edit-button">Editer</a>
-                                <a href="/Openclassroom/RELATION/public/book/delete/<?= $book->getId() ?>" class="delete-button">Supprimer</a>
+                                <a href="/public/book/edit/<?= $book->getId() ?>" class="edit-button">Editer</a>
+                                <a href="/public/book/delete/<?= $book->getId() ?>" class="delete-button">Supprimer</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -1,5 +1,4 @@
 <?php
-use App\Services\Path;
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page de connexion',
@@ -13,7 +12,7 @@ EasyHeader::addHeader(
         <div class="main-content">
             <section class="register-form-section">
                 <h2 class="register-title">Connexion</h2>
-                <form class="register-form" method="POST" action="/Openclassroom/RELATION/public/login/userLogin">
+                <form class="register-form" method="POST" action="/public/login/userLogin">
                     <div id="email-label">
                         <label for="mail" class="register-label">Adresse email</label>
                         <input type="mail" id="mail" name="mail" class="register-input" required>
@@ -25,10 +24,10 @@ EasyHeader::addHeader(
                     <button type="submit" class="signup-btn">Se connecter</button>
                 </form>
                 <div class="login-link">
-                    <p>Pas encore de compte ? <a href="/Openclassroom/RELATION/public/register">Inscrivez-vous</a></p>
+                    <p>Pas encore de compte ? <a href="/public/register">Inscrivez-vous</a></p>
                 </div>
             </section>
-                <img class="start_img" src="/Openclassroom/RELATION/public/assets/home/register.png" alt="Échange de livres" width="425px" height="503px">
+                <img class="start_img" src="/public/assets/home/register.png" alt="Échange de livres" width="425px" height="503px">
         </div>
     </main>
 </body>

@@ -1,5 +1,4 @@
 <?php
-use App\Services\Path;
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page d\'inscription',
@@ -13,7 +12,7 @@ EasyHeader::addHeader(
         <div class="main-content">
             <section class="register-form-section">
                 <h2 class="register-title">Inscription</h2>
-                <form class="register-form" method="POST" action="/OPENCLASSROOM/RELATION/public/register/userRegister">
+                <form class="register-form" method="POST" action="/public/register/userRegister">
                     <div id="nickname-label">
                         <label for="nickname" class="register-label">Pseudo</label>
                         <input type="text" id="nickname" name="nickname" class="register-input" required>
@@ -33,10 +32,10 @@ EasyHeader::addHeader(
                     <button type="submit" class="signup-btn">S'inscrire</button>
                 </form>
                 <div class="login-link">
-                    <p>Déjà inscrit ? <a href="<?= Path::url('/public/login') ?>">Connectez-vous</a></p>
+                    <p>Déjà inscrit ? <a href="/public/login">Connectez-vous</a></p>
                 </div>
             </section>
-                <img class="start_img" src="<?= Path::url('/public/assets/home/register.png') ?>" alt="Échange de livres" width="425px" height="503px">
+                <img class="start_img" src="/public/assets/home/register.png" alt="Échange de livres" width="425px" height="503px">
         </div>
     </main>
 </body>

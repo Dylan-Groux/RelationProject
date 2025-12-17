@@ -35,7 +35,7 @@ class RegisterController extends AbstractController
         $userRepository = new UserRepository();
         $userRepository->createUser(['nickname' => $nickname, 'mail' => $mail, 'password' => password_hash($password, PASSWORD_BCRYPT), 'name' => $name]);
 
-        header('Location: /Openclassroom/RELATION/public/login');
+        header('Location: /public/login');
         exit;
     }
 
@@ -61,7 +61,7 @@ class RegisterController extends AbstractController
         if ($user) {
             session_start();
             $_SESSION['user_id'] = $user['id'];
-            header('Location: /Openclassroom/RELATION/public/user/account/' . $user['id']);
+            header('Location: /public/user/account/' . $user['id']);
             exit;
         } else {
             $view = new View('home');
@@ -78,7 +78,7 @@ class RegisterController extends AbstractController
         session_start();
         session_unset();
         session_destroy();
-        header('Location: /Openclassroom/RELATION/public/');
+        header('Location: /public/');
         exit;
     }
 }

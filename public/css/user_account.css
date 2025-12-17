@@ -48,6 +48,17 @@
     color: #A6A6A6;
 }
 
+.avatar-form input[type="file"] {
+    display: none;
+}
+
+.line-bar {
+    height:1px; 
+    width:242px; 
+    background-color:#F5F3EF; 
+    margin:20px auto;
+}
+
 .user-title {
     font-family: "Playfair Display", serif;
     font-weight: 400;

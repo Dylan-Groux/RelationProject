@@ -20,9 +20,6 @@ enum RelationStatus: int {
 final class Relation
 {
     /** @var int */
-    public readonly int $id;
-
-    /** @var int */
     public readonly int $userId1;
 
     /** @var int */
@@ -38,7 +35,7 @@ final class Relation
     public readonly \DateTimeImmutable $updatedAt;
 
     public function __construct(
-        int $id,
+        public readonly int $id,
         int $userId1,
         int $userId2,
         RelationStatus $statut,

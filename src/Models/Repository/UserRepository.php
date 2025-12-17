@@ -165,7 +165,7 @@ class UserRepository
             if (strpos($oldPicture, '/uploads/') !== false) {
                 $oldPath = dirname(__DIR__, 3) . '/public' . strstr($oldPicture, '/uploads/');
                 if (file_exists($oldPath)) {
-                    @unlink($oldPath);
+                    unlink($oldPath);
                 }
             }
         }
@@ -173,7 +173,7 @@ class UserRepository
         $extension = $allowedTypes[$file['type']];
         $filename = 'user_' . $userId . '_' . time() . '.' . $extension;
         $uploadDir = dirname(__DIR__, 3) . '/public/uploads/';
-        $relativePath = '/Openclassroom/RELATION/public/uploads/' . $filename;
+        $relativePath = '/public/uploads/' . $filename;
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
