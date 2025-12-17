@@ -39,12 +39,9 @@ class MessageController
     #[\App\Library\Router('/messagerie/{id}', 'GET')]
     public function showMessages(): void
     {
-        $userId = $this->userId; // Pour les tests, on utilise un ID utilisateur fixe
+        $userId = $this->userId;
 
-        $userRepository = new UserRepository();
         $messageRepository = new MessageRepository();
-        $relations = $messageRepository->getAllRelationWithUserId($userId);
-        $otherUserIdPicture = $messageRepository->getAllRelationWithUserInfos($userId);
 
         $conversations = [];
         $relations = $messageRepository->getAllRelationWithUserInfos($userId);
@@ -56,7 +53,7 @@ class MessageController
                 'nickname' => $relation['nickname'],
                 'picture' => $relation['picture'],
                 'last_message' => $lastMessage['content'] ?? '',
-                'last_date' => $lastMessage['sent_at'] ?? '',
+                'last_date' => $lastMessage['formatted_time'] ?? '',
             ];
         }
         $view = new View('messagerie');

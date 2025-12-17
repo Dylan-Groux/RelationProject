@@ -25,7 +25,7 @@ class MessageRepository
 
     public function getMessagesByRelationId(int $relationId): array
     {
-        $sql = "SELECT m.*, u.nickname, u.picture
+        $sql = "SELECT m.*, u.nickname, u.picture, DATE_FORMAT(m.sent_at, '%H:%i') AS formatted_time
                 FROM message m
                 JOIN user u ON m.sender_id = u.id
                 WHERE m.relation_id = :relationId

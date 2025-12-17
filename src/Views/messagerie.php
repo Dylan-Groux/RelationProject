@@ -9,14 +9,19 @@ EasyHeader::addHeader(
 <body>
     <?php include_once __DIR__ . '/navbar.php'; ?>
     <main class="main">
+        <h1 class="main-title"> Messagerie </h1>
+        <?php if (empty($conversations)): ?>
+            <p class="no-conversation-message">Vous n'avez aucune conversation pour le moment.</p>
+        <?php endif; ?>
         <?php foreach ($conversations as $conv): ?>
-            <div class="conversation">
-                <img class="conversation-picture" src="<?= htmlspecialchars($conv['picture']) ?>" alt="Photo de profil" />
-                <span><?= htmlspecialchars($conv['nickname']) ?></span>
-                <span><?= htmlspecialchars($conv['last_message']) ?></span>
-                <span><?= htmlspecialchars($conv['last_date']) ?></span>
-                <a href="/public/conversation/<?= htmlspecialchars($conv['relation_id']) ?>">Ouvrir</a>
-            </div>
+            <a href="/public/conversation/<?= htmlspecialchars($conv['relation_id']) ?>">
+                <div class="conversation-grid">
+                    <img class="conversation-picture" src="<?= htmlspecialchars($conv['picture']) ?>" alt="Profil" />
+                    <span class="conversation-nickname"><?= htmlspecialchars($conv['nickname']) ?></span>
+                    <span class="conversation-message"><?= htmlspecialchars($conv['last_message']) ?></span>
+                    <span class="conversation-date"><?= htmlspecialchars($conv['last_date']) ?></span>
+                </div>
+            </a>
         <?php endforeach; ?>
     </main>
 </body>
