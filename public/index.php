@@ -37,6 +37,7 @@ $routes = [
     ['pattern' => '/book/delete/{id}', 'controller' => BookController::class, 'action' => 'deleteBook', 'method' => 'GET'],
     ['pattern' => '/user/picture/update/{id}', 'controller' => UserController::class, 'action' => 'updateUserPicture', 'method' => 'POST'],
     ['pattern' => '/conversation/{conversationId}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'openConversation', 'method' => 'GET'],
+    ['pattern' => '/messagerie/conversation/{conversationId}/send', 'controller' => \App\Controllers\MessageController::class, 'action' => 'openConversation', 'method' => 'POST'],
     // Ajoute ici d'autres routes si besoin
 ];
 

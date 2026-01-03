@@ -84,8 +84,13 @@ class MessageRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Ajouter un UserId pour vérifier que l'utilisateur fait partie de la conversation
-    public function getConversationInformations(int $relationId): ?array
+    /**
+     * Récupère les informations d'une conversation spécifique et vérifie que l'utilisateur en fait partie.
+     * @param int $relationId
+     * @param int $userId
+     * @return array|null liste des conversation ou null si non trouvée
+     */
+    public function getConversationInformations(int $relationId, int $userId): ?array
     {
         $sql = "SELECT
             r.id AS relation_id,
@@ -98,10 +103,11 @@ class MessageRepository
         FROM relation r
         JOIN user u1 ON u1.id = r.first_user
         JOIN user u2 ON u2.id = r.second_user
-        WHERE r.id = :relationId";
+        WHERE r.id = :relationId AND (r.first_user = :userId OR r.second_user = :userId)";
         $pdo = $this->pdo;
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':relationId', $relationId, PDO::PARAM_INT);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -109,5 +115,25 @@ class MessageRepository
             return null;
         }
         return $result;
+    }
+
+    /**
+     * Envoie un message dans une relation donnée.
+     * @param int $senderId
+     * @param int $relationId
+     * @param string $content
+     * @return bool
+     */
+    public function sendMessage(int $senderId, int $relationId, string $content): bool
+    {
+        $sql = "INSERT INTO message (sender_id, relation_id, statut, content, sent_at)
+                VALUES (:senderId, :relationId, :statut, :content, NOW())";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':senderId', $senderId, PDO::PARAM_INT);
+        $stmt->bindParam(':relationId', $relationId, PDO::PARAM_INT);
+        $stmt->bindParam(':content', $content, PDO::PARAM_STR);
+        $statut = '1'; // Statut par défaut
+        $stmt->bindParam(':statut', $statut, PDO::PARAM_STR);
+        return $stmt->execute();
     }
 }

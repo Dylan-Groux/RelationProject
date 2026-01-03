@@ -72,6 +72,28 @@ class MessageController
         $currentUser = $this->currentUser;
         $messageRepository = new MessageRepository();
 
+        if ($_POST['CSRF_token'] ?? false) {
+            $postedToken = $_POST['CSRF_token'];
+            if (!hash_equals($_SESSION['CSRF_token'], $postedToken)) {
+                http_response_code(403);
+                echo 'Invalid CSRF token.';
+                exit();
+            }
+        }
+
+        if ($_POST['message'] ?? false) {
+            // Traite l'envoi du message
+            $content = trim($_POST['message']);
+            var_dump($content);
+            if (!empty($content)) {
+                $messageRepository->sendMessage($currentUser->getId(), $conversationId, $content);
+            }
+            // Redirige pour éviter la soumission multiple du formulaire
+            $redirectUrl = '/public/conversation/' . htmlspecialchars($conversationId);
+            header("Location: $redirectUrl", true, 301);
+            exit();
+        }
+
         $baseReturnUrl = '/public/messagerie/' . htmlspecialchars($currentUser->getId());
 
         if ($conversationId <= 0) {
@@ -80,7 +102,7 @@ class MessageController
             exit();
         }
 
-        $conv = $messageRepository->getConversationInformations($conversationId);
+        $conv = $messageRepository->getConversationInformations($conversationId, $currentUser->getId());
         if ($conv === null || empty($conv) || !isset($conv['user1_id'], $conv['user2_id']) || $conv === false) {
             http_response_code(404);
             header("Location: $baseReturnUrl", true, 301);
@@ -105,12 +127,17 @@ class MessageController
         $messages = $messageRepository->getMessagesByRelationId($conversationId, 5, 0);
 
         $view = new View('conversation');
+        if (!isset($_SESSION['CSRF_token'])) {
+            $_SESSION['CSRF_token'] = bin2hex(random_bytes(32));
+        }
+
         $view->render([
             'conversationId' => $conversationId,
             'messages' => $messages,
             'otherNickname' => $otherNickname,
             'otherPicture' => $otherPicture,
             'currentUserId' => $currentUser->getId(),
+            'csrfToken' => $_SESSION['CSRF_token'],
         ]);
     }
 }

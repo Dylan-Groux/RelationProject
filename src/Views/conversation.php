@@ -31,6 +31,13 @@ EasyHeader::addHeader(
                 </div>
             </div>
         <?php endforeach; ?>
+        <div class="send-message-form">
+            <form action="/public/messagerie/conversation/<?= htmlspecialchars($conversationId) ?>/send" method="POST">
+                <textarea name="message" placeholder="Écrire un message..." required></textarea>
+                <input type="hidden" name="CSRF_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
     </main>
 </body>
 <?php include_once __DIR__ . '/footer.php'; ?>
