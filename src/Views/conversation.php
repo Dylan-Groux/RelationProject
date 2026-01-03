@@ -20,14 +20,14 @@ EasyHeader::addHeader(
             <div class="conversation">
                 <div class="message-body">
                     <p>
-                        <?php if ($conv['sender_id'] == $currentUserId): ?>
+                        <?php if ($conv->getSenderId() == $currentUserId): ?>
                             <span class="message-sent-by-you"><strong>Vous: </strong></span>
                         <?php else: ?>
                             <img class="receiver-avatar-conversation" src="<?= $otherPicture ?>" alt="Avatar utilisateur" width="100px" height="100px">
                         <?php endif; ?>
-                        <span class="timestamp"><?= htmlspecialchars($conv['sent_at']) ?></span>
+                        <span class="timestamp"><?= htmlspecialchars($conv->getSentAt()->format('H:i')) ?></span>
                         <br>
-                        <?= htmlspecialchars($conv['content']) ?></p>
+                        <?= htmlspecialchars($conv->getContent()) ?></p>
                 </div>
             </div>
         <?php endforeach; ?>

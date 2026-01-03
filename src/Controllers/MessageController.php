@@ -53,8 +53,8 @@ class MessageController
                 'relation_id' => $relation['id'],
                 'nickname' => $relation['nickname'],
                 'picture' => $relation['picture'],
-                'last_message' => $lastMessage['content'] ?? '',
-                'last_date' => $lastMessage['formatted_time'] ?? '',
+                'last_message' => $lastMessage->getContent() ?? '',
+                'last_date' => $lastMessage->getSentAt()->format('H:i') ?? '',
             ];
         }
         $view = new View('messagerie');
