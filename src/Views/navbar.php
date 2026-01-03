@@ -7,7 +7,7 @@
     <div class="header-secondline">
         <?php
             if (isset($_SESSION['user_id'])) {
-                echo '<a class="header-title"><img src="/public/assets/icon/icon-msg.svg" alt="Messagerie" width="10px" height="10px"> Messagerie</a>';
+                echo '<a class="header-title" href="/public/messagerie/' . $_SESSION['user_id'] . '"><img src="/public/assets/icon/icon-msg.svg" alt="Messagerie" width="10px" height="10px"> Messagerie</a>';
                 echo '<a href="/public/user/account/' . $_SESSION['user_id'] . '" class="header-title"><img src="/public/assets/icon/icon-compte.svg" alt="Messagerie" width="10px" height="10px">Mon compte</a>';
                 echo '<a class="header-title" href="/public/logout">Déconnexion</a>';
             } else {
@@ -24,7 +24,7 @@
             <a href="/public/books" class="header-title">Nos livres</a>
             <?php
                 if (isset($_SESSION['user_id'])) {
-                    echo '<a class="header-title"><img src="/public/assets/icon/icon-msg.svg" alt="Messagerie" width="10px" height="10px"> Messagerie</a>';
+                    echo '<a class="header-title" href="/public/messagerie/' . $_SESSION['user_id'] . '"><img src="/public/assets/icon/icon-msg.svg" alt="Messagerie" width="10px" height="10px"> Messagerie</a>';
                     echo '<a href="/public/user/account/' . $_SESSION['user_id'] . '" class="header-title"><img src="/public/assets/icon/icon-compte.svg" alt="Messagerie" width="10px" height="10px">Mon compte</a>';
                     echo '<a class="header-title" href="/public/logout">Déconnexion</a>';
                 } else {

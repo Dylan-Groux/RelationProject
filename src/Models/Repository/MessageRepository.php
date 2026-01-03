@@ -23,17 +23,21 @@ class MessageRepository
         return array_column($stmt->fetchAll(PDO::FETCH_ASSOC), 'relation_id');
     }
 
-    public function getMessagesByRelationId(int $relationId): array
+    public function getMessagesByRelationId(int $relationId, int $limit = 20, int $offset = 0): array
     {
         $sql = "SELECT m.*, u.nickname, u.picture, DATE_FORMAT(m.sent_at, '%H:%i') AS formatted_time
                 FROM message m
                 JOIN user u ON m.sender_id = u.id
                 WHERE m.relation_id = :relationId
-                ORDER BY m.sent_at ASC, m.id ASC";
+                ORDER BY m.sent_at DESC, m.id DESC
+                LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':relationId', $relationId, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return array_reverse($messages);
     }
 
     public function getSenderAndReceiverByRelationId(int $relationId): ?array
@@ -78,5 +82,32 @@ class MessageRepository
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    //Ajouter un UserId pour vérifier que l'utilisateur fait partie de la conversation
+    public function getConversationInformations(int $relationId): ?array
+    {
+        $sql = "SELECT
+            r.id AS relation_id,
+            u1.id AS user1_id,
+            u1.nickname AS user1_nickname,
+            u1.picture AS user1_picture,
+            u2.id AS user2_id,
+            u2.nickname AS user2_nickname,
+            u2.picture AS user2_picture
+        FROM relation r
+        JOIN user u1 ON u1.id = r.first_user
+        JOIN user u2 ON u2.id = r.second_user
+        WHERE r.id = :relationId";
+        $pdo = $this->pdo;
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':relationId', $relationId, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result === false) {
+            return null;
+        }
+        return $result;
     }
 }

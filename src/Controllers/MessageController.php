@@ -32,6 +32,7 @@ class MessageController
         $this->currentUser = $user;
         $this->userId = $userId;
     }
+
     /**
      * Affiche la page de messagerie.
      * @return void
@@ -65,34 +66,51 @@ class MessageController
      * @param int $conversationId
      * @return void
      */
+    #[\App\Library\Router('/messagerie/conversation/{id}', 'GET')]
    public function openConversation(int $conversationId): void
     {
         $currentUser = $this->currentUser;
         $messageRepository = new MessageRepository();
-        var_dump($currentUser);
 
-        $messages = $messageRepository->getMessagesByRelationId($conversationId);
-        $user = $messageRepository->getSenderAndReceiverByRelationId($conversationId);
-        if ($user === null) {
+        $baseReturnUrl = '/public/messagerie/' . htmlspecialchars($currentUser->getId());
+
+        if ($conversationId <= 0) {
+            http_response_code(400);
+            header("Location: $baseReturnUrl", true, 301);
+            exit();
+        }
+
+        $conv = $messageRepository->getConversationInformations($conversationId);
+        if ($conv === null || empty($conv) || !isset($conv['user1_id'], $conv['user2_id']) || $conv === false) {
             http_response_code(404);
-            echo 'Conversation introuvable.';
-            return;
+            header("Location: $baseReturnUrl", true, 301);
+            exit();
         }
 
-        if ($currentUser->getId() !== $user['first_user'] && $currentUser->getId() !== $user['second_user']) {
-            http_response_code(403);
-            echo 'Accès refusé à cette conversation.';
-            return;
+        // Détermine qui est l'autre utilisateur // Vérifie si l'utilisateur courant fait partie de la conversation
+        if ($currentUser->getId() == $conv['user1_id']) {
+            $otherNickname = $conv['user2_nickname'];
+            $otherPicture = $conv['user2_picture'];
+        } else {
+            $otherNickname = $conv['user1_nickname'];
+            $otherPicture = $conv['user1_picture'];
         }
+
+        if ($currentUser->getId() != $conv['user1_id'] && $currentUser->getId() != $conv['user2_id']) {
+            http_response_code(403);
+            header("Location: $baseReturnUrl", true, 301);
+            exit();
+        }
+
+        $messages = $messageRepository->getMessagesByRelationId($conversationId, 5, 0);
 
         $view = new View('conversation');
         $view->render([
             'conversationId' => $conversationId,
             'messages' => $messages,
-            'user' => $user,
-            'currentUserId' => $currentUser,
+            'otherNickname' => $otherNickname,
+            'otherPicture' => $otherPicture,
+            'currentUserId' => $currentUser->getId(),
         ]);
     }
 }
-
-
