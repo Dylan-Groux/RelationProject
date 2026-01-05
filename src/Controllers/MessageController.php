@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Entity\DTO\ConversationDTO;
 use App\Models\Repository\MessageRepository;
 use App\Views\View;
 use App\Models\Repository\UserRepository;
@@ -46,16 +47,18 @@ class MessageController
 
         $conversations = [];
         $relations = $messageRepository->getAllRelationWithUserInfos($userId);
+        $unreadCount = $messageRepository->countMessageNotRead($userId);
         foreach ($relations as $relation) {
             $messages = $messageRepository->getMessagesByRelationId($relation['id']);
             $lastMessage = end($messages);
-            $conversations[] = [
-                'relation_id' => $relation['id'],
-                'nickname' => $relation['nickname'],
-                'picture' => $relation['picture'],
-                'last_message' => $lastMessage->getContent() ?? '',
-                'last_date' => $lastMessage->getSentAt()->format('H:i') ?? '',
-            ];
+            $conversations[] = new ConversationDTO(
+                $relation['id'],
+                $relation['nickname'],
+                $relation['picture'],
+                $lastMessage->getContent() ?? '',
+                $lastMessage->getSentAt()->format('H:i') ?? '',
+                $unreadCount
+            );
         }
         $view = new View('messagerie');
         $view->render(['conversations' => $conversations]);

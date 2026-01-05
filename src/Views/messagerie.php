@@ -14,12 +14,12 @@ EasyHeader::addHeader(
             <p class="no-conversation-message">Vous n'avez aucune conversation pour le moment.</p>
         <?php endif; ?>
         <?php foreach ($conversations as $conv): ?>
-            <a href="/public/conversation/<?= htmlspecialchars($conv['relation_id']) ?>">
+            <a href="/public/conversation/<?= htmlspecialchars($conv->relationId) ?>">
                 <div class="conversation-grid">
-                    <img class="conversation-picture" src="<?= htmlspecialchars($conv['picture']) ?>" alt="Profil" />
-                    <span class="conversation-nickname"><?= htmlspecialchars($conv['nickname']) ?></span>
-                    <span class="conversation-message"><?= htmlspecialchars($conv['last_message']) ?></span>
-                    <span class="conversation-date"><?= htmlspecialchars($conv['last_date']) ?></span>
+                    <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil" />
+                    <span class="conversation-nickname"><?= htmlspecialchars($conv->nickname) ?></span>
+                    <span class="conversation-message"><?= htmlspecialchars($conv->lastMessage) ?></span>
+                    <span class="conversation-date"><?= htmlspecialchars($conv->lastDate) ?></span>
                 </div>
             </a>
         <?php endforeach; ?>

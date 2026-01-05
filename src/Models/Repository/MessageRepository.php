@@ -122,6 +122,11 @@ class MessageRepository
         return $stmt->execute();
     }
 
+    /**
+     * Compte le nombre de messages non lus pour un utilisateur donné.
+     * @param int $userId
+     * @return int Nombre de messages non lus
+     */
     public function countMessageNotRead(int $userId): int
     {
         $sql = "SELECT COUNT(*) AS unread_count
