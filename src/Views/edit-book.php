@@ -20,11 +20,13 @@ EasyHeader::addHeader(
             <img src="<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre" width="720px" height="863px">
             <form class="edit-picture-form" action="<?= '/public/book/' . $book->getId() . '/edit-picture' ?>" method="post" enctype="multipart/form-data">
                 <label for="picture" class="edit-picture-label">Modifier la photo</label>
+                <input type="hidden" name="CSRF_token" value="<?= htmlspecialchars($csrfToken) ?>">
                 <input type="file" id="picture" name="picture" accept="image/*" required>
             </form>
         </div>
         <div class="books-all-container">
             <section class="books-section">
+                <!-- CSRF Token à faire -->
                 <form class="book-info-container" method="post" action="/public/book/update/<?= $book->getId() ?>">
                     <label for="title">Titre</label>
                     <input class="info-title" type="text" id="title" name="title" value="<?= htmlspecialchars($book->getTitle()) ?>" required>
@@ -39,7 +41,7 @@ EasyHeader::addHeader(
                         <option value="disponible">Disponible</option>
                         <option value="non disponible">Non disponible</option>
                     </select>
-
+                    <input type="hidden" name="CSRF_token" value="<?= htmlspecialchars($csrfToken) ?>">
                     <button type="submit" class="signup-btn">Valider</button>
                 </form>
             </section>

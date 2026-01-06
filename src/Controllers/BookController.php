@@ -62,14 +62,22 @@ class BookController extends AbstractController
         $bookRepository = new BookRepository();
         $book = $bookRepository->getBookById($id);
 
+        if (!isset($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+
         if ($book === null) {
             http_response_code(404);
             echo 'Livre non trouvé';
             return;
         }
+        var_dump($_SESSION['csrf_token']);
 
         $view = new View('edit-book');
-        $view->render(['book' => $book]);
+        $view->render([
+            'book' => $book,
+            'csrfToken' => $_SESSION['csrf_token']
+        ]);
     }
 
     /**
@@ -81,8 +89,10 @@ class BookController extends AbstractController
     public function updateBook(int $id): void
     {
         $bookRepository = new BookRepository();
-
-        $data = [
+        var_dump($_POST['CSRF_token']);
+        try {
+            $this->validateCSRFToken($_POST['CSRF_token'] ?? '');
+            $data = [
             'title' => $_POST['title'] ?? null,
             'picture' => $_POST['picture'] ?? null,
             'author' => $_POST['author'] ?? null,
@@ -90,22 +100,27 @@ class BookController extends AbstractController
             'comment' => $_POST['comment'] ?? null,
             'user_id' => isset($_POST['user_id']) ? intval($_POST['user_id']) : null,
             'id' => $id
-        ];
+            ];
 
-        if ($data['id'] === null) {
-            http_response_code(404);
-            echo 'Livre non trouvé';
+            if ($data['id'] === null) {
+                http_response_code(404);
+                echo 'Livre non trouvé';
+                return;
+            }
+            
+            $book = $bookRepository->updateBook($data);
+
+            if ($book) {
+                header('Location: /public/book/' . $id);
+                exit;
+            } else {
+                http_response_code(500);
+                echo 'Erreur lors de la mise à jour du livre';
+            }
+        } catch (\Exception $e) {
+            http_response_code(403);
+            echo 'CSRF token invalide.';
             return;
-        }
-        
-        $book = $bookRepository->updateBook($data);
-
-        if ($book) {
-            header('Location: /public/book/' . $id);
-            exit;
-        } else {
-            http_response_code(500);
-            echo 'Erreur lors de la mise à jour du livre';
         }
     }
 

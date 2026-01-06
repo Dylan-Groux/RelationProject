@@ -21,7 +21,8 @@ EasyHeader::addHeader(
                 }
                 ?>
                 <img class="user-avatar" src="<?= $userPicture ?>" alt="Avatar utilisateur" width="150px" height="150px">
-               <form class="avatar-form" id='user-avatar-form' method="post" action="/public/user/picture/update/<?= htmlspecialchars($userData['user']->getId()) ?>" enctype="multipart/form-data">
+               <!-- CSRF Token à faire -->
+                <form class="avatar-form" id='user-avatar-form' method="post" action="/public/user/picture/update/<?= htmlspecialchars($userData['user']->getId()) ?>" enctype="multipart/form-data">
                     <label class="modifier" for="user-avatar-upload">modifier</label>
                     <input type="file" id="user-avatar-upload" name="picture" accept=".jpeg,.jpg,.png">
                 </form>

@@ -12,6 +12,7 @@ EasyHeader::addHeader(
         <div class="main-content">
             <section class="register-form-section">
                 <h2 class="register-title">Inscription</h2>
+                <!-- CSRF Token à faire -->
                 <form class="register-form" method="POST" action="/public/register/userRegister">
                     <div id="nickname-label">
                         <label for="nickname" class="register-label">Pseudo</label>
