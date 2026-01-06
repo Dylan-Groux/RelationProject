@@ -20,4 +20,11 @@ abstract class AbstractController
             throw new LoginException('Invalid CSRF token.');
         }
     }
+
+    public function checkUserAccess(int $userId): void
+    {
+        if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] !== $userId) {
+            throw new LoginException('Access denied for this user.');
+        }
+    }
 }

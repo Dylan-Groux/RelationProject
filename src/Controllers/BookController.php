@@ -71,7 +71,8 @@ class BookController extends AbstractController
             echo 'Livre non trouvé';
             return;
         }
-        var_dump($_SESSION['csrf_token']);
+
+        $this->checkUserAccess($book->getUserId());
 
         $view = new View('edit-book');
         $view->render([
@@ -89,7 +90,7 @@ class BookController extends AbstractController
     public function updateBook(int $id): void
     {
         $bookRepository = new BookRepository();
-        var_dump($_POST['CSRF_token']);
+
         try {
             $this->validateCSRFToken($_POST['CSRF_token'] ?? '');
             $data = [
@@ -133,6 +134,7 @@ class BookController extends AbstractController
     public function deleteBook(int $id): void
     {
         $bookRepository = new BookRepository();
+        $this->checkUserAccess($bookRepository->getBookById($id)->getUserId());
         $success = $bookRepository->deleteBook($id);
 
         if ($success) {
