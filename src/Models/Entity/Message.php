@@ -12,6 +12,7 @@ enum MessageStatus: int {
     case PENDING = 2;
     case REJECTED = 3;
     case ERRORED = 4;
+    case UNKNOWN = 99;
 }
 
 /**
@@ -52,7 +53,7 @@ class Message
         $this->senderId = $senderId;
         $this->statut = $statut instanceof MessageStatus
                 ? $statut
-                : MessageStatus::tryFrom($statut) ?? MessageStatus::ERRORED;
+                : MessageStatus::tryFrom($statut) ?? MessageStatus::UNKNOWN;
         $this->content = $content;
         $this->sentAt = $sentAt;
     }

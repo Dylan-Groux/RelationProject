@@ -98,7 +98,7 @@ class BookRepositoryTest extends TestCase
         $this->assertEquals('Livre de test', $book->getTitle());
         $this->assertEquals('test.jpg', $book->getPicture());
         $this->assertEquals('Auteur Test', $book->getAuthor());
-        $this->assertEquals(1, $book->getAvailability());
+        $this->assertEquals('disponible', $book->getAvailability());
         $this->assertEquals('Ceci est un commentaire de test', $book->getComment());
         $this->assertEquals(new \DateTimeImmutable('2023-01-01 10:00:00'), $book->getCreatedAt());
         $this->assertEquals(new \DateTimeImmutable('2023-01-01 10:00:00'), $book->getUpdatedAt());

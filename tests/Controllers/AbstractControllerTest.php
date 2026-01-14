@@ -2,7 +2,7 @@
 
 use App\Controllers\Abstract\AbstractController;
 use PHPUnit\Framework\TestCase;
-use App\Controllers\Exception\LoginException;
+use App\Models\Exceptions\LoginException;
 
 class DummyController extends AbstractController
 {
@@ -23,7 +23,7 @@ class AbstractControllerTest extends TestCase
     {
         $_SESSION['user_id'] = 42;
         $controller = new DummyController();
-        $checkSession = $controller->checkUserAuthenticated();
+        $checkSession = $controller->checkUserAccess(42);
         $this->assertTrue($checkSession);
     }
 
@@ -31,7 +31,7 @@ class AbstractControllerTest extends TestCase
     {
         $controller = new DummyController();
         try {
-            $controller->checkUserAuthenticated();
+            $controller->checkUserAccess(42);
         } catch (LoginException $e) {
             $this->matchesRegularExpression('/Location: \/login/');
             $this->assertInstanceOf(LoginException::class, $e);

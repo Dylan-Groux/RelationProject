@@ -21,10 +21,12 @@ abstract class AbstractController
         }
     }
 
-    public function checkUserAccess(int $userId): void
+    public function checkUserAccess(int $userId): bool
     {
         if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] !== $userId) {
             throw new LoginException('Access denied for this user.');
         }
+
+        return true;
     }
 }
