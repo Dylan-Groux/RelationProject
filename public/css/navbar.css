@@ -6,7 +6,6 @@
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  height: 10%;
   min-height: 40px;
   padding: 0 28px;
   width: 100%;
@@ -47,7 +46,7 @@
 }
 .header-btn {
   justify-self: end;
-  color:#A6A6A6;
+  background-color: #F5F3EF;
   border: none;
   padding: 8px;
   border-radius: 8px;

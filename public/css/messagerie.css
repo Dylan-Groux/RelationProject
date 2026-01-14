@@ -1,6 +1,6 @@
 .conversation-grid {
     display: grid;
-    grid-template-columns: 20% 60% 20%;
+    grid-template-columns: 20% 50% 20%;
     grid-template-rows: 1fr 1fr;
     gap: 0.5em;
     align-items: center;
@@ -63,4 +63,105 @@
     line-height: 100%;
     letter-spacing: 0%;
     margin-left: 28px;
+}
+
+.conversations-list-desktop {
+    display: none;
+}
+
+.messagerie-layout {
+    display: none;
+}
+
+@media (min-width: 1023px) {
+    .conversations-list-mobile {
+        display: none;
+    }
+    .conversations-list-desktop {
+        display: block;
+        background-color: white;
+        height: 100%;
+        width: 100%;
+    }
+    .messagerie-layout {
+        margin-top: 2%;
+        display: grid;
+        margin-left: 9%;
+        grid-template-columns: 245px auto;
+        height: calc(100vh - 80px); /* ou 100% si le parent a une hauteur fixée */
+    }
+    .conversation-grid {
+        padding-left: 2em;
+    }
+    .conversation-picture { 
+        grid-row: 1/3;
+        grid-column: 1/2;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .conversation-nickname {
+        grid-row: 1 / 2;
+        grid-column: 2 / 4;
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 10px;
+        line-height: 100%;
+        letter-spacing: 0%;
+
+    }
+
+    .conversation-message {
+        grid-row: 2 / 3;
+        grid-column: 2 / 4;
+        color: #A6A6A6;
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 10px;
+        line-height: 100%;
+        letter-spacing: 0%;
+    }
+
+    .conversation-date {
+        grid-row: 1/2;
+        grid-column: 3/4; /* sur toute la largeur */
+        color: black;
+        text-align: right;
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 10px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        margin-right: 10px;
+    }
+    .main-title {
+        padding-top: 38px;
+        margin-bottom: 38px;
+    }
+    .conversations-list {
+        display: flex;
+        flex-direction: column;
+        height: 90%;
+        min-height: 0;
+        padding-right: 10%;
+        padding-left: 10%;
+        padding-bottom: 5%;
+    }
+    .conversation, .send-message-form {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: 0;
+        margin-top: 0;
+    }
+    main {
+        padding: 0;
+    }
 }

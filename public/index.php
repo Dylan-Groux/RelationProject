@@ -38,6 +38,7 @@ $routes = [
     ['pattern' => '/user/picture/update/{id}', 'controller' => UserController::class, 'action' => 'updateUserPicture', 'method' => 'POST'],
     ['pattern' => '/conversation/{conversationId}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'openConversation', 'method' => 'GET'],
     ['pattern' => '/messagerie/conversation/{conversationId}/send', 'controller' => \App\Controllers\MessageController::class, 'action' => 'openConversation', 'method' => 'POST'],
+    ['pattern' => '/messagerie/{userId}/conversation/{conversationId}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'showConversationAndMessages', 'method' => 'GET'],
     // Ajoute ici d'autres routes si besoin
 ];
 
@@ -65,6 +66,7 @@ foreach ($routes as $route) {
 }
 
 if (!$routeFound) {
+    var_dump($requestUri);
     http_response_code(404);
     echo 'Page non trouvée';
 }

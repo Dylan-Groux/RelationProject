@@ -9,20 +9,48 @@ EasyHeader::addHeader(
 <body>
     <?php include_once __DIR__ . '/navbar.php'; ?>
     <main class="main">
-        <h1 class="main-title"> Messagerie </h1>
         <?php if (empty($conversations)): ?>
             <p class="no-conversation-message">Vous n'avez aucune conversation pour le moment.</p>
         <?php endif; ?>
-        <?php foreach ($conversations as $conv): ?>
-            <a href="/public/conversation/<?= htmlspecialchars($conv->relationId) ?>">
-                <div class="conversation-grid">
-                    <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil" />
-                    <span class="conversation-nickname"><?= htmlspecialchars($conv->nickname) ?></span>
-                    <span class="conversation-message"><?= htmlspecialchars($conv->lastMessage) ?></span>
-                    <span class="conversation-date"><?= htmlspecialchars($conv->lastDate) ?></span>
-                </div>
-            </a>
-        <?php endforeach; ?>
+        <div class="conversations-list-mobile">
+            <h1 class="main-title"> Messagerie </h1>
+            <?php foreach ($conversations as $conv): ?>
+                <a href="/public/conversation/<?= htmlspecialchars($conv->relationId) ?>">
+                    <div class="conversation-grid">
+                        <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil" />
+                        <span class="conversation-nickname"><?= htmlspecialchars($conv->nickname) ?></span>
+                        <span class="conversation-message">
+                            <?= mb_strlen($conv->lastMessage) > 40
+                                ? htmlspecialchars(mb_substr($conv->lastMessage, 0, 40)) . ',...'
+                                : htmlspecialchars($conv->lastMessage) ?>
+                        </span>
+                        <span class="conversation-date"><?= htmlspecialchars($conv->lastDate) ?></span>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+        <div class="messagerie-layout">
+            <div class="conversations-list-desktop">
+                <h1 class="main-title"> Messagerie </h1>
+                <?php foreach ($conversations as $conv): ?>
+                    <a href="/public/messagerie/<?= htmlspecialchars($userId) ?>/conversation/<?= htmlspecialchars($conv->relationId) ?>">
+                        <div class="conversation-grid">
+                            <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil" />
+                            <span class="conversation-nickname"><?= htmlspecialchars($conv->nickname) ?></span>
+                            <span class="conversation-message">
+                                <?= mb_strlen($conv->lastMessage) > 40
+                                    ? htmlspecialchars(mb_substr($conv->lastMessage, 0, 40)) . ',...'
+                                    : htmlspecialchars($conv->lastMessage) ?>
+                            </span>
+                            <span class="conversation-date"><?= htmlspecialchars($conv->lastDate) ?></span>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+            <div class="conversation-details">
+                <!-- Liste des conversations -->
+            </div>
+        </div>
     </main>
 </body>
 <?php include_once __DIR__ . '/footer.php'; ?>

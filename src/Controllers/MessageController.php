@@ -61,7 +61,10 @@ class MessageController
             );
         }
         $view = new View('messagerie');
-        $view->render(['conversations' => $conversations]);
+        $view->render([
+        'conversations' => $conversations,
+        'userId' => $userId
+        ]);
     }
 
     /**
@@ -127,7 +130,7 @@ class MessageController
             exit();
         }
 
-        $messages = $messageRepository->getMessagesByRelationId($conversationId, 5, 0);
+        $messages = $messageRepository->getMessagesByRelationId($conversationId, 10, 0);
 
         $view = new View('conversation');
         if (!isset($_SESSION['CSRF_token'])) {
@@ -141,6 +144,102 @@ class MessageController
             'otherPicture' => $otherPicture,
             'currentUserId' => $currentUser->getId(),
             'csrfToken' => $_SESSION['CSRF_token'],
+        ]);
+    }
+
+    #[\App\Library\Router('/messagerie/{userId}/conversation/{conversationId}', 'GET')]
+    public function showConversationAndMessages(int $userId, int $conversationId): void
+    {
+         $userId = $this->userId;
+
+        $messageRepository = new MessageRepository();
+
+        $conversations = [];
+        $relations = $messageRepository->getAllRelationWithUserInfos($userId);
+        $unreadCount = $messageRepository->countMessageNotRead($userId);
+        foreach ($relations as $relation) {
+            $messages = $messageRepository->getMessagesByRelationId($relation['id']);
+            $lastMessage = end($messages);
+            $conversations[] = new ConversationDTO(
+                $relation['id'],
+                $relation['nickname'],
+                $relation['picture'],
+                $lastMessage->getContent() ?? '',
+                $lastMessage->getSentAt()->format('H:i') ?? '',
+                $unreadCount
+            );
+        }
+
+                $currentUser = $this->currentUser;
+        $messageRepository = new MessageRepository();
+
+        if ($_POST['CSRF_token'] ?? false) {
+            $postedToken = $_POST['CSRF_token'];
+            if (!hash_equals($_SESSION['CSRF_token'], $postedToken)) {
+                http_response_code(403);
+                echo 'Invalid CSRF token.';
+                exit();
+            }
+        }
+
+        if ($_POST['message'] ?? false) {
+            // Traite l'envoi du message
+            $content = trim($_POST['message']);
+            var_dump($content);
+            if (!empty($content)) {
+                $messageRepository->sendMessage($currentUser->getId(), $conversationId, $content);
+            }
+            // Redirige pour éviter la soumission multiple du formulaire
+            $redirectUrl = '/public/conversation/' . htmlspecialchars($conversationId);
+            header("Location: $redirectUrl", true, 301);
+            exit();
+        }
+
+        $baseReturnUrl = '/public/messagerie/' . htmlspecialchars($currentUser->getId());
+
+        if ($conversationId <= 0) {
+            http_response_code(400);
+            header("Location: $baseReturnUrl", true, 301);
+            exit();
+        }
+
+        $conv = $messageRepository->getConversationInformations($conversationId, $currentUser->getId());
+        if ($conv === null || empty($conv) || !isset($conv['user1_id'], $conv['user2_id']) || $conv === false) {
+            http_response_code(404);
+            header("Location: $baseReturnUrl", true, 301);
+            exit();
+        }
+
+        // Détermine qui est l'autre utilisateur // Vérifie si l'utilisateur courant fait partie de la conversation
+        if ($currentUser->getId() == $conv['user1_id']) {
+            $otherNickname = $conv['user2_nickname'];
+            $otherPicture = $conv['user2_picture'];
+        } else {
+            $otherNickname = $conv['user1_nickname'];
+            $otherPicture = $conv['user1_picture'];
+        }
+
+        if ($currentUser->getId() != $conv['user1_id'] && $currentUser->getId() != $conv['user2_id']) {
+            http_response_code(403);
+            header("Location: $baseReturnUrl", true, 301);
+            exit();
+        }
+
+        $messages = $messageRepository->getMessagesByRelationId($conversationId, 5, 0);
+
+        $view = new View('messagerie_desktop');
+        if (!isset($_SESSION['CSRF_token'])) {
+            $_SESSION['CSRF_token'] = bin2hex(random_bytes(32));
+        }
+        $view->render([
+            'conversations' => $conversations,
+            'conversationId' => $conversationId,
+            'messages' => $messages,
+            'otherNickname' => $otherNickname,
+            'otherPicture' => $otherPicture,
+            'currentUserId' => $currentUser->getId(),
+            'csrfToken' => $_SESSION['CSRF_token'],
+            'userId' => $userId,
         ]);
     }
 }
