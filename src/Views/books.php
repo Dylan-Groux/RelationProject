@@ -11,7 +11,7 @@ EasyHeader::addHeader(
     <main class="main-content">
         <section class="search-section">
             <h2 class="search-title">Nos livres à l'échange</h2>
-            <form method="GET" action="" class="search-bar-container">
+            <form method="GET" class="search-bar-container">
                  <span class="search-icon">
                     <!-- SVG loupe -->
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -28,8 +28,8 @@ EasyHeader::addHeader(
                 <?php foreach ($books as $book): ?>
                     <a class="book" href="<?= '/public/book/' . htmlspecialchars($book->getId()) ?>">
                         <img src="<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre">
-                        <p class="book-title"><?= htmlspecialchars($book->getTitle()) ?></p>
-                        <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
+                        <h1 class="book-title"><?= htmlspecialchars($book->getTitle()) ?></h1>
+                        <h2 class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></h2>
                         <p class="book-seller">Vendu par <?= htmlspecialchars($book->getUserId()) ?></p>
                     </a>
                 <?php endforeach; ?>

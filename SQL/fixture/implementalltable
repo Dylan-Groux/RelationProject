@@ -1,5 +1,5 @@
 -- Insertion de 5 utilisateurs
-INSERT INTO user (picture, created_at, updated_at, password, nickname, mail) VALUES
+INSERT INTO user (picture, created_at, updated_at, password, nickname, email) VALUES
 ('public/assets/utils/user1.png', NOW(), NOW(), 'pass1', 'Alice', 'alice@example.com'),
 ('public/assets/utils/user2.png', NOW(), NOW(), 'pass2', 'Bob', 'bob@example.com'),
 ('public/assets/utils/user3.png', NOW(), NOW(), 'pass3', 'Charlie', 'charlie@example.com'),

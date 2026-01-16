@@ -53,10 +53,10 @@ class UserRepository
 
     public function createUser(array $userData): bool
     {
-        $sql = "INSERT INTO user (nickname, mail, password, name, created_at, updated_at) VALUES (:nickname, :mail, :password, :name, NOW(), NOW())";
+        $sql = "INSERT INTO user (nickname, email, password, name, created_at, updated_at) VALUES (:nickname, :email, :password, :name, NOW(), NOW())";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':nickname', $userData['nickname'], PDO::PARAM_STR);
-        $stmt->bindParam(':mail', $userData['mail'], PDO::PARAM_STR);
+        $stmt->bindParam(':email', $userData['email'], PDO::PARAM_STR);
         $stmt->bindParam(':password', $userData['password'], PDO::PARAM_STR);
         $stmt->bindParam(':name', $userData['name'], PDO::PARAM_STR);
         return $stmt->execute();
@@ -116,9 +116,9 @@ class UserRepository
             $fields[] = 'nickname = :nickname';
             $params[':nickname'] = $userData['nickname'];
         }
-        if (isset($userData['mail'])) {
-            $fields[] = 'mail = :mail';
-            $params[':mail'] = $userData['mail'];
+        if (isset($userData['email'])) {
+            $fields[] = 'email = :email';
+            $params[':email'] = $userData['email'];
         }
         if (isset($userData['password'])) {
             $fields[] = 'password = :password';

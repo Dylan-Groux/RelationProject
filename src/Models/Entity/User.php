@@ -27,7 +27,7 @@ class User
     private string $nickname;
 
     /** @var string */
-    private string $mail;
+    private string $email;
 
     /** @var string */
     private string $name;
@@ -70,8 +70,8 @@ class User
         if (isset($data['nickname'])) {
             $this->nickname = (string)($data['nickname'] ?? '');
         }
-        if (isset($data['mail'])) {
-            $this->mail = (string)($data['mail'] ?? '');
+        if (isset($data['email'])) {
+            $this->email = (string)($data['email'] ?? '');
         }
     }
 
@@ -83,7 +83,7 @@ class User
     public function getUpdatedAt(): \DateTimeImmutable { return $this->updatedAt; }
     public function getPassword(): string { return $this->password; }
     public function getNickname(): string { return $this->nickname; }
-    public function getMail(): string { return $this->mail; }
+    public function getEmail(): string { return $this->email; }
 
     /** Setters */
     public function setName(string $name): void { $this->name = $name; }
@@ -91,7 +91,7 @@ class User
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): void { $this->updatedAt = $updatedAt; }
     public function setPassword(string $password): void { $this->password = $password; }
     public function setNickname(string $nickname): void { $this->nickname = $nickname; }
-    public function setMail(string $mail): void { $this->mail = $mail; }
+    public function setEmail(string $email): void { $this->email = $email; }
 
     /**
      * Retourne le nombre d'années depuis la création du compte (ex: '1 an', '2 ans').

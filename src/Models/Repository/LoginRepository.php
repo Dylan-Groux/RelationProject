@@ -20,11 +20,11 @@ class LoginRepository
      * @param string $password
      * @return array|null
      */
-    public function loginUser(string $mail, string $password): ?array
+    public function loginUser(string $email, string $password): ?array
     {
-        $sql = "SELECT * FROM user WHERE mail = :mail";
+        $sql = "SELECT * FROM user WHERE email = :email";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':mail', $mail, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
         $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 

@@ -27,13 +27,13 @@ class RegisterController extends AbstractController
     #[Router('/register/userRegister', 'POST')]
     public function registerUser(): void
     {
-        $mail = $_POST['mail'] ?? '';
+        $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
         $nickname = $_POST['nickname'] ?? '';
         $name = $_POST['name'] ?? '';
 
         $userRepository = new UserRepository();
-        $userRepository->createUser(['nickname' => $nickname, 'mail' => $mail, 'password' => password_hash($password, PASSWORD_BCRYPT), 'name' => $name]);
+        $userRepository->createUser(['nickname' => $nickname, 'email' => $email, 'password' => password_hash($password, PASSWORD_BCRYPT), 'name' => $name]);
 
         header('Location: /public/login');
         exit;
@@ -52,12 +52,11 @@ class RegisterController extends AbstractController
     #[Router('/login/userLogin', 'POST')]
     public function loginUser(): void
     {
-        $mail = $_POST['mail'] ?? '';
+        $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
 
         $loginRepository = new LoginRepository();
-        $user = $loginRepository->loginUser($mail, $password);
-
+        $user = $loginRepository->loginUser($email, $password);
         if ($user) {
             session_start();
             $_SESSION['user_id'] = $user['id'];

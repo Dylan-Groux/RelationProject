@@ -9,11 +9,11 @@ EasyHeader::addHeader(
 <body>
     <?php include_once __DIR__ . '/navbar.php'; ?>
     <main class="main">
-        <a class="back" href="/public/messagerie/{<?= htmlspecialchars($currentUserId) ?>}">
+        <a class="back" href="/public/messagerie/<?= htmlspecialchars($currentUserId) ?>">
             &#8592; retour
         </a>
         <div class="receiver-info-grid">
-            <img class="receiver-avatar" src="<?= $otherPicture ?>" alt="Avatar utilisateur" width="100px" height="100px">
+            <img class="receiver-avatar" src="<?= $otherPicture ?>" alt="Avatar utilisateur" width="100" height="100">
             <span class="receiver-nickname"> <?= htmlspecialchars($otherNickname) ?> </span>
         </div>
         <?php foreach ($messages as $conv): ?>
@@ -31,7 +31,7 @@ EasyHeader::addHeader(
                     <?php else: ?>
                         <div class="receiver">
                             <div class="receiver-info">
-                                <img class="receiver-avatar-conversation" src="<?= $otherPicture ?>" alt="Avatar utilisateur" width="100px" height="100px">
+                                <img class="receiver-avatar-conversation" src="<?= $otherPicture ?>" alt="Avatar utilisateur" width="100" height="100">
                                 <span class="datestamp"><?= htmlspecialchars($conv->getSentAt()->format('d.m')) ?> </span>
                                 <span class="timestamp"><?= htmlspecialchars($conv->getSentAt()->format('H:i')) ?></span>
                             </div>
@@ -50,6 +50,6 @@ EasyHeader::addHeader(
             </form>
         </div>
     </main>
+    <?php include_once __DIR__ . '/footer.php'; ?>
 </body>
-<?php include_once __DIR__ . '/footer.php'; ?>
 </html>

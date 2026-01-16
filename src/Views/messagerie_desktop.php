@@ -17,7 +17,7 @@ EasyHeader::addHeader(
             <?php foreach ($conversations as $conv): ?>
                 <a href="/public/conversation/<?= htmlspecialchars($conv->relationId) ?>">
                     <div class="conversation-grid">
-                        <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil" />
+                        <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil">
                         <span class="conversation-nickname"><?= htmlspecialchars($conv->nickname) ?></span>
                         <span class="conversation-message">
                             <?= mb_strlen($conv->lastMessage) > 40
@@ -36,7 +36,7 @@ EasyHeader::addHeader(
                     <?php foreach ($conversations as $conv): ?>
                         <a href="/public/messagerie/<?= htmlspecialchars($userId) ?>/conversation/<?= htmlspecialchars($conv->relationId) ?>">
                             <div class="conversation-grid">
-                                <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil" />
+                                <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil">
                                 <span class="conversation-nickname"><?= htmlspecialchars($conv->nickname) ?></span>
                                 <span class="conversation-message">
                                     <?= mb_strlen($conv->lastMessage) > 40
@@ -51,7 +51,7 @@ EasyHeader::addHeader(
             </div>
             <div class="conversations-list">
                 <div class="receiver-info-grid">
-                    <img class="receiver-avatar" src="<?= $otherPicture ?>" alt="Avatar utilisateur" width="100px" height="100px">
+                    <img class="receiver-avatar" src="<?= $otherPicture ?>" alt="Avatar utilisateur" width="100" height="100">
                     <span class="receiver-nickname"> <?= htmlspecialchars($otherNickname) ?> </span>
                 </div>
                 <?php foreach ($messages as $conv): ?>
@@ -69,7 +69,7 @@ EasyHeader::addHeader(
                             <?php else: ?>
                                 <div class="receiver">
                                     <div class="receiver-info">
-                                        <img class="receiver-avatar-conversation" src="<?= $otherPicture ?>" alt="Avatar utilisateur" width="100px" height="100px">
+                                        <img class="receiver-avatar-conversation" src="<?= $otherPicture ?>" alt="Avatar utilisateur" width="100" height="100">
                                         <span class="datestamp"><?= htmlspecialchars($conv->getSentAt()->format('d.m')) ?> </span>
                                         <span class="timestamp"><?= htmlspecialchars($conv->getSentAt()->format('H:i')) ?></span>
                                     </div>
@@ -90,6 +90,6 @@ EasyHeader::addHeader(
             </div>
         </div>
     </main>
+    <?php include_once __DIR__ . '/footer.php'; ?>
 </body>
-<?php include_once __DIR__ . '/footer.php'; ?>
 </html>

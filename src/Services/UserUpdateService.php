@@ -23,7 +23,7 @@ class UserUpdateService
      * @param int|null $id L'ID du contact (optionnel)
      * @return array Un tableau associatif avec les champs nettoyés et validés
      */
-    public static function sanitizeUserObjectInput(?string $nickname, ?string $mail, ?string $password = null, ?int $id = null): array {
+    public static function sanitizeUserObjectInput(?string $nickname, ?string $email, ?string $password = null, ?int $id = null): array {
       $data = [];
       if ($id !== null && (!is_int($id) || $id <= 0)) {
         return [];
@@ -36,12 +36,12 @@ class UserUpdateService
         $nickname = preg_replace('/[^a-zA-Z0-9_]/', '', $nickname);
         $data['nickname'] = $nickname;
       }
-      if ($mail !== null && $mail !== '') {
-        $mail = filter_var($mail, FILTER_SANITIZE_EMAIL);
-        if (filter_var($mail, FILTER_VALIDATE_EMAIL) === false) {
+      if ($email !== null && $email !== '') {
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
           return [];
         }
-        $data['mail'] = $mail;
+        $data['email'] = $email;
       }
       if ($password !== null && $password !== '') {
         if (strlen($password) < 3) {

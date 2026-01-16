@@ -17,7 +17,7 @@ EasyHeader::addHeader(
             <?php foreach ($conversations as $conv): ?>
                 <a href="/public/conversation/<?= htmlspecialchars($conv->relationId) ?>">
                     <div class="conversation-grid">
-                        <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil" />
+                        <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil" >
                         <span class="conversation-nickname"><?= htmlspecialchars($conv->nickname) ?></span>
                         <span class="conversation-message">
                             <?= mb_strlen($conv->lastMessage) > 40
@@ -52,6 +52,6 @@ EasyHeader::addHeader(
             </div>
         </div>
     </main>
+    <?php include_once __DIR__ . '/footer.php'; ?>
 </body>
-<?php include_once __DIR__ . '/footer.php'; ?>
 </html>

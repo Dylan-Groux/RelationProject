@@ -12,8 +12,8 @@ EasyHeader::addHeader(
         <div class="header-container">
             <div class="header-flex">
             <section class="intro-section">
-                <img class="start_img" src="<?= '/public/assets/home/header.png' ?>" alt="Échange de livres" width="425px" height="503px">
-                <p class="author_name">Hamza</p>
+                <img class="start_img" src="<?= '/public/assets/home/header.png' ?>" alt="Échange de livres" width="425" height="503">
+                <h2 class="author_name">Hamza</h2>
             </section>
             <section class="info-section">
                 <h2 class="info-title">Rejoignez nos lecteurs passionnés </h2>
@@ -67,8 +67,8 @@ EasyHeader::addHeader(
             </form>
         </section>
         <section class="value-section">
-            <img class="value-img-mobile" src="/public/assets/home/sectionbar_mobile.png" alt="Nos valeurs" width="375px" height="425px">
-            <img class="value-img-desktop" src="/public/assets/home/sectionbar_desktop.png" alt="Nos valeurs" width="1440px" height="230px">
+            <img class="value-img-mobile" src="/public/assets/home/sectionbar_mobile.png" alt="Nos valeurs" width="375" height="425">
+            <img class="value-img-desktop" src="/public/assets/home/sectionbar_desktop.png" alt="Nos valeurs" width="1440" height="230">
             <div class="value-content">
                 <h2 class="value-title">Nos valeurs</h2>
                 <p class="value-description">
@@ -89,7 +89,7 @@ EasyHeader::addHeader(
                 </p>
                 <p class="author_name">L'équipe Tom Troc</p>
             </div>
-            <img class="vectorlove-img" src="/public/assets/utils/lovevector.svg" alt="Nos valeurs" width="370px" height="573px">
+            <img class="vectorlove-img" src="/public/assets/utils/lovevector.svg" alt="Nos valeurs" width="370" height="573">
         </section>
     </main>
     <?php include_once __DIR__ . '/footer.php'; ?>

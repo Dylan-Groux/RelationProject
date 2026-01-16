@@ -5,5 +5,5 @@ CREATE TABLE user (
 	updated_at DATETIME NOT NULL,
 	password VARCHAR(255) NOT NULL,
 	nickname VARCHAR(55) NOT NULL,
-	mail VARCHAR(255) NOT NULL
+	email VARCHAR(255) NOT NULL
 );

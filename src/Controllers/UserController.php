@@ -72,7 +72,7 @@ class UserController extends AbstractController
 
         $sanitizedData = \App\Services\UserUpdateService::sanitizeUserObjectInput(
             $_POST['nickname'] ?? '',
-            $_POST['mail'] ?? '',
+            $_POST['email'] ?? '',
             $_POST['password'] ?? null,
             (int)$id
         );

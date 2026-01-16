@@ -23,8 +23,8 @@ EasyHeader::addHeader(
                         <input type="text" id="name" name="name" class="register-input" required>
                     </div>
                     <div id="email-label">
-                        <label for="mail" class="register-label">Adresse email</label>
-                        <input type="mail" id="mail" name="mail" class="register-input" required>
+                        <label for="email" class="register-label">Adresse email</label>
+                        <input type="email" id="email" name="email" class="register-input" required>
                     </div>
                     <div id="password-label">
                         <label for="password" class="register-label">Mot de passe</label>
@@ -36,9 +36,9 @@ EasyHeader::addHeader(
                     <p>Déjà inscrit ? <a href="/public/login">Connectez-vous</a></p>
                 </div>
             </section>
-                <img class="start_img" src="/public/assets/home/register.png" alt="Échange de livres" width="425px" height="503px">
+                <img class="start_img" src="/public/assets/home/register.png" alt="Échange de livres" width="425" height="503">
         </div>
     </main>
+    <?php include_once __DIR__ . '/footer.php'; ?>
 </body>
-<?php include_once __DIR__ . '/footer.php'; ?>
 </html>

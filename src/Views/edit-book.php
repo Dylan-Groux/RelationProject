@@ -17,7 +17,7 @@ EasyHeader::addHeader(
     <main class="main-content">
         <div class="book-img-container">
             <p>Photo</p>
-            <img src="<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre" width="720px" height="863px">
+            <img src="<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre" width="720" height="863">
             <form class="edit-picture-form" action="<?= '/public/book/' . $book->getId() . '/edit-picture' ?>" method="post" enctype="multipart/form-data">
                 <label for="picture" class="edit-picture-label">Modifier la photo</label>
                 <input type="hidden" name="CSRF_token" value="<?= htmlspecialchars($csrfToken) ?>">

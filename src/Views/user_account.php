@@ -20,7 +20,7 @@ EasyHeader::addHeader(
                     $userPicture = htmlspecialchars($userPicture);
                 }
                 ?>
-                <img class="user-avatar" src="<?= $userPicture ?>" alt="Avatar utilisateur" width="150px" height="150px">
+                <img class="user-avatar" src="<?= $userPicture ?>" alt="Avatar utilisateur" width="150" height="150">
                <!-- CSRF Token à faire -->
                 <form class="avatar-form" id='user-avatar-form' method="post" action="/public/user/picture/update/<?= htmlspecialchars($userData['user']->getId()) ?>" enctype="multipart/form-data">
                     <label class="modifier" for="user-avatar-upload">modifier</label>
@@ -36,7 +36,7 @@ EasyHeader::addHeader(
                 <div class="biblio-info">
                     <p class="biblio-info-title"><strong>BIBLIOTHEQUE</strong></p>
                     <div class="livre-info">
-                        <img src="/public/assets/utils/biblio.svg" alt="Icone livre" width="12px" height="12px">
+                        <img src="/public/assets/utils/biblio.svg" alt="Icone livre" width="12" height="12">
                         <p>
                             <?php
                             $availableBooks = array_filter($userData['books'], fn($book) => $book->getAvailability() === 'disponible' || $book->getAvailability() === "non disponible");
@@ -51,8 +51,8 @@ EasyHeader::addHeader(
             <h3>Vos informations personnelles</h3>
             <form class="info-form" method="post" action="/public/user/update/<?= htmlspecialchars($userData['user']->getId()) ?>">
                 <div class="info-grid">
-                    <label class="info-email" for="mail">Email</label>
-                    <input type="mail" id="mail" name="mail" value="<?= htmlspecialchars($userData['user']->getMail()) ?>">
+                    <label class="info-email" for="email">Email</label>
+                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($userData['user']->getEmail()) ?>">
 
                     <label class="info-mdp" for="password">Mot de passe</label>
                     <input type="password" id="password" name="password" value="" placeholder="Nouveau mot de passe">
@@ -93,7 +93,7 @@ EasyHeader::addHeader(
                 <?php endforeach; ?>
             </div>
         </section>
-        <section class="liste-books-section-desktop">
+        <div class="liste-books-section-desktop">
             <div class="user-books-table-wrapper">
                 <table class="user-books-table">
                     <thead>
@@ -150,7 +150,7 @@ EasyHeader::addHeader(
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
     </main>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -170,6 +170,6 @@ EasyHeader::addHeader(
         });
     });
     </script>
+    <?php include_once __DIR__ . '/footer.php'; ?>
 </body>
-<?php include_once __DIR__ . '/footer.php'; ?>
 </html>
