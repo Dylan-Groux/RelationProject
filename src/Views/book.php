@@ -27,10 +27,12 @@ EasyHeader::addHeader(
             </section>
             <section class="user-section">
                 <h4>PROPRIÉTAIRE</h4>
-                <div>
-                    <p class="user-name">Utilisateur <?= htmlspecialchars($book->getUserId()) ?></p>
+                <div class="user-info-grid">
+                    <img class="user-picture" src="<?= htmlspecialchars($userPicture) ?>" alt="Photo de profil" width="50" height="50">
+                    <h2 class="user-nickname"><?= htmlspecialchars($userNickname) ?></h2>
                 </div>
-                <button class="signup-btn">Envoyer un message</button>
+                <!-- TODO Bouton pour envoyer un message au propriétaire du livre -->
+                <button class="signup-btn" href="">Envoyer un message</button>
             </section>
         </div>
     </main>

@@ -41,6 +41,8 @@ class BookController extends AbstractController
     {
         $bookRepository = new BookRepository();
         $book = $bookRepository->getBookById($id);
+        $userRepository = new \App\Models\Repository\UserRepository();
+        $user = $userRepository->getUserById($book->getUserId());
 
         if ($book === null) {
             http_response_code(404);
@@ -49,7 +51,7 @@ class BookController extends AbstractController
         }
 
         $view = new View('book');
-        $view->render(['book' => $book]);
+        $view->render(['book' => $book, 'userPicture' => $user->getPicture(), 'userNickname' => $user->getNickname()]);
     }
 
     /**Affiche l'édition d'un livre spécifique 
