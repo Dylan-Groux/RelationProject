@@ -141,4 +141,30 @@ class MessageRepository
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return (int)($result['unread_count'] ?? 0);
     }
+
+    public function createNewRelation(int $userId, int $targetUserId): ?int
+    {
+        $sql = "INSERT INTO relation (first_user, second_user, created_at)
+                VALUES (:firstUser, :secondUser, NOW())";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':firstUser', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':secondUser', $targetUserId, PDO::PARAM_INT);
+        if ($stmt->execute()) {
+            return (int)$this->pdo->lastInsertId();
+        }
+        return null;
+    }
+    
+    public function findRelationBetweenUsers(int $userId1, int $userId2): ?int
+    {
+        $sql = "SELECT id FROM relation
+                WHERE (first_user = :userId1 AND second_user = :userId2)
+                   OR (first_user = :userId2 AND second_user = :userId1)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':userId1', $userId1, PDO::PARAM_INT);
+        $stmt->bindParam(':userId2', $userId2, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? (int)$result['id'] : null;
+    }
 }

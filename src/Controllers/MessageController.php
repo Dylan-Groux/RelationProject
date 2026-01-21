@@ -6,6 +6,7 @@ use App\Models\Entity\DTO\ConversationDTO;
 use App\Models\Repository\MessageRepository;
 use App\Views\View;
 use App\Models\Repository\UserRepository;
+use App\Services\CheckExistingRelation;
 
 class MessageController
 {
@@ -241,5 +242,47 @@ class MessageController
             'csrfToken' => $_SESSION['CSRF_token'],
             'userId' => $userId,
         ]);
+    }
+
+    #[\App\Library\Router('/messagerie/start/{book_id}', 'GET')]
+    public function startNewRelation(int $book_id): void
+    {
+        $userId = $this->userId;
+        $bookRepository = new \App\Models\Repository\BookRepository();
+
+        $targetUserId = $bookRepository->getUserWithBookId($book_id);
+        if ($targetUserId === null || $targetUserId <= 0) {
+            http_response_code(400);
+            echo 'ID utilisateur cible invalide.';
+            return;
+        }
+
+        $relationExists = CheckExistingRelation::class;
+        $checker = new $relationExists();
+
+        $existingRelationId = $checker->checkRelation($userId, $targetUserId);
+        if ($existingRelationId instanceof \App\Models\Exceptions\IdenticalUserException) {
+            header("Location: /public/messagerie/$userId", true, 301);
+            exit();
+        }  elseif ($existingRelationId !== null) {
+            $redirectUrl = "/public/messagerie/$userId/conversation/$existingRelationId";
+            header("Location: $redirectUrl", true, 301);
+            exit();
+        } else {
+            $messageRepository = new MessageRepository();
+            $relationId = $messageRepository->createNewRelation($userId, $targetUserId);
+            if ($relationId === null) {
+                http_response_code(500);
+                echo 'Erreur lors de la création de la relation.';
+                return;
+            } else {
+                $messageRepository->sendMessage($userId, $relationId, "Bonjour! Je suis intéressé par votre livre.");
+            }
+        }
+
+        // Redirige vers la conversation nouvellement créée
+        $redirectUrl = "/public/messagerie/$userId/conversation/$relationId";
+        header("Location: $redirectUrl", true, 301);
+        exit();
     }
 }

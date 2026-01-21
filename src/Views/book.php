@@ -32,7 +32,7 @@ EasyHeader::addHeader(
                     <h2 class="user-nickname"><?= htmlspecialchars($userNickname) ?></h2>
                 </div>
                 <!-- TODO Bouton pour envoyer un message au propriétaire du livre -->
-                <button class="signup-btn" href="">Envoyer un message</button>
+                <a href="/public/messagerie/start/<?= htmlspecialchars($book->getId()) ?>" class="signup-btn">Envoyer un message</a>
             </section>
         </div>
     </main>

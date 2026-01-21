@@ -15,7 +15,9 @@ $dotenv = new Symfony\Component\Dotenv\Dotenv();
 $dotenv->usePutenv();
 $dotenv->loadEnv(__DIR__ . '/../.env', true, true);
 
-//TODO : session start moved to AbstractController
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Liste des routes (pattern, contrôleur, méthode)
 $routes = [
@@ -39,7 +41,7 @@ $routes = [
     ['pattern' => '/conversation/{conversationId}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'openConversation', 'method' => 'GET'],
     ['pattern' => '/messagerie/conversation/{conversationId}/send', 'controller' => \App\Controllers\MessageController::class, 'action' => 'openConversation', 'method' => 'POST'],
     ['pattern' => '/messagerie/{userId}/conversation/{conversationId}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'showConversationAndMessages', 'method' => 'GET'],
-    // Ajoute ici d'autres routes si besoin
+    ['pattern' => '/messagerie/start/{book_id}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'startNewRelation', 'method' => 'GET'],
 ];
 
 // Récupère l'URL demandée

@@ -269,4 +269,15 @@ class BookRepository
         }
         return $results;
     }
+
+    public function getUserWithBookId(int $bookId): ?int
+    {
+        $sql = "SELECT user_id FROM book WHERE id = :bookId";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':bookId', $bookId, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result ? (int)$result['user_id'] : null;
+    }
 }
