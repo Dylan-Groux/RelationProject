@@ -42,7 +42,8 @@ $routes = [
     ['pattern' => '/messagerie/conversation/{conversationId}/send', 'controller' => \App\Controllers\MessageController::class, 'action' => 'openConversation', 'method' => 'POST'],
     ['pattern' => '/messagerie/{userId}/conversation/{conversationId}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'showConversationAndMessages', 'method' => 'GET'],
     ['pattern' => '/messagerie/start/{book_id}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'startNewRelation', 'method' => 'GET'],
-];
+    ['pattern' => '/book/create/book', 'controller' => BookController::class, 'action' => 'createBook', 'method' => 'POST'],
+    ];
 
 // Récupère l'URL demandée
 $requestUri = strtok($_SERVER['REQUEST_URI'], '?');

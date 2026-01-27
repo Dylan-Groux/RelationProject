@@ -33,6 +33,9 @@ class UserController extends AbstractController
     #[Router('/user/account/{id}', 'GET')]
     public function showUserAccount(string $id): void
     {
+        if (!isset($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -52,7 +55,7 @@ class UserController extends AbstractController
         $userData = $userRepository->getUserWithBooksById($id);
 
         $view = new View('user_account');
-        $view->render(['user' => $user, 'userData' => $userData]);
+        $view->render(['user' => $user, 'userData' => $userData, 'csrfToken' => $_SESSION['csrf_token']]);
     }
 
     /**

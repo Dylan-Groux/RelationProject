@@ -2,8 +2,8 @@
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page de connexion',
-    ['css/home.css', 'css/footer.css', 'css/navbar.css', 'css/user_account.css'],
-    ['js/navbar.js', 'js/button.js']
+    ['css/home.css', 'css/footer.css', 'css/navbar.css', 'css/user_account.css', 'css/Components/newbook.css'],
+    ['js/navbar.js', 'js/button.js', 'js/newbook.js']
 );
 ?>
 <body>
@@ -63,8 +63,19 @@ EasyHeader::addHeader(
                 <button type="submit" class="edit-link">Enregistrer</button>
             </form>
         </section>
+        <?php include_once __DIR__ . '/Components/NewBook.php'; ?>
         <section class="liste-books-section-mobile">
             <div class="user-books-grid">
+                <?php if (empty($userData['books'])): ?>
+                    <div class="user-book-card modern-book-card empty-state">
+                        <div class="modern-book-content">
+                            <img src="/assets/utils/mystery-book.jpeg" alt="Aucun livre" class="user-book-image" width="100" height="100">
+                            <div class="modern-book-text">
+                                <p>Aucun livre ajouté</p>
+                            </div>
+                        </div>
+                    </div>
+                <?php else: ?>
                 <?php
                 $i = 0;
                 foreach ($userData['books'] as $book):
@@ -91,6 +102,7 @@ EasyHeader::addHeader(
                         </div>
                     </div>
                 <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </section>
         <div class="liste-books-section-desktop">

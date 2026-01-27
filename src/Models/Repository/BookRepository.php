@@ -280,4 +280,52 @@ class BookRepository
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result ? (int)$result['user_id'] : null;
     }
+
+    /**
+    * Crée un nouveau livre dans la base de données.
+    * @param Book $book
+    * @return int|false ID du livre créé ou false en cas d'échec
+    */
+    public function createBook(Book $book): int|false
+    {
+       // Validation des champs obligatoires
+       $title = trim($book->getTitle());
+       $author = trim($book->getAuthor());
+       
+       if (empty($title) || empty($author) || $book->getUserId() <= 0) {
+          return false;
+       }
+
+       // Validation de la longueur des champs
+       if (strlen($title) > 255 || strlen($author) > 255) {
+          return false;
+       }
+
+       $sql = "INSERT INTO book (title, author, picture, availability, comment, user_id, created_at, updated_at) 
+             VALUES (:title, :author, :picture, :availability, :comment, :user_id, :created_at, :updated_at)";
+
+       try {
+          $stmt = $this->pdo->prepare($sql);
+          $now = (new \DateTimeImmutable())->format('Y-m-d H:i:s');
+
+          $stmt->bindValue(':title', $title, \PDO::PARAM_STR);
+          $stmt->bindValue(':author', $author, \PDO::PARAM_STR);
+          $stmt->bindValue(':picture', $book->getPicture(), \PDO::PARAM_STR);
+          $stmt->bindValue(':availability', $book->getAvailailityInt(), \PDO::PARAM_INT);
+          $stmt->bindValue(':comment', $book->getComment(), \PDO::PARAM_STR);
+          $stmt->bindValue(':user_id', $book->getUserId(), \PDO::PARAM_INT);
+          $stmt->bindValue(':created_at', $now, \PDO::PARAM_STR);
+          $stmt->bindValue(':updated_at', $now, \PDO::PARAM_STR);
+
+          if ($stmt->execute()) {
+             return (int)$this->pdo->lastInsertId();
+          }
+
+          return false;
+
+       } catch (\PDOException $e) {
+          error_log('BookRepository::createBook PDOException: ' . $e->getMessage());
+          return false;
+       }
+    }
 }

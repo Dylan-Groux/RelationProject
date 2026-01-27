@@ -147,4 +147,61 @@ class BookController extends AbstractController
             echo 'Erreur lors de la suppression du livre';
         }
     }
+
+    /**
+    * Traite la création d'un nouveau livre.
+    * @return void
+    */
+    #[Router('/book/create/book', 'POST')]
+    public function createBook(): void
+    {
+        try {
+            $this->validateCSRFToken($_POST['csrf_token'] ?? '');
+
+            // Gestion de l'upload de l'image
+            $picturePath = null;
+            if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
+                $uploadDir = __DIR__ . '/../../public/uploads/';
+                $fileName = uniqid() . '_' . basename($_FILES['picture']['name']);
+                $targetPath = $uploadDir . $fileName;
+                
+                if (move_uploaded_file($_FILES['picture']['tmp_name'], $targetPath)) {
+                    $picturePath = '/uploads/' . $fileName;
+                }
+            }
+
+            $data = [
+                'title' => trim($_POST['title'] ?? ''),
+                'picture' => $picturePath ?? '',
+                'author' => trim($_POST['author'] ?? ''),
+                'availability' => isset($_POST['availability']) ? intval($_POST['availability']) : 1,
+                'comment' => trim($_POST['comment'] ?? ''),
+                'user_id' => $_SESSION['user_id'] ?? null
+            ];
+
+            // Validation
+            if (empty($data['title']) || empty($data['author']) || $data['user_id'] === null) {
+                header('Location: /public/user/account/' . htmlspecialchars((string)$data['user_id']));
+                exit;
+            }
+
+            // Créer l'objet Book
+            $book = new \App\Models\Entity\Book($data);
+
+            $bookRepository = new BookRepository();
+            $bookId = $bookRepository->createBook($book);
+
+            if ($bookId) {
+                header('Location: /public/book/' . $bookId);
+                exit;
+            } else {
+                header('Location: /public/user/account/' . htmlspecialchars((string)$data['user_id']));
+                exit;
+            }
+        } catch (\Exception $e) {
+            error_log('Erreur création livre: ' . $e->getMessage());
+            header('Location: /public/user/account/' . htmlspecialchars((string)($_SESSION['user_id'] ?? '')));
+            exit;
+        }
+    }
 }
