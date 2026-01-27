@@ -53,12 +53,17 @@ class UserRepository
 
     public function createUser(array $userData): bool
     {
-        $sql = "INSERT INTO user (nickname, email, password, name, created_at, updated_at) VALUES (:nickname, :email, :password, :name, NOW(), NOW())";
+        $sql = "INSERT INTO user (nickname, email, password, name, created_at, updated_at, picture) VALUES (:nickname, :email, :password, :name, NOW(), NOW(), :picture)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':nickname', $userData['nickname'], PDO::PARAM_STR);
         $stmt->bindParam(':email', $userData['email'], PDO::PARAM_STR);
         $stmt->bindParam(':password', $userData['password'], PDO::PARAM_STR);
         $stmt->bindParam(':name', $userData['name'], PDO::PARAM_STR);
+        
+        // Définir l'image par défaut si aucune n'est fournie
+        $picture = !empty($userData['picture']) ? $userData['picture'] : '/assets/utils/user-avatar.png';
+        $stmt->bindValue(':picture', $picture, PDO::PARAM_STR);
+        
         return $stmt->execute();
     }
 

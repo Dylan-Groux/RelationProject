@@ -9,11 +9,11 @@ EasyHeader::addHeader(
 <body>
     <?php include_once __DIR__ . '/navbar.php'; ?>
     <main class="main">
-        <?php if (empty($conversations)): ?>
-            <p class="no-conversation-message">Vous n'avez aucune conversation pour le moment.</p>
-        <?php endif; ?>
         <div class="conversations-list-mobile">
             <h1 class="main-title"> Messagerie </h1>
+                <?php if (empty($conversations)): ?>
+                    <p class="no-conversation-message">Vous n'avez aucune conversation pour le moment.</p>
+                <?php endif; ?>
             <?php foreach ($conversations as $conv): ?>
                 <a href="/public/conversation/<?= htmlspecialchars($conv->relationId) ?>">
                     <div class="conversation-grid">
@@ -48,7 +48,9 @@ EasyHeader::addHeader(
                 <?php endforeach; ?>
             </div>
             <div class="conversation-details">
-                <!-- Liste des conversations -->
+                <?php if (empty($conversations)): ?>
+                    <p class="no-conversation-message">Vous n'avez aucune conversation pour le moment.</p>
+                <?php endif; ?>
             </div>
         </div>
     </main>

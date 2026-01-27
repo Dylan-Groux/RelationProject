@@ -1,5 +1,11 @@
 body {
-    height: 90%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.main {
+    height: calc(100vh - 60px); /* Ajuster selon la hauteur du navbar */
+    overflow: hidden;
 }
 
 .main-content {
@@ -7,6 +13,7 @@ body {
     display: grid;
     grid-template-rows: auto auto;
     align-items: center;
+    overflow: hidden;
 }
 
 .register-form-section {
@@ -100,7 +107,7 @@ body {
     }
     .start_img {
         width: 100%;
-        height: 90%;
+        height: 80%;
         object-fit: cover;
         overflow: hidden;
     }

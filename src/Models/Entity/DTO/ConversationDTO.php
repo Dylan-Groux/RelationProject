@@ -6,7 +6,7 @@ class ConversationDTO
 {
     public int $relationId;
     public string $nickname;
-    public string $picture;
+    public ?string $picture;
     public string $lastMessage;
     public string $lastDate;
     public int $unreadCount;
@@ -14,7 +14,7 @@ class ConversationDTO
     public function __construct(
         int $relationId,
         string $nickname,
-        string $picture,
+        ?string $picture,
         string $lastMessage,
         string $lastDate,
         int $unreadCount = 0
