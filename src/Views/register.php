@@ -36,7 +36,7 @@ EasyHeader::addHeader(
                     <p>Déjà inscrit ? <a href="/public/login">Connectez-vous</a></p>
                 </div>
             </section>
-                <img class="start_img" src="/public/assets/home/register.png" alt="Échange de livres" width="425" height="503">
+                <img class="start_img" src="/assets/home/register.png" alt="Échange de livres" width="425" height="503">
         </div>
     </main>
     <?php include_once __DIR__ . '/footer.php'; ?>

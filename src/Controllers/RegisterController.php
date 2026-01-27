@@ -58,7 +58,6 @@ class RegisterController extends AbstractController
         $loginRepository = new LoginRepository();
         $user = $loginRepository->loginUser($email, $password);
         if ($user) {
-            session_start();
             $_SESSION['user_id'] = $user['id'];
             header('Location: /public/user/account/' . $user['id']);
             exit;
@@ -74,7 +73,6 @@ class RegisterController extends AbstractController
     #[Router('/logout', 'GET')]
     public function logout(): void
     {
-        session_start();
         session_unset();
         session_destroy();
         header('Location: /public/');

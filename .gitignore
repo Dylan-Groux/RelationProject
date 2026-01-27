@@ -1,3 +1,16 @@
 vendor/
 composer.lock
 .env
+
+# Docker
+.env.local
+.env.*.local
+docker-compose.override.yml
+
+# Volumes & data
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# Docker volumes (si vous avez des dossiers de données)
+/mysql-data/
+/db_data/

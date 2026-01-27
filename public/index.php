@@ -13,7 +13,7 @@ use App\Controllers\RegisterController;
 
 $dotenv = new Symfony\Component\Dotenv\Dotenv();
 $dotenv->usePutenv();
-$dotenv->loadEnv(__DIR__ . '/../.env', true, true);
+$dotenv->loadEnv(__DIR__ . '/../.env.tests', true, true);
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

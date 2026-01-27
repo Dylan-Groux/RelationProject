@@ -15,7 +15,7 @@ EasyHeader::addHeader(
                 <?php
                 $userPicture = $userData['user']->getPicture();
                 if (empty($userPicture)) {
-                    $userPicture = '/public/assets/utils/user-avatar.png'; // image par défaut
+                    $userPicture = 'assets/utils/user-avatar.png'; // image par défaut
                 } else {
                     $userPicture = htmlspecialchars($userPicture);
                 }
@@ -36,7 +36,7 @@ EasyHeader::addHeader(
                 <div class="biblio-info">
                     <p class="biblio-info-title"><strong>BIBLIOTHEQUE</strong></p>
                     <div class="livre-info">
-                        <img src="/public/assets/utils/biblio.svg" alt="Icone livre" width="12" height="12">
+                        <img src="/assets/utils/biblio.svg" alt="Icone livre" width="12" height="12">
                         <p>
                             <?php
                             $availableBooks = array_filter($userData['books'], fn($book) => $book->getAvailability() === 'disponible' || $book->getAvailability() === "non disponible");
@@ -110,7 +110,7 @@ EasyHeader::addHeader(
                     <?php if (empty($userData['books'])): ?>
                         <tr>
                             <td class="user-book-image-cell">
-                                <img src="/public/assets/utils/mystery-book.jpeg" alt="Aucun livre" class="user-book-image" width="70" height="70">
+                                <img src="/assets/utils/mystery-book.jpeg" alt="Aucun livre" class="user-book-image" width="70" height="70">
                             </td>
                             <td colspan="5">Aucun livre ajouté</td>
                         </tr>

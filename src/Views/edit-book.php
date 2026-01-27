@@ -36,10 +36,10 @@ EasyHeader::addHeader(
                     <label for="comment">Commentaire</label>
                     <textarea class="info-comment" id="comment" name="comment" rows="5" required><?= htmlspecialchars($book->getComment()) ?></textarea>
 
-                    <label for="disponibilite">Disponibilité</label>
-                    <select class="info-disponibility" id="disponibilite" name="disponibilite">
-                        <option value="disponible">Disponible</option>
-                        <option value="non disponible">Non disponible</option>
+                    <label for="availability">Disponibilité</label>
+                    <select class="info-disponibility" id="availability" name="availability">
+                        <option value="1" <?= $book->getAvailability() == 1 ? 'selected' : '' ?>>Disponible</option>
+                        <option value="0" <?= $book->getAvailability() == 0 ? 'selected' : '' ?>>Non disponible</option>
                     </select>
                     <input type="hidden" name="CSRF_token" value="<?= htmlspecialchars($csrfToken) ?>">
                     <button type="submit" class="signup-btn">Valider</button>

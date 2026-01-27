@@ -173,7 +173,7 @@ class UserRepository
         $extension = $allowedTypes[$file['type']];
         $filename = 'user_' . $userId . '_' . time() . '.' . $extension;
         $uploadDir = dirname(__DIR__, 3) . '/public/uploads/';
-        $relativePath = '/public/uploads/' . $filename;
+        $relativePath = '/uploads/' . $filename;
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }

@@ -10,13 +10,13 @@ EasyHeader::addHeader(
     <?php include_once __DIR__ . '/navbar.php'; ?>
     <main class="main-content">
         <section class="user-section">
-            <img class="user-avatar" src="/public/assets/utils/user-avatar.png" alt="Avatar utilisateur" width="150" height="150">
+            <img class="user-avatar" src="/assets/utils/user-avatar.png" alt="Avatar utilisateur" width="150" height="150">
             <h2 class="user-title">Alexlecture</h2>
             <p class="user-member">Membre depuis 1 an</p>
             <div class="biblio-info">
                 <p class="biblio-info-title"><strong>BIBLIOTHEQUE</strong></p>
                 <div class="livre-info">
-                    <img src="/public/assets/utils/biblio.svg" alt="Icone livre" width="12" height="12">
+                    <img src="/assets/utils/biblio.svg" alt="Icone livre" width="12" height="12">
                     <p> <?php // Afficher le nombre de livres de l'utilisateur
                         $bookCount = 5; // Exemple de valeur
                         echo $bookCount . ' livres';
