@@ -22,11 +22,11 @@ jobs:
         run: composer dump-autoload
       - name: Make phpunit executable
         run: chmod +x ./vendor/bin/phpunit
-      - name: Run RelationEntityTest tests
-        run: ./vendor/bin/phpunit tests/domain/Entity/RelationEntityTest.php
-      - name: Run BookManager tests
-        run: ./vendor/bin/phpunit tests/application/BookManagerTest.php
-      - name: Run RelationService tests
-        run: ./vendor/bin/phpunit tests/application/BookHelperTest.php
-      - name: Run AbstractController tests
-        run: ./vendor/bin/phpunit tests/interface/Controller/AbstractControllerTest.php
+      - name : Run AbstractController tests
+        run : ./vendor/bin/phpunit tests/Controllers/AbstractControllerTest.php
+      - name : Run MessageEntity tests
+        run : ./vendor/bin/phpunit tests/Models/Entity/MessageEntityTest.php
+      - name : Run BookRepository tests
+        run : ./vendor/bin/phpunit tests/Models/Repository/BookRepositoryTest.php
+      - name : Run BookHelper tests
+        run : ./vendor/bin/phpunit tests/Models/Services/BookHelperTest.php

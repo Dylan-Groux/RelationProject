@@ -106,16 +106,17 @@ class BookRepository
             throw new \InvalidArgumentException("Impossible d'update : l'entité n'a pas d'ID.");
         }
 
-        // Mapping des champs → getters
+        // Mapping des champs → getters (sans l'id)
         $fields = [
             'title' => $data['title'] ?? null,
             'picture' => $data['picture'] ?? null,
             'author' => $data['author'] ?? null,
             'availability' => $data['availability'] ?? null,
             'comment' => $data['comment'] ?? null,
-            'user_id' => $data['user_id'] ?? null,
-            'id' => $data['id']
+            'user_id' => $data['user_id'] ?? null
         ];
+
+        $id = $data['id'];
 
         // On filtre tout champ null : on NE L’UPDATE PAS
         $fields = array_filter(
@@ -152,7 +153,7 @@ class BookRepository
             }
 
             $stmt->bindValue(':updated_at', (new \DateTimeImmutable())->format('Y-m-d H:i:s'));
-            $stmt->bindValue(':id', $data['id'], \PDO::PARAM_INT);
+            $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
 
             return $stmt->execute();
 
