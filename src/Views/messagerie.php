@@ -23,7 +23,7 @@ EasyHeader::addHeader(
                                 <div class="conversation-grid">
                                     <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil">
                                     <span class="conversation-nickname"><?= htmlspecialchars($conv->nickname) ?></span>
-                                    <span class="conversation-message">
+                                    <span class="conversation-message <?= $conv->unreadCount > 0 ? 'unread' : '' ?>">
                                         <?= mb_strlen($conv->lastMessage) > 40
                                             ? htmlspecialchars(mb_substr($conv->lastMessage, 0, 40)) . ',...'
                                             : htmlspecialchars($conv->lastMessage) ?>
@@ -95,7 +95,7 @@ EasyHeader::addHeader(
                                 <div class="conversation-grid <?= $hasActiveConversation && $conversationId == $conv->relationId ? 'active' : '' ?>">
                                     <img class="conversation-picture" src="<?= htmlspecialchars($conv->picture) ?>" alt="Profil">
                                     <span class="conversation-nickname"><?= htmlspecialchars($conv->nickname) ?></span>
-                                    <span class="conversation-message">
+                                    <span class="conversation-message <?= $conv->unreadCount > 0 ? 'unread' : '' ?>">
                                         <?= mb_strlen($conv->lastMessage) > 40
                                             ? htmlspecialchars(mb_substr($conv->lastMessage, 0, 40)) . ',...'
                                             : htmlspecialchars($conv->lastMessage) ?>

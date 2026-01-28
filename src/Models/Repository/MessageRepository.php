@@ -55,7 +55,12 @@ class MessageRepository
      */
     public function getAllRelationWithUserInfos(int $userId): array
     {
-        $sql = "SELECT r.*, u.picture, u.nickname, MAX(m.sent_at) as last_message_date
+        $sql = "SELECT r.*, u.picture, u.nickname, 
+                MAX(m.sent_at) as last_message_date,
+                COUNT(CASE 
+                    WHEN m.statut = 1 AND m.sender_id != :userId 
+                    THEN 1 
+                END) as unread_count
                 FROM relation r
                 JOIN user u ON u.id = CASE
                     WHEN r.first_user = :userId THEN r.second_user

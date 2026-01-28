@@ -18,9 +18,6 @@ class ConversationBuilder
         // Récupérer toutes les relations de l'utilisateur
         $relations = $messageRepository->getAllRelationWithUserInfos($userId);
         
-        // Compter les messages non lus
-        $unreadCount = $messageRepository->countMessageNotRead($userId);
-        
         // Pour chaque relation, construire un DTO
         foreach ($relations as $relation) {
             // Récupérer les messages de cette relation
@@ -29,14 +26,14 @@ class ConversationBuilder
             // Prendre le dernier message
             $lastMessage = end($messages);
             
-            // Créer le DTO
+            // Créer le DTO avec le count de messages non lus de CETTE conversation
             $conversations[] = new ConversationDTO(
                 $relation['id'],                                      // relationId
                 $relation['nickname'],                                // nickname
                 $relation['picture'],                                 // picture
                 $lastMessage ? $lastMessage->getContent() : '',       // lastMessage
                 $lastMessage ? $lastMessage->getSentAt()->format('H:i') : '', // lastDate
-                $unreadCount                                          // unreadCount
+                (int)($relation['unread_count'] ?? 0)                // unreadCount PAR conversation
             );
         }
         
