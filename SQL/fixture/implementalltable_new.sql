@@ -13,14 +13,13 @@ ALTER TABLE relation AUTO_INCREMENT = 1;
 ALTER TABLE message AUTO_INCREMENT = 1;
 
 -- Insertion de 5 utilisateurs passionnés de lecture
--- Mots de passe: sophie123, marc123, emma123, thomas123, julie123
+-- Mots de passe: password (haché avec bcrypt)
 INSERT INTO user (picture, created_at, updated_at, password, nickname, name, email) VALUES
-('assets/utils/user1.png', NOW(), NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', "Sophie_Lectrice","Sophie Martin", 'sophie.martin@gmail.com'),
-('assets/utils/user2.png', NOW(), NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', "Marc_Bibliophile","Marc Dubois", 'marc.dubois@outlook.fr'),
-('assets/utils/user3.png', NOW(), NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', "Emma_Books","Emma Bernard", 'emma.bernard@yahoo.fr'),
-('assets/utils/user4.png', NOW(), NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', "Thomas_Reader","Thomas Petit", 'thomas.petit@hotmail.com'),
-('assets/utils/user5.png', NOW(), NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', "Julie_Livre","Julie Robert", 'julie.robert@gmail.com');
-
+('/assets/utils/user-avatar.png', NOW(), NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', "Sophie_Lectrice","Sophie Martin", 'sophie.martin@gmail.com'),
+('/assets/utils/user-avatar.png', NOW(), NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', "Marc_Bibliophile","Marc Dubois", 'marc.dubois@outlook.fr'),
+('/assets/utils/user-avatar.png', NOW(), NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', "Emma_Books","Emma Bernard", 'emma.bernard@yahoo.fr'),
+('/assets/utils/user-avatar.png', NOW(), NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', "Thomas_Reader","Thomas Petit", 'thomas.petit@hotmail.com'),
+('/assets/utils/user-avatar.png', NOW(), NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', "Julie_Livre","Julie Robert", 'julie.robert@gmail.com');
 -- Insertion de 25 livres variés répartis sur les 5 utilisateurs
 INSERT INTO book (title, author, comment, availability, created_at, updated_at, user_id, picture) VALUES
 -- Livres de Sophie

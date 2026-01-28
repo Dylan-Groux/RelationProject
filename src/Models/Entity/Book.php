@@ -93,7 +93,7 @@ final class Book
         };
     }
 
-    public function getAvailailityInt(): int
+    public function getAvailabilityInt(): int
     {
         return match ($this->availability) {
             BookAvailability::AVAILABLE => 1,
