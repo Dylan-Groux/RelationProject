@@ -45,9 +45,8 @@ class BookController extends AbstractController
         $user = $userRepository->getUserById($book->getUserId());
 
         if ($book === null) {
-            http_response_code(404);
-            echo 'Livre non trouvé';
-            return;
+            header('Location: /public/books');
+            exit;
         }
 
         $view = new View('book');
@@ -69,9 +68,8 @@ class BookController extends AbstractController
         }
 
         if ($book === null) {
-            http_response_code(404);
-            echo 'Livre non trouvé';
-            return;
+            header('Location: /public/books');
+            exit;
         }
 
         $this->checkUserAccess($book->getUserId());
@@ -106,9 +104,8 @@ class BookController extends AbstractController
             ];
 
             if ($data['id'] === null) {
-                http_response_code(404);
-                echo 'Livre non trouvé';
-                return;
+                header('Location: /public/books');
+                exit;
             }
             
             $book = $bookRepository->updateBook($data);
@@ -117,8 +114,8 @@ class BookController extends AbstractController
                 header('Location: /public/book/' . $id);
                 exit;
             } else {
-                http_response_code(500);
-                echo 'Erreur lors de la mise à jour du livre';
+                header('Location: /public/book/edit/' . $id);
+                exit;
             }
         } catch (\Exception $e) {
             http_response_code(403);
@@ -143,8 +140,8 @@ class BookController extends AbstractController
             header('Location: /public/books');
             exit;
         } else {
-            http_response_code(500);
-            echo 'Erreur lors de la suppression du livre';
+            header('Location: /public/books');
+            exit;
         }
     }
 

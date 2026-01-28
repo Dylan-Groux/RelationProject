@@ -19,9 +19,8 @@ class UserController extends AbstractController
         $userRepository = new UserRepository();
         $user = $userRepository->getUserById($id);
         if ($user === null) {
-            http_response_code(404);
-            echo 'Utilisateur non trouvé';
-            return;
+            header('Location: /public');
+            exit;
         }
         $view = new View('user');
         $view->render(['user' => $user]);
@@ -68,9 +67,8 @@ class UserController extends AbstractController
         $userRepository = new UserRepository();
         $user = $userRepository->getUserById($id);
         if ($user === null) {
-            http_response_code(404);
-            echo 'Utilisateur non trouvé';
-            return;
+            header('Location: /public');
+            exit;
         }
 
         $sanitizedData = \App\Services\UserUpdateService::sanitizeUserObjectInput(
@@ -81,9 +79,8 @@ class UserController extends AbstractController
         );
 
         if (empty($sanitizedData)) {
-            http_response_code(400);
-            echo 'Données invalides';
-            return;
+            header('Location: /public/user/account/' . $id);
+            exit;
         }
 
         $userRepository->updateUser($sanitizedData);
@@ -99,23 +96,20 @@ class UserController extends AbstractController
     {
         // Vérifie que l'utilisateur est connecté et que l'ID correspond
         if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != $id) {
-            http_response_code(403);
-            echo 'Accès refusé.';
-            return;
+            header('Location: /public/user/account/' . $id);
+            exit;
         }
 
         $userRepository = new UserRepository();
         if (!isset($_FILES['picture'])) {
-            http_response_code(400);
-            echo 'Aucun fichier envoyé.';
-            return;
+            header('Location: /public/user/account/' . $id);
+            exit;
         }
 
         $result = $userRepository->uploadUserPicture($id, $_FILES['picture']);
         if ($result === false) {
-            http_response_code(400);
-            echo "Échec de l'upload de l'image.";
-            return;
+            header('Location: /public/user/account/' . $id);
+            exit;
         }
 
         // Redirection vers le compte utilisateur après succès
