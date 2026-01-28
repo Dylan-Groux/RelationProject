@@ -1,19 +1,19 @@
 body {
-    height: 100vh;
-    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto auto auto; /* navbar, main, footer */
+    min-height: 100vh; /* Mobile : peut scroller */
 }
 
 .main {
-    height: calc(100vh - 60px); /* Ajuster selon la hauteur du navbar */
-    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto; /* S'adapte au contenu sur mobile */
 }
 
 .main-content {
-    height: 100%;
     display: grid;
-    grid-template-rows: auto auto;
-    align-items: center;
-    overflow: hidden;
+    grid-template-rows: auto; /* Laisse l'image définir sa taille */
+    gap: 20px;
+    padding: 20px 0;
 }
 
 .register-form-section {
@@ -67,6 +67,12 @@ body {
     color: #000000;
 }
 
+.start_img {
+    width: 100%;
+    height: fit-content;
+    object-fit: cover;
+}
+
 .login-link {
     font-family: "Inter", sans-serif;
     font-weight: 400;
@@ -82,6 +88,12 @@ body {
 }
 
 @media (min-width: 768px) {
+    body {
+        grid-template-rows: auto 1fr auto; /* navbar, main (flexible), footer */
+        height: 100vh; /* Desktop : exactement 100vh */
+        overflow: hidden;
+    }
+
     .main {
         display: grid;
         grid-template-rows: 1fr;
@@ -90,10 +102,13 @@ body {
 
     .main-content {
         grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        height: 100%;
     }
 
     .register-form-section {
         margin: 10%;
+        height: fit-content;
     }
 
     .register-img {
@@ -107,9 +122,10 @@ body {
     }
     .start_img {
         width: 100%;
-        height: 80%;
-        object-fit: cover;
-        overflow: hidden;
+        max-height: 100%;
+        height: auto;
+        object-fit: contain;
+        display: block;
     }
 
     .register-form input {
