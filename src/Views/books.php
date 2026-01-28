@@ -27,12 +27,12 @@ EasyHeader::addHeader(
                 <div class="books-grid">
                     <!-- TODO : Affichage des livres non gérer si indisponible -->
                     <!-- TODO : afficher le nom au lieu de l'ID -->
-                <?php foreach ($books as $book): ?>
-                    <a class="book" href="<?= '/public/book/' . htmlspecialchars($book->getId()) ?>">
-                        <img src="<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre">
-                        <h1 class="book-title"><?= htmlspecialchars($book->getTitle()) ?></h1>
-                        <h2 class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></h2>
-                        <p class="book-seller">Vendu par <?= htmlspecialchars($book->getUserId()) ?></p>
+                <?php foreach ($booksWithUser as $dto): ?>
+                    <a class="book" href="<?= '/public/book/' . htmlspecialchars($dto->book->getId()) ?>">
+                        <img src="<?= htmlspecialchars($dto->book->getPicture()) ?>" class="book-img" alt="Couverture du livre">
+                        <h1 class="book-title"><?= htmlspecialchars($dto->book->getTitle()) ?></h1>
+                        <h2 class="book-author"><?= htmlspecialchars($dto->book->getAuthor()) ?></h2>
+                        <p class="book-seller">Vendu par <?= htmlspecialchars($dto->userNickname) ?></p>
                     </a>
                 <?php endforeach; ?>
                 </div>

@@ -5,6 +5,7 @@ namespace App\Models\Repository;
 
 use App\Models\Database\DBManager;
 use App\Models\Entity\Book;
+use App\Models\Entity\DTO\BookWithUserDTO;
 
 /**
  * Class BookRepository
@@ -184,48 +185,70 @@ class BookRepository
     }
 
     /**
-     * Récupère les livres paginés.
+     * Récupère les livres paginés avec les informations utilisateur.
      * @param int $limit
      * @param int $offset
-     * @return Book[] array liste des livres paginés
+     * @return array[] tableau avec les données des livres et utilisateurs
      */
-    public function getBooksPaginated(int $limit, int $offset): array
+    public function getBooksPaginatedWithUser(int $limit, int $offset): array
     {
-        $sql = "SELECT * FROM book ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+        $sql = "SELECT b.*, u.nickname, u.picture as user_picture 
+                FROM book b 
+                INNER JOIN user u ON b.user_id = u.id 
+                ORDER BY b.created_at DESC 
+                LIMIT :limit OFFSET :offset";
+        
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, \PDO::PARAM_INT);
         $stmt->execute();
 
-        $booksData = [];
-
-        while ($book = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $booksData[] = new Book($book);
+        $results = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            // Extraire les données user AVANT de créer Book
+            $userNickname = $row['nickname'] ?? '';
+            $userPicture = $row['user_picture'] ?? null;
+            
+            $results[] = new BookWithUserDTO(
+                book: new Book($row),
+                userNickname: $userNickname,
+                userPicture: $userPicture
+            );
         }
 
-        return $booksData;
+        return $results;
     }
 
     /**
-     * Recherche de livres par titre avec une correspondance exacte.
+     * Recherche de livres par titre avec informations utilisateur.
      * @param string $title
-     * @return Book[] array liste des livres trouvés
+     * @return array[] tableau avec les données des livres et utilisateurs
      */
-    public function searchBookByTitle(string $title): array
+    public function searchBookByTitleWithUser(string $title): array
     {
-        $sql = "SELECT * FROM book WHERE title LIKE :title";
+        $sql = "SELECT b.*, u.nickname, u.picture as user_picture 
+                FROM book b 
+                INNER JOIN user u ON b.user_id = u.id 
+                WHERE b.title LIKE :title";
+        
         $stmt = $this->pdo->prepare($sql);
         $likeTitle = '%' . $title . '%';
         $stmt->bindValue(':title', $likeTitle, \PDO::PARAM_STR);
         $stmt->execute();
 
-        $booksData = [];
-
-        while ($book = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $booksData[] = new Book($book);
+        $results = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $userNickname = $row['nickname'] ?? '';
+            $userPicture = $row['user_picture'] ?? null;
+            
+            $results[] = new BookWithUserDTO(
+                book: new Book($row),
+                userNickname: $userNickname,
+                userPicture: $userPicture
+            );
         }
 
-        return $booksData;
+        return $results;
     }
 
     /**

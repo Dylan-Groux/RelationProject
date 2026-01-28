@@ -23,12 +23,12 @@ class BookController extends AbstractController
 
         $bookPaginator = new BooksPaginator(new BookRepository());
 
-        $result = $bookPaginator->paginate([], $page, $limit, $search);
-        $books = $result['books'];
+        $result = $bookPaginator->paginateWithUser($page, $limit, $search);
+        $booksWithUser = $result['booksWithUser'];
         $totalPages = $result['totalPages'];
         
         $view = new View('books');
-        $view->render(['books' => $books, 'totalPages' => $totalPages]);
+        $view->render(['booksWithUser' => $booksWithUser, 'totalPages' => $totalPages]);
     }
 
     /**
