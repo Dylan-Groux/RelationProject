@@ -8,11 +8,8 @@ namespace App\Models\Entity;
  * Représente les différents statuts d'une relation entre utilisateurs.
  */
 enum MessageStatus: int {
-    case AVAILABLE = 1;
-    case PENDING = 2;
-    case REJECTED = 3;
-    case ERRORED = 4;
-    case UNKNOWN = 99;
+    case UNREAD = 1;
+    case READ = 2;
 }
 
 /**

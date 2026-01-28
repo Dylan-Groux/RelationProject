@@ -12,7 +12,8 @@ abstract class AbstractController
     public function validateCSRFToken(string $token): void
     {
         if (!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']) {
-            throw new LoginException('Invalid CSRF token.');
+            header('Location: /public/');
+            exit();
         }
     }
 

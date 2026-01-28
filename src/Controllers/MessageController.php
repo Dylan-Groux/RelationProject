@@ -26,15 +26,15 @@ class MessageController extends AbstractController
         $userId = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
         if ($userId === null) {
             http_response_code(401);
-            echo 'Utilisateur non authentifié.';
-            return;
+            header('Location: /public/login', true, 302);
+            exit();
         }
         $userRepository = new UserRepository();
         $user = $userRepository->getUserById($userId);
         if ($user === null) {
             http_response_code(401);
-            echo 'Utilisateur non authentifié.';
-            return;
+            header('Location: /public/login', true, 302);
+            exit();
         }
         $this->currentUser = $user;
         $this->userId = $userId;
@@ -56,8 +56,8 @@ class MessageController extends AbstractController
         $targetUserId = $bookRepository->getUserWithBookId($book_id);
         if ($targetUserId === null || $targetUserId <= 0) {
             http_response_code(400);
-            echo 'ID utilisateur cible invalide.';
-            return;
+            header("Location: /public/books", true, 302);
+            exit();
         }
 
         $relationExists = CheckExistingRelation::class;
@@ -76,8 +76,8 @@ class MessageController extends AbstractController
             $relationId = $messageRepository->createNewRelation($userId, $targetUserId);
             if ($relationId === null) {
                 http_response_code(500);
-                echo 'Erreur lors de la création de la relation.';
-                return;
+                header("Location: /public/books", true, 302);
+                exit();
             } else {
                 $messageRepository->sendMessage($userId, $relationId, "Bonjour! Je suis intéressé par votre livre.");
             }
@@ -107,6 +107,9 @@ class MessageController extends AbstractController
         $otherPicture = null;
         
         if ($conversationId !== null) {
+            // Marquer les messages comme lus
+            $messageRepository->markConversationAsRead($conversationId, $userId);
+        
             // Récupérer les messages
             $messages = $messageRepository->getConversationMessages($conversationId, $userId);
             
@@ -167,7 +170,7 @@ class MessageController extends AbstractController
         // Vérification CSRF
         if (!isset($_POST['CSRF_token']) || !hash_equals($_SESSION['CSRF_token'], $_POST['CSRF_token'])) {
             http_response_code(403);
-            echo 'Invalid CSRF token.';
+            header('Location: /public/messagerie/' . $userId, true, 302);
             exit();
         }
 

@@ -203,4 +203,24 @@ class MessageRepository
         }
         return $messages;
     }
+
+    /**
+     * Marque tous les messages d'une conversation comme lus pour un utilisateur donné.
+     * @param int $relationId
+     * @param int $userId
+     * @return void
+     */
+    public function markConversationAsRead(int $relationId, int $userId): void
+    {
+        $sql = "UPDATE message m
+                JOIN relation r ON m.relation_id = r.id
+                SET m.statut = '2'
+                WHERE m.relation_id = :relationId
+                  AND m.sender_id != :userId
+                  AND m.statut = '1'";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':relationId', $relationId, PDO::PARAM_INT);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }
