@@ -13,13 +13,21 @@ html, body {
     padding: 0;
     box-sizing: border-box;
     background-color: #F5F5F5;
-    overflow: hidden;
+}
+
+body {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    min-height: 100vh; /* Mobile : peut scroller */
 }
 
 .book-img-container {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-height: 500px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .books-img-container img {
@@ -32,6 +40,10 @@ html, body {
 
 .book-img {
     border-radius: 0px;
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
 }
 
 .main-content {
@@ -133,14 +145,39 @@ html, body {
 }
 
 @media(min-width: 768px) {
+    body {
+        height: 100vh; /* Tablette/Desktop : exactement 100vh, pas plus */
+        overflow: hidden; /* Empêche le scroll sur body */
+    }
+    
     .main-content {
-        margin-top: 2%;
-        grid-template-columns: 390px 50%;
-        grid-template-rows: 523px;
+        margin-top: 0;
+        grid-template-columns: 390px 1fr;
+        grid-template-rows: auto;
+        align-items: stretch;
+        overflow: hidden; /* Contenu ne dépasse pas */
+    }
+    
+    .book-img-container {
+        max-height: 100%;
+        height: 100%;
         overflow: hidden;
     }
+    
+    .book-img {
+        max-height: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    
     .books-all-container {
         padding: 3%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow-y: hidden;
+        max-height: 100%;
     }
     .route-path {
         display: block;
@@ -157,10 +194,9 @@ html, body {
 
 @media(min-width: 1024px) {
     .main-content {
-        grid-template-columns: auto;
-        grid-template-columns: 520px 50%;
-        grid-template-rows: 663px;
+        grid-template-columns: 520px 1fr;
     }
+    
     .books-all-container {
         padding: 9%;
     }
@@ -168,10 +204,9 @@ html, body {
 
 @media(min-width: 1440px) {
     .main-content {
-        grid-template-columns: auto;
-        grid-template-columns: 720px 50%;
-        grid-template-rows: 863px;
+        grid-template-columns: 720px 1fr;
     }
+    
     .books-all-container {
         padding: 15%;
     }

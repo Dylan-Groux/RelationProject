@@ -2,11 +2,11 @@
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page d\'accueil',
-    ['css/home.css', 'css/navbar.css', 'css/footer.css'],
+    ['css/common.css', 'css/home.css', 'css/navbar.css', 'css/footer.css'],
     ['js/navbar.js']
 );
 ?>
-<body>
+<body class="home-page">
     <?php include_once __DIR__ . '/navbar.php'; ?>
     <main class="main-content">
         <div class="header-container">

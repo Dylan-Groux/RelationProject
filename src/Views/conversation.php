@@ -2,7 +2,7 @@
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page de connexion',
-    ['css/home.css', 'css/footer.css', 'css/navbar.css', 'css/conversation.css'],
+    ['css/home.css', 'css/footer.css', 'css/navbar.css', 'css/conversation.css', 'css/common.css'],
     ['js/navbar.js', 'js/messagerie.js']
 );
 ?>

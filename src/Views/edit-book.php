@@ -2,7 +2,7 @@
 use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page du livre',
-    ['css/home.css', 'css/edit-book.css', 'css/navbar.css', 'css/footer.css'],
+    ['css/home.css', 'css/edit-book.css', 'css/navbar.css', 'css/footer.css', 'css/common.css'],
     ['js/navbar.js']
 );
 ?>
