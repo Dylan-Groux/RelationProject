@@ -62,7 +62,7 @@
 
 1. **Cloner le repository**
 ```bash
-git clone https://github.com/votre-username/RelationProject.git
+git clone https://github.com/Dylan-Groux/RelationProject.git
 cd RelationProject
 ```
 

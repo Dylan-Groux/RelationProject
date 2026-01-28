@@ -1,16 +1,68 @@
--- Nettoyage des tables dans l'ordre des contraintes
-SET FOREIGN_KEY_CHECKS = 0;
-DELETE FROM message;
-DELETE FROM relation;
-DELETE FROM book;
-DELETE FROM user;
-SET FOREIGN_KEY_CHECKS = 1;
+-- ==============================================
+-- CRÉATION DES TABLES
+-- ==============================================
 
--- Réinitialisation des auto-increment
-ALTER TABLE user AUTO_INCREMENT = 1;
-ALTER TABLE book AUTO_INCREMENT = 1;
-ALTER TABLE relation AUTO_INCREMENT = 1;
-ALTER TABLE message AUTO_INCREMENT = 1;
+-- Suppression des tables existantes (si relance)
+DROP TABLE IF EXISTS message;
+DROP TABLE IF EXISTS relation;
+DROP TABLE IF EXISTS book;
+DROP TABLE IF EXISTS user;
+
+-- Table user
+CREATE TABLE user (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	picture VARCHAR(255),
+	created_at DATETIME NOT NULL,
+	updated_at DATETIME NOT NULL,
+	password VARCHAR(255) NOT NULL,
+	nickname VARCHAR(55) NOT NULL,
+	name VARCHAR(100) NOT NULL,
+	email VARCHAR(255) NOT NULL
+);
+
+-- Table book
+CREATE TABLE book (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(55) NOT NULL,
+	author VARCHAR(55) NOT NULL,
+	comment MEDIUMTEXT,
+	availability INT NOT NULL,
+	created_at DATETIME NOT NULL,
+	updated_at DATETIME NOT NULL,
+	user_id INT NOT NULL,
+	picture VARCHAR(255),
+	FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
+-- Table relation
+CREATE TABLE relation (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	first_user INT NOT NULL,
+	second_user INT NOT NULL,
+	created_at DATETIME NOT NULL,
+	FOREIGN KEY (first_user) REFERENCES user(id),
+	FOREIGN KEY (second_user) REFERENCES user(id)
+);
+
+-- Table message
+CREATE TABLE message (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	relation_id INT NOT NULL,
+	sender_id INT NOT NULL,
+	statut SMALLINT NOT NULL,
+	content MEDIUMTEXT NOT NULL,
+	sent_at DATETIME NOT NULL,
+	FOREIGN KEY (relation_id) REFERENCES relation(id),
+	FOREIGN KEY (sender_id) REFERENCES user(id)
+);
+
+-- ==============================================
+-- INSERTION DES DONNÉES
+-- ==============================================
+
+-- ==============================================
+-- INSERTION DES DONNÉES
+-- ==============================================
 
 -- Insertion de 5 utilisateurs passionnés de lecture
 -- Mots de passe: password (haché avec bcrypt)
