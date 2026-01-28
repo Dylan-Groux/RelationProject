@@ -91,7 +91,6 @@ class MessageController
         if ($_POST['message'] ?? false) {
             // Traite l'envoi du message
             $content = trim($_POST['message']);
-            var_dump($content);
             if (!empty($content)) {
                 $messageRepository->sendMessage($currentUser->getId(), $conversationId, $content);
             }
@@ -186,7 +185,6 @@ class MessageController
         if ($_POST['message'] ?? false) {
             // Traite l'envoi du message
             $content = trim($_POST['message']);
-            var_dump($content);
             if (!empty($content)) {
                 $messageRepository->sendMessage($currentUser->getId(), $conversationId, $content);
             }

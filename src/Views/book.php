@@ -31,7 +31,6 @@ EasyHeader::addHeader(
                     <img class="user-picture" src="<?= htmlspecialchars($userPicture) ?>" alt="Photo de profil" width="50" height="50">
                     <h2 class="user-nickname"><?= htmlspecialchars($userNickname) ?></h2>
                 </div>
-                <!-- TODO Bouton pour envoyer un message au propriétaire du livre -->
                 <a href="/public/messagerie/start/<?= htmlspecialchars($book->getId()) ?>" class="signup-btn">Envoyer un message</a>
             </section>
         </div>

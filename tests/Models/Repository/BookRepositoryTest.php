@@ -199,9 +199,9 @@ class BookRepositoryTest extends TestCase
         $pdoMock->method('prepare')->willReturn($statementMock);
 
         $bookRepository = new BookRepository($pdoMock);
-        $books = $bookRepository->searchBookByTitle('test');
+        $books = $bookRepository->searchBookByTitleWithUser('test');
         $this->assertIsArray($books);
-        $this->assertInstanceOf(\App\Models\Entity\Book::class, $books[0]);
+        $this->assertInstanceOf(\App\Models\Entity\DTO\BookWithUserDTO::class, $books[0]);
     }
 
     public function testSearchBookByTitleWithNoResultReturnsEmptyArray()
@@ -213,7 +213,7 @@ class BookRepositoryTest extends TestCase
         $pdoMock->method('prepare')->willReturn($statementMock);
 
         $bookRepository = new BookRepository($pdoMock);
-        $books = $bookRepository->searchBookByTitle('nonexistenttitle');
+        $books = $bookRepository->searchBookByTitleWithUser('nonexistenttitle');
         $this->assertIsArray($books);
         $this->assertEmpty($books);
     }

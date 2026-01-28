@@ -195,6 +195,7 @@ class BookRepository
         $sql = "SELECT b.*, u.nickname, u.picture as user_picture 
                 FROM book b 
                 INNER JOIN user u ON b.user_id = u.id 
+                WHERE b.availability = 1
                 ORDER BY b.created_at DESC 
                 LIMIT :limit OFFSET :offset";
         
@@ -229,7 +230,7 @@ class BookRepository
         $sql = "SELECT b.*, u.nickname, u.picture as user_picture 
                 FROM book b 
                 INNER JOIN user u ON b.user_id = u.id 
-                WHERE b.title LIKE :title";
+                WHERE b.title LIKE :title AND b.availability = 1";
         
         $stmt = $this->pdo->prepare($sql);
         $likeTitle = '%' . $title . '%';
@@ -260,7 +261,7 @@ class BookRepository
      */
     public function searchBookByTitlePaginated(string $title, int $limit, int $offset): array
     {
-        $sql = "SELECT * FROM book WHERE title LIKE :title ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+        $sql = "SELECT * FROM book WHERE title LIKE :title AND availability = 1 ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($sql);
         $likeTitle = '%' . $title . '%';
         $stmt->bindValue(':title', $likeTitle, \PDO::PARAM_STR);
@@ -335,7 +336,7 @@ class BookRepository
           $stmt->bindValue(':title', $title, \PDO::PARAM_STR);
           $stmt->bindValue(':author', $author, \PDO::PARAM_STR);
           $stmt->bindValue(':picture', $book->getPicture(), \PDO::PARAM_STR);
-          $stmt->bindValue(':availability', $book->getAvailailityInt(), \PDO::PARAM_INT);
+          $stmt->bindValue(':availability', $book->getAvailabilityInt(), \PDO::PARAM_INT);
           $stmt->bindValue(':comment', $book->getComment(), \PDO::PARAM_STR);
           $stmt->bindValue(':user_id', $book->getUserId(), \PDO::PARAM_INT);
           $stmt->bindValue(':created_at', $now, \PDO::PARAM_STR);

@@ -62,7 +62,7 @@ class MessageRepository
                     ELSE r.first_user
                 END
                 WHERE r.first_user = :userId OR r.second_user = :userId
-                ORDER BY r.created_at ASC";
+                ORDER BY r.created_at DESC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();

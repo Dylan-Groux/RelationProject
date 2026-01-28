@@ -25,8 +25,6 @@ EasyHeader::addHeader(
         <section class="books-section">
             <div class="books-container">
                 <div class="books-grid">
-                    <!-- TODO : Affichage des livres non gérer si indisponible -->
-                    <!-- TODO : afficher le nom au lieu de l'ID -->
                 <?php foreach ($booksWithUser as $dto): ?>
                     <a class="book" href="<?= '/public/book/' . htmlspecialchars($dto->book->getId()) ?>">
                         <img src="<?= htmlspecialchars($dto->book->getPicture()) ?>" class="book-img" alt="Couverture du livre">

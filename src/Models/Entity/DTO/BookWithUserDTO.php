@@ -9,7 +9,7 @@ class BookWithUserDTO
     public function __construct(
         public readonly Book $book,
         public readonly string $userNickname,
-        public readonly string $userPicture
+        public readonly ?string $userPicture
     ) {
     }
 }
