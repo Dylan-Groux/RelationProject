@@ -55,14 +55,16 @@ class MessageRepository
      */
     public function getAllRelationWithUserInfos(int $userId): array
     {
-        $sql = "SELECT r.*, u.picture, u.nickname
+        $sql = "SELECT r.*, u.picture, u.nickname, MAX(m.sent_at) as last_message_date
                 FROM relation r
                 JOIN user u ON u.id = CASE
                     WHEN r.first_user = :userId THEN r.second_user
                     ELSE r.first_user
                 END
+                LEFT JOIN message m ON m.relation_id = r.id
                 WHERE r.first_user = :userId OR r.second_user = :userId
-                ORDER BY r.created_at DESC";
+                GROUP BY r.id, u.picture, u.nickname
+                ORDER BY last_message_date DESC, r.created_at DESC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
@@ -166,5 +168,39 @@ class MessageRepository
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? (int)$result['id'] : null;
+    }
+    
+    /**
+     * Récupère tous les messages d'une conversation avec vérification de sécurité.
+     * @param int $relationId
+     * @param int $userId
+     * @return Message[]
+     */
+    public function getConversationMessages(int $relationId, int $userId): array
+    {
+        $sql = "SELECT m.*, u.nickname, u.picture, DATE_FORMAT(m.sent_at, '%H:%i') AS formatted_time
+                FROM message m
+                JOIN user u ON m.sender_id = u.id
+                JOIN relation r ON m.relation_id = r.id
+                WHERE m.relation_id = :relationId 
+                AND (r.first_user = :userId OR r.second_user = :userId)
+                ORDER BY m.sent_at ASC, m.id ASC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':relationId', $relationId, PDO::PARAM_INT);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        $messages = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $messages[] = new Message(
+                (int)$row['id'],
+                (int)$row['relation_id'],
+                (int)$row['sender_id'],
+                $row['statut'],
+                $row['content'],
+                new \DateTimeImmutable($row['sent_at'])
+            );
+        }
+        return $messages;
     }
 }
