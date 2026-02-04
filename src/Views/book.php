@@ -28,8 +28,10 @@ EasyHeader::addHeader(
             <section class="user-section">
                 <h4>PROPRIÉTAIRE</h4>
                 <div class="user-info-grid">
-                    <img class="user-picture" src="<?= htmlspecialchars($userPicture) ?>" alt="Photo de profil" width="50" height="50">
-                    <h2 class="user-nickname"><?= htmlspecialchars($userNickname) ?></h2>
+                    <a class="user-info-link" href="/public/user/<?= htmlspecialchars($book->getUserId()) ?>">
+                        <img class="user-picture" src="<?= htmlspecialchars($userPicture) ?>" alt="Photo de profil" width="50" height="50">
+                        <h2 class="user-nickname"><?= htmlspecialchars($userNickname) ?></h2>
+                    </a>
                 </div>
                 <a href="/public/messagerie/start/<?= htmlspecialchars($book->getId()) ?>" class="signup-btn">Envoyer un message</a>
             </section>

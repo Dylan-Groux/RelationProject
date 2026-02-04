@@ -21,10 +21,10 @@ EasyHeader::addHeader(
                 }
                 ?>
                 <img class="user-avatar" src="<?= $userPicture ?>" alt="Avatar utilisateur" width="150" height="150">
-               <!-- CSRF Token à faire -->
                 <form class="avatar-form" id='user-avatar-form' method="post" action="/public/user/picture/update/<?= htmlspecialchars($userData['user']->getId()) ?>" enctype="multipart/form-data">
                     <label class="modifier" for="user-avatar-upload">modifier</label>
                     <input type="file" id="user-avatar-upload" name="picture" accept=".jpeg,.jpg,.png">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
                 </form>
             </div>
             <div>
@@ -50,6 +50,7 @@ EasyHeader::addHeader(
         <section class="personal-info-section">
             <h3>Vos informations personnelles</h3>
             <form class="info-form" method="post" action="/public/user/update/<?= htmlspecialchars($userData['user']->getId()) ?>">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
                 <div class="info-grid">
                     <label class="info-email" for="email">Email</label>
                     <input type="email" id="email" name="email" value="<?= htmlspecialchars($userData['user']->getEmail()) ?>">
@@ -63,7 +64,6 @@ EasyHeader::addHeader(
                 <button type="submit" class="edit-link">Enregistrer</button>
             </form>
         </section>
-        <?php include_once __DIR__ . '/Components/NewBook.php'; ?>
         <section class="liste-books-section-mobile">
             <div class="user-books-grid">
                 <?php if (empty($userData['books'])): ?>

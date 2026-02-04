@@ -35,13 +35,6 @@ EasyHeader::addHeader(
                 <?php endforeach; ?>
                 </div>
             </div>
-            <div class="pagination-container">
-                <?php
-                $searchParam = isset($_GET['search']) ? '&search=' . urlencode($_GET['search']) : '';
-                for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <a class="pagination-link" href="?page=<?= $i . $searchParam ?>"><?= $i ?></a>
-                <?php endfor; ?>
-            </div>
         </section>
     </main>
     <?php include_once __DIR__ . '/footer.php'; ?>

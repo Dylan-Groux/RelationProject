@@ -119,12 +119,19 @@ body {
 }
 
 .user-info-grid {
-    display: grid;
-    grid-template-columns: auto auto;
+    display: flex;
     align-items: center;
     width: fit-content;
     gap: 15px;
     margin-bottom: 45px;
+}
+
+.user-info-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    color: inherit;
 }
 
 .user-picture {

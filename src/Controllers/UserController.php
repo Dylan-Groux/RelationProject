@@ -22,8 +22,36 @@ class UserController extends AbstractController
             header('Location: /public');
             exit;
         }
+        
+        $bookRepository = new \App\Models\Repository\BookRepository();
+        $userBooks = $bookRepository->getAllBooksByUserId($id);
+        $bookCount = count($userBooks);
+        
+        // Calculer l'ancienneté de l'utilisateur
+        $createdAt = $user->getCreatedAt();
+        if (is_string($createdAt)) {
+            $createdAt = new \DateTime($createdAt);
+        }
+        $now = new \DateTime();
+        $interval = $createdAt->diff($now);
+        
+        if ($interval->y > 0) {
+            $memberSince = $interval->y . ' an' . ($interval->y > 1 ? 's' : '');
+        } elseif ($interval->m > 0) {
+            $memberSince = $interval->m . ' mois';
+        } elseif ($interval->d > 0) {
+            $memberSince = $interval->d . ' jour' . ($interval->d > 1 ? 's' : '');
+        } else {
+            $memberSince = 'aujourd\'hui';
+        }
+        
         $view = new View('user');
-        $view->render(['user' => $user]);
+        $view->render([
+            'user' => $user,
+            'userBooks' => $userBooks,
+            'bookCount' => $bookCount,
+            'memberSince' => $memberSince
+        ]);
     }
 
     /**

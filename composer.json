@@ -1,6 +1,6 @@
 {
-    "name": "openclassroom/hexagonal-base",
-    "description": "Base d'architecture hexagonale PHP",
+    "name": "openclassrooms/tomtroc-mvc",
+    "description": "Base d'architecture MVC PHP",
     "type": "project",
     "autoload": {
         "psr-4": {
