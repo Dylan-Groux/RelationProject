@@ -12,16 +12,15 @@ abstract class AbstractController
     public function validateCSRFToken(string $token): void
     {
         if (!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']) {
-            header('Location: /public/');
-            exit();
+            header('Location: /public/login');
+            throw new LoginException("Invalid CSRF token");
         }
     }
 
     public function checkUserAccess(int $userId): bool
     {
         if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] !== $userId) {
-            header('Location: /public/');
-            exit();
+            throw new LoginException("User not authenticated or unauthorized");
         }
 
         return true;

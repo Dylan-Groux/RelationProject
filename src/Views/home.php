@@ -28,16 +28,13 @@ EasyHeader::addHeader(
             <div class="books-container">
                 <h2 class="books-title">Les derniers livres ajoutés</h2>
                 <div class="books-grid">
-                <?php $count = 0; ?>
-                <?php foreach ($books as $book): ?>
-                    <?php if ($count >= 4) break; ?>
+                <?php foreach ($books as $bookItem): ?>
                     <div class="book">
-                        <img src="<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre">
-                        <p class="book-title"><?= htmlspecialchars($book->getTitle()) ?></p>
-                        <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
-                        <p class="book-seller">Vendu par user <?= htmlspecialchars($book->getUserId()) ?></p>
+                        <img src="<?= htmlspecialchars($bookItem->book->getPicture()) ?>" class="book-img" alt="Couverture du livre">
+                        <p class="book-title"><?= htmlspecialchars($bookItem->book->getTitle()) ?></p>
+                        <p class="book-author"><?= htmlspecialchars($bookItem->book->getAuthor()) ?></p>
+                        <p class="book-seller">Vendu par <?= htmlspecialchars($bookItem->userNickname) ?></p>
                     </div>
-                    <?php $count++; ?>
                 <?php endforeach; ?>
                 </div>
                 <form  class="btn-container" action="/public/books" method="get">

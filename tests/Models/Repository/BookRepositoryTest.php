@@ -2,10 +2,12 @@
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use App\Models\Repository\BookRepository;
 
 use Tests\Fixtures\FakeBook;
 
+#[AllowMockObjectsWithoutExpectations]
 class BookRepositoryTest extends TestCase
 {
     public function mockBase()

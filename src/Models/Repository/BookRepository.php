@@ -185,6 +185,38 @@ class BookRepository
     }
 
     /**
+     * Récupère les derniers livres ajoutés avec les informations utilisateur.
+     * @param int $limit
+     * @return BookWithUserDTO[]
+     */
+    public function getLastBooksWithUser(int $limit = 4): array
+    {
+        $sql = "SELECT b.*, u.nickname, u.picture as user_picture
+                FROM book b
+                INNER JOIN user u ON b.user_id = u.id
+                ORDER BY b.created_at DESC
+                LIMIT :limit";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        $results = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $userNickname = $row['nickname'] ?? '';
+            $userPicture = $row['user_picture'] ?? null;
+
+            $results[] = new BookWithUserDTO(
+                book: new Book($row),
+                userNickname: $userNickname,
+                userPicture: $userPicture
+            );
+        }
+
+        return $results;
+    }
+
+    /**
      * Récupère les livres paginés avec les informations utilisateur.
      * @param int $limit
      * @param int $offset
@@ -348,9 +380,8 @@ class BookRepository
 
           return false;
 
-       } catch (\PDOException $e) {
-          error_log('BookRepository::createBook PDOException: ' . $e->getMessage());
-          return false;
-       }
+         } catch (\PDOException $e) {
+             return false;
+         }
     }
 }

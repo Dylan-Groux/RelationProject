@@ -27,7 +27,6 @@ class UserController extends AbstractController
         $userBooks = $bookRepository->getAllBooksByUserId($id);
         $bookCount = count($userBooks);
         
-        // Calculer l'ancienneté de l'utilisateur
         $createdAt = $user->getCreatedAt();
         if (is_string($createdAt)) {
             $createdAt = new \DateTime($createdAt);

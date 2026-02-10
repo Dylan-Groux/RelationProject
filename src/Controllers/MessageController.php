@@ -79,6 +79,7 @@ class MessageController extends AbstractController
                 header("Location: /public/books", true, 302);
                 exit();
             } else {
+                //TODO : Faire un message vide pour initialiser la conversation
                 $messageRepository->sendMessage($userId, $relationId, "Bonjour! Je suis intéressé par votre livre.");
             }
         }
@@ -94,7 +95,12 @@ class MessageController extends AbstractController
     public function showMessaging(int $userId, ?int $conversationId = null): void
     {
         // Sécurité : Vérifier que l'utilisateur accède à ses propres messages
-        $this->checkUserAccess($userId);
+        try {
+            $this->checkUserAccess($userId);
+        } catch (LoginException $e) {
+            header('Location: /public/login');
+            exit();
+        }
         
         $currentUser = $this->currentUser;
         $messageRepository = new MessageRepository();

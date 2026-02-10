@@ -8,6 +8,7 @@ namespace App\Models\Entity;
  * Représente les différents statuts d'une relation entre utilisateurs.
  */
 enum MessageStatus: int {
+    case UNKNOWN = 0;
     case UNREAD = 1;
     case READ = 2;
 }
@@ -69,10 +70,8 @@ class Message
      */
     public function getStatutLabel(): string {
         return match ($this->statut) {
-            MessageStatus::AVAILABLE => 'Available',
-            MessageStatus::PENDING => 'Pending',
-            MessageStatus::REJECTED => 'Rejected',
-            MessageStatus::ERRORED => 'Errored',
+            MessageStatus::UNREAD => 'Unread',
+            MessageStatus::READ => 'Read',
             default => 'Unknown',
         };
     }

@@ -30,11 +30,7 @@ class AbstractControllerTest extends TestCase
     public function testCheckUserAuthenticatedRedirectWhenNoUserId()
     {
         $controller = new DummyController();
-        try {
-            $controller->checkUserAccess(42);
-        } catch (LoginException $e) {
-            $this->matchesRegularExpression('/Location: \/login/');
-            $this->assertInstanceOf(LoginException::class, $e);
-        }
+        $this->expectException(LoginException::class);
+        $controller->checkUserAccess(42);
     }
 }

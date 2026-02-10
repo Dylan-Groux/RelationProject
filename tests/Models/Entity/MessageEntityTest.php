@@ -30,7 +30,7 @@ class MessageEntityTest extends TestCase
             content: 'Test message'
         );
 
-        $this->assertEquals('Available', $message->getStatutLabel());
+        $this->assertEquals('Unread', $message->getStatutLabel());
     }
 
     public function testStatutLabelPending()
@@ -43,33 +43,7 @@ class MessageEntityTest extends TestCase
             content: 'Test message'
         );
 
-        $this->assertEquals('Pending', $message->getStatutLabel());
-    }
-
-    public function testStatutLabelRejected()
-    {
-        $message = new Message(
-            id: 1,
-            relationId:1,
-            senderId:2,
-            statut: 3,
-            content: 'Test message'
-        );
-
-        $this->assertEquals('Rejected', $message->getStatutLabel());
-    }
-
-    public function testStatutLabelErrored()
-    {
-        $message = new Message(
-            id: 1,
-            relationId:1,
-            senderId:2,
-            statut: 4,
-            content: 'Test message'
-        );
-
-        $this->assertEquals('Errored', $message->getStatutLabel());
+        $this->assertEquals('Read', $message->getStatutLabel());
     }
 
     public function testDateTimeImmutableInitialization()

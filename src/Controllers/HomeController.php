@@ -22,7 +22,7 @@ class HomeController
         }
 
         $bookRepository = new BookRepository();
-        $books = $bookRepository->getAllBooks();
+        $books = $bookRepository->getLastBooksWithUser(4);
 
         $view = new View('home');
         $view->render(['books' => $books]);

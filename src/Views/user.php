@@ -20,13 +20,13 @@ EasyHeader::addHeader(
                     <p><?= $bookCount ?> livre<?= $bookCount > 1 ? 's' : '' ?></p>
                 </div>
             </div>
+            <?php foreach ($userBooks as $book): ?>
             <div class="message-section">
-                <button onclick="window.location.href='/public/messagerie/start/<?= htmlspecialchars($user->getId()) ?>'" class="cta-btn">Écrire un message</button>
+                <a href='/public/messagerie/start/<?= htmlspecialchars($book->getId()) ?>' class="cta-btn">Écrire un message</a>
             </div>
         </section>
         <section class="user-books-section-mobile">
             <div class="user-books-grid">
-                <?php foreach ($userBooks as $book): ?>
                     <div class="user-book-card modern-book-card">
                         <div class="modern-book-content">
                             <img src="<?= htmlspecialchars($book->getPicture()) ?>" alt="<?= htmlspecialchars($book->getTitle()) ?>" class="user-book-image" width="100" height="100">
@@ -37,8 +37,8 @@ EasyHeader::addHeader(
                         </div>
                         <p class="user-book-description"><?= htmlspecialchars($book->getComment()) ?></p>
                     </div>
-                <?php endforeach; ?>
-            </div>
+                </div>
+            <?php endforeach; ?>
         </section>
         <section class="user-books-section-desktop">
             <div class="user-books-table-wrapper">

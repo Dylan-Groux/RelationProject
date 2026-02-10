@@ -115,7 +115,7 @@ body.home-page footer {
 
 .book {
     display: grid;
-    grid-template-rows: auto 30px 10px 30px;
+    grid-template-rows: auto 30px 30px 30px;
     box-shadow: 0px 3.2px 19.2px 0px #00000003;
 }
 

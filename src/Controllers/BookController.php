@@ -77,7 +77,12 @@ class BookController extends AbstractController
             exit;
         }
 
-        $this->checkUserAccess($book->getUserId());
+        try {
+            $this->checkUserAccess($book->getUserId());
+        } catch (LoginException $e) {
+            header('Location: /public/login');
+            exit();
+        }
 
         $view = new View('edit-book');
         $view->render([
@@ -138,7 +143,12 @@ class BookController extends AbstractController
     public function deleteBook(int $id): void
     {
         $bookRepository = new BookRepository();
-        $this->checkUserAccess($bookRepository->getBookById($id)->getUserId());
+        try {
+            $this->checkUserAccess($bookRepository->getBookById($id)->getUserId());
+        } catch (LoginException $e) {
+            header('Location: /public/login');
+            exit();
+        }
         $success = $bookRepository->deleteBook($id);
 
         if ($success) {

@@ -1,10 +1,12 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use App\Models\Repository\BookRepository;
 
 use function PHPUnit\Framework\assertTrue;
 
+#[AllowMockObjectsWithoutExpectations]
 class BookHelperTest extends TestCase
 {
     public function mock()
