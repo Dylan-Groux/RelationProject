@@ -33,7 +33,10 @@ EasyHeader::addHeader(
                         <h2 class="user-nickname"><?= htmlspecialchars($userNickname) ?></h2>
                     </a>
                 </div>
-                <a href="/public/messagerie/start/<?= htmlspecialchars($book->getId()) ?>" class="signup-btn">Envoyer un message</a>
+                <form method="POST" action="/public/messagerie/start/<?= htmlspecialchars($book->getId()) ?>">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken ?? '') ?>">
+                    <button type="submit" class="signup-btn">Envoyer un message</button>
+                </form>
             </section>
         </div>
     </main>

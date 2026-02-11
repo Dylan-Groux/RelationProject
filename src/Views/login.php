@@ -23,6 +23,7 @@ EasyHeader::addHeader(
                         <input type="password" id="password" name="password" class="register-input" required>
                     </div>
                     <button type="submit" class="signup-btn">Se connecter</button>
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
                 </form>
                 <div class="login-link">
                     <p>Pas encore de compte ? <a href="/public/register">Inscrivez-vous</a></p>

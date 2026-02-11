@@ -47,7 +47,7 @@ class MessageController extends AbstractController
 
 
 
-    #[\App\Library\Router('/messagerie/start/{book_id}', 'GET')]
+    #[\App\Library\Router('/messagerie/start/{book_id}', 'POST')]
     public function startNewRelation(int $book_id): void
     {
         $userId = $this->userId;
@@ -144,8 +144,8 @@ class MessageController extends AbstractController
         }
 
         // Étape 4: Générer le token CSRF
-        $csrfToken = bin2hex(random_bytes(32));
-        $_SESSION['CSRF_token'] = $csrfToken;
+        $this->requireCsrfToken();
+        $csrfToken = $_SESSION['csrf_token'];
 
         // Étape 5: Render la vue unifiée
         $view = new View('messagerie');
@@ -174,11 +174,7 @@ class MessageController extends AbstractController
         $messageRepository = new MessageRepository();
 
         // Vérification CSRF
-        if (!isset($_POST['CSRF_token']) || !hash_equals($_SESSION['CSRF_token'], $_POST['CSRF_token'])) {
-            http_response_code(403);
-            header('Location: /public/messagerie/' . $userId, true, 302);
-            exit();
-        }
+        $this->validateCSRFToken($_POST['csrf_token'] ?? '');
 
         // Vérifier que l'utilisateur fait partie de la conversation
         $conv = $messageRepository->getConversationInformations($conversationId, $userId);

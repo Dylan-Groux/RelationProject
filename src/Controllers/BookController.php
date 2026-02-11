@@ -49,13 +49,20 @@ class BookController extends AbstractController
         $userRepository = new \App\Models\Repository\UserRepository();
         $user = $userRepository->getUserById($book->getUserId());
 
+        $this->requireCsrfToken();
+
         if ($book === null) {
             header('Location: /public/books');
             exit;
         }
 
         $view = new View('book');
-        $view->render(['book' => $book, 'userPicture' => $user->getPicture(), 'userNickname' => $user->getNickname()]);
+        $view->render([
+            'book' => $book,
+            'userPicture' => $user->getPicture(),
+            'userNickname' => $user->getNickname(),
+            'csrfToken' => $_SESSION['csrf_token']
+        ]);
     }
 
     /**Affiche l'édition d'un livre spécifique 
@@ -68,9 +75,7 @@ class BookController extends AbstractController
         $bookRepository = new BookRepository();
         $book = $bookRepository->getBookById($id);
 
-        if (!isset($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
+        $this->requireCsrfToken();
 
         if ($book === null) {
             header('Location: /public/books');
@@ -102,7 +107,7 @@ class BookController extends AbstractController
         $bookRepository = new BookRepository();
 
         try {
-            $this->validateCSRFToken($_POST['CSRF_token'] ?? '');
+            $this->validateCSRFToken($_POST['csrf_token'] ?? '');
             $data = [
             'title' => $_POST['title'] ?? null,
             'picture' => $_POST['picture'] ?? null,
@@ -139,11 +144,12 @@ class BookController extends AbstractController
      * @param int $id
      * @return void
      */
-    #[Router('/book/delete/{id}', 'GET')]
+    #[Router('/book/delete/{id}', 'POST')]
     public function deleteBook(int $id): void
     {
         $bookRepository = new BookRepository();
         try {
+            $this->validateCSRFToken($_POST['csrf_token'] ?? '');
             $this->checkUserAccess($bookRepository->getBookById($id)->getUserId());
         } catch (LoginException $e) {
             header('Location: /public/login');

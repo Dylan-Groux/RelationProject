@@ -74,7 +74,7 @@ EasyHeader::addHeader(
                 <div class="send-message-form">
                     <form action="/public/messagerie/conversation/<?= htmlspecialchars($conversationId) ?>/send" method="POST">
                         <textarea name="message" placeholder="Tapez votre message ici" required></textarea>
-                        <input type="hidden" name="CSRF_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
                         <button type="submit">Envoyer</button>
                     </form>
                 </div>
@@ -146,7 +146,7 @@ EasyHeader::addHeader(
                     <div class="send-message-form">
                         <form action="/public/messagerie/conversation/<?= htmlspecialchars($conversationId) ?>/send" method="POST">
                             <textarea name="message" placeholder="Tapez votre message ici" required></textarea>
-                            <input type="hidden" name="CSRF_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
                             <button type="submit">Envoyer</button>
                         </form>
                     </div>

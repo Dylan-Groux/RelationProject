@@ -35,12 +35,12 @@ $routes = [
     ['pattern' => '/register/userRegister', 'controller' => RegisterController::class, 'action' => 'registerUser', 'method' => 'POST'],
     ['pattern' => '/user/update/{id}', 'controller' => UserController::class, 'action' => 'updateUser', 'method' => 'POST'],
     ['pattern' => '/book/update/{id}', 'controller' => BookController::class, 'action' => 'updateBook', 'method' => 'POST'],
-    ['pattern' => '/book/delete/{id}', 'controller' => BookController::class, 'action' => 'deleteBook', 'method' => 'GET'],
+    ['pattern' => '/book/delete/{id}', 'controller' => BookController::class, 'action' => 'deleteBook', 'method' => 'POST'],
     ['pattern' => '/user/picture/update/{id}', 'controller' => UserController::class, 'action' => 'updateUserPicture', 'method' => 'POST'],
     ['pattern' => '/messagerie/conversation/{conversationId}/send', 'controller' => \App\Controllers\MessageController::class, 'action' => 'sendMessage', 'method' => 'POST'],
     ['pattern' => '/messagerie/{userId}/conversation/{conversationId}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'showMessaging', 'method' => 'GET'],
     ['pattern' => '/messagerie/{userId}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'showMessaging', 'method' => 'GET'],
-    ['pattern' => '/messagerie/start/{book_id}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'startNewRelation', 'method' => 'GET'],
+    ['pattern' => '/messagerie/start/{book_id}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'startNewRelation', 'method' => 'POST'],
     ['pattern' => '/book/create/book', 'controller' => BookController::class, 'action' => 'createBook', 'method' => 'POST'],
     ];
 

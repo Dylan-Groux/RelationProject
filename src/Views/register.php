@@ -30,6 +30,7 @@ EasyHeader::addHeader(
                         <label for="password" class="register-label">Mot de passe</label>
                         <input type="password" id="password" name="password" class="register-input" required>
                     </div>
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
                     <button type="submit" class="signup-btn">S'inscrire</button>
                 </form>
                 <div class="login-link">

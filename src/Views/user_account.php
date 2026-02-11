@@ -98,7 +98,10 @@ EasyHeader::addHeader(
                         <p class="user-book-description"><?= htmlspecialchars($shortDesc) ?></p>
                         <div class="user-book-actions">
                             <a href="/public/book/edit/<?= $book->getId() ?>" class="edit-button">Editer</a>
-                            <a href="/public/book/delete/<?= $book->getId() ?>" class="delete-button">Supprimer</a>
+                            <form method="POST" action="/public/book/delete/<?= $book->getId() ?>">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                                <button type="submit" class="delete-button">Supprimer</button>
+                            </form>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -154,7 +157,10 @@ EasyHeader::addHeader(
                             </td>
                             <td>
                                 <a href="/public/book/edit/<?= $book->getId() ?>" class="edit-button">Editer</a>
-                                <a href="/public/book/delete/<?= $book->getId() ?>" class="delete-button">Supprimer</a>
+                                <form method="POST" action="/public/book/delete/<?= $book->getId() ?>">
+                                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                                    <button type="submit" class="delete-button">Supprimer</button>
+                                </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -22,6 +22,8 @@ class UserController extends AbstractController
             header('Location: /public');
             exit;
         }
+
+        $this->requireCsrfToken();
         
         $bookRepository = new \App\Models\Repository\BookRepository();
         $userBooks = $bookRepository->getAllBooksByUserId($id);
@@ -49,7 +51,8 @@ class UserController extends AbstractController
             'user' => $user,
             'userBooks' => $userBooks,
             'bookCount' => $bookCount,
-            'memberSince' => $memberSince
+            'memberSince' => $memberSince,
+            'csrfToken' => $_SESSION['csrf_token']
         ]);
     }
 
@@ -59,12 +62,10 @@ class UserController extends AbstractController
     #[Router('/user/account/{id}', 'GET')]
     public function showUserAccount(string $id): void
     {
-        if (!isset($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+        $this->requireCsrfToken();
         // Redirige si l'ID n'est pas numérique ou ne correspond pas à la session
         if (!isset($_SESSION['user_id']) || !is_numeric($id) || $_SESSION['user_id'] != $id) {
             header('Location: /public/user/account/' . $_SESSION['user_id']);
@@ -91,6 +92,7 @@ class UserController extends AbstractController
     #[Router('/user/update/{id}', 'POST')]
     public function updateUser(int $id): void
     {
+        $this->validateCSRFToken($_POST['csrf_token'] ?? '');
         $userRepository = new UserRepository();
         $user = $userRepository->getUserById($id);
         if ($user === null) {
@@ -121,6 +123,7 @@ class UserController extends AbstractController
     #[Router('/user/picture/update/{id}', 'POST')]
     public function updateUserPicture(int $id): void
     {
+        $this->validateCSRFToken($_POST['csrf_token'] ?? '');
         // Vérifie que l'utilisateur est connecté et que l'ID correspond
         if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != $id) {
             header('Location: /public/user/account/' . $id);

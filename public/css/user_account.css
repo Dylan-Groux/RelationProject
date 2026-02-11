@@ -253,6 +253,20 @@
     margin-top: 10px;
 }
 
+.user-book-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.user-book-actions form,
+.user-books-table td form {
+    display: inline;
+    margin: 0;
+}
+
 .edit-button, .delete-button {
     font-family: "Inter", sans-serif;
     font-weight: 400;

@@ -5,9 +5,9 @@ namespace App\Controllers;
 use App\Models\Repository\BookRepository;
 use App\Views\View;
 use App\Library\Router;
-use App\Services\CheckAuth;
+use App\Controllers\Abstract\AbstractController;
 
-class HomeController
+class HomeController extends AbstractController
 {
     /**
      * Affiche la page d'accueil de présentation.
@@ -16,11 +16,6 @@ class HomeController
     #[Router('/', 'GET')]
     public function index(): void
     {
-        $checkAuth = new CheckAuth();
-        if (!$checkAuth->checkUserAuthenticated()) {
-            return;
-        }
-
         $bookRepository = new BookRepository();
         $books = $bookRepository->getLastBooksWithUser(4);
 

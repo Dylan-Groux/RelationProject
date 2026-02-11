@@ -22,7 +22,10 @@ EasyHeader::addHeader(
             </div>
             <?php foreach ($userBooks as $book): ?>
             <div class="message-section">
-                <a href='/public/messagerie/start/<?= htmlspecialchars($book->getId()) ?>' class="cta-btn">Écrire un message</a>
+                <form method="POST" action="/public/messagerie/start/<?= htmlspecialchars($book->getId()) ?>">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken ?? '') ?>">
+                    <button type="submit" class="cta-btn">Écrire un message</button>
+                </form>
             </div>
         </section>
         <section class="user-books-section-mobile">
