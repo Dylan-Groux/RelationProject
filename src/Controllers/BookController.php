@@ -21,15 +21,19 @@ class BookController extends AbstractController
         $bookRepository = new BookRepository();
         $userRepository = new \App\Models\Repository\UserRepository();
 
-        $books = $bookRepository->getAllBooks();
-        $booksWithUser = [];
+        if ($search !== '') {
+            $booksWithUser = $bookRepository->searchBookByTitleWithUser($search);
+        } else {
+            $books = $bookRepository->getAllBooks();
+            $booksWithUser = [];
 
-        foreach ($books as $book) {
-            $user = $userRepository->getUserById($book->getUserId());
-            $dto = new \stdClass();
-            $dto->book = $book;
-            $dto->userNickname = $user ? $user->getNickname() : 'Utilisateur inconnu';
-            $booksWithUser[] = $dto;
+            foreach ($books as $book) {
+                $user = $userRepository->getUserById($book->getUserId());
+                $dto = new \stdClass();
+                $dto->book = $book;
+                $dto->userNickname = $user ? $user->getNickname() : 'Utilisateur inconnu';
+                $booksWithUser[] = $dto;
+            }
         }
 
         $view = new View('books');
