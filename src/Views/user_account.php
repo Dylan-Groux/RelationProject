@@ -30,6 +30,7 @@ EasyHeader::addHeader(
             <div>
                 <div class="line-bar"></div>
             </div>
+            <?php include_once __DIR__ . '/Components/newbook.php'; ?>
             <div>
                 <h2 class="user-title"><?= htmlspecialchars($userData['user']->getNickName()); ?></h2>
                 <p class="user-member">Membre depuis <?= htmlspecialchars($userData['user']->getMembershipDuration()); ?></p>

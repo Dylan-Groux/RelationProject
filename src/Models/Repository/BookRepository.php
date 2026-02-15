@@ -6,6 +6,7 @@ namespace App\Models\Repository;
 use App\Models\Database\DBManager;
 use App\Models\Entity\Book;
 use App\Models\Entity\DTO\BookWithUserDTO;
+use PDO;
 
 /**
  * Class BookRepository
@@ -14,10 +15,33 @@ use App\Models\Entity\DTO\BookWithUserDTO;
 class BookRepository
 {
     private \PDO $pdo;
+    private $fileMover;
+    private $nowProvider;
+    private string $uploadDir;
+    private $unlink;
+    private $isDir;
+    private $mkdir;
+    private $fileExists;
 
-    public function __construct(?\PDO $pdo = null)
+    public function __construct (
+        ?\PDO $pdo = null,
+        ?callable $fileMover = null,
+        ?callable $nowProvider = null,
+        ?string $uploadDir = '',
+        ?callable $unlink = null,
+        ?callable $isDir = null,
+        ?callable $mkdir = null,
+        ?callable $fileExists = null
+    )
     {
         $this->pdo = $pdo ?? DBManager::getInstance()->getPdo();
+        $this->fileMover = $fileMover ?? "move_uploaded_file";
+        $this->nowProvider = $nowProvider ?? fn(): int=> time();
+        $this->uploadDir = $uploadDir ?? dirname(__DIR__, 3) . '/public/uploads/books/';
+        $this->unlink = $unlink ?? "unlink";
+        $this->isDir = $isDir ?? "is_dir";
+        $this->mkdir = $mkdir ?? "mkdir";
+        $this->fileExists = $fileExists ?? "file_exists";
     }
 
     /**

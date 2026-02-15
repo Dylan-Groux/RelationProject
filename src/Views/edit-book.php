@@ -3,7 +3,7 @@ use App\Library\EasyHeader;
 EasyHeader::addHeader(
     'Page du livre',
     ['css/home.css', 'css/edit-book.css', 'css/navbar.css', 'css/footer.css', 'css/common.css'],
-    ['js/navbar.js']
+    ['js/navbar.js', 'js/button.js']
 );
 ?>
 <body>
@@ -18,11 +18,10 @@ EasyHeader::addHeader(
         <div class="book-img-container">
             <p>Photo</p>
             <img src="<?= htmlspecialchars($book->getPicture()) ?>" class="book-img" alt="Couverture du livre" width="720" height="863">
-            <!-- Formulaire pour modifier la photo du livre ne marche pas encore -->
-            <form class="edit-picture-form" action="<?= '/public/book/' . $book->getId() . '/edit-picture' ?>" method="post" enctype="multipart/form-data">
+            <form class="edit-picture-form" id="edit-picture-form" method="post" action="<?= '/public/book/edit-picture/' . $book->getId() . '/' . ($_SESSION['user_id'] ?? '') ?>" enctype="multipart/form-data">
                 <label for="picture" class="edit-picture-label">Modifier la photo</label>
-                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
                 <input type="file" id="picture" name="picture" accept="image/*" required>
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
             </form>
         </div>
         <div class="books-all-container">

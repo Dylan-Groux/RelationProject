@@ -6,6 +6,7 @@ use App\Models\Repository\UserRepository;
 use App\Views\View;
 use App\Library\Router;
 use App\Controllers\Abstract\AbstractController;
+use App\Models\Services\PictureService;
 
 class UserController extends AbstractController
 {
@@ -136,7 +137,9 @@ class UserController extends AbstractController
             exit;
         }
 
-        $result = $userRepository->uploadUserPicture($id, $_FILES['picture']);
+        $pictureService = new PictureService();
+        $result = $pictureService->uploadNewPicture(null, $id, $_FILES['picture']);
+
         if ($result === false) {
             header('Location: /public/user/account/' . $id);
             exit;

@@ -42,6 +42,7 @@ $routes = [
     ['pattern' => '/messagerie/{userId}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'showMessaging', 'method' => 'GET'],
     ['pattern' => '/messagerie/start/{book_id}', 'controller' => \App\Controllers\MessageController::class, 'action' => 'startNewRelation', 'method' => 'POST'],
     ['pattern' => '/book/create/book', 'controller' => BookController::class, 'action' => 'createBook', 'method' => 'POST'],
+    ['pattern' => '/book/edit-picture/{id}/{userId}', 'controller' => BookController::class, 'action' => 'updateBookPicture', 'method' => 'POST'],
     ];
 
 // Récupère l'URL demandée

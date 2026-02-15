@@ -6,6 +6,7 @@ use App\Models\Repository\BookRepository;
 use App\Views\View;
 use App\Library\Router;
 use App\Controllers\Abstract\AbstractController;
+use App\Models\Services\PictureService;
 
 class BookController extends AbstractController
 {
@@ -225,5 +226,42 @@ class BookController extends AbstractController
             header('Location: /public/user/account/' . htmlspecialchars((string)($_SESSION['user_id'] ?? '')));
             exit;
         }
+    }
+
+    /**
+     * Met à jour l'image d'un livre spécifique.
+     * @param int $id
+     * @return void
+     */
+    #[Router('/book/edit-picture/{id}/{userId}', 'POST')]
+    public function updateBookPicture(int $id, int $userId): void
+    {
+        $userId = $_SESSION['user_id'] ?? null;
+
+        $this->validateCSRFToken($_POST['csrf_token'] ?? '');
+        
+        // Vérifie que l'utilisateur est connecté et que l'ID correspond
+        if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != $userId) {
+            header('Location: /public/');
+            exit;
+        }
+
+        $bookRepository = new BookRepository();
+        if (!isset($_FILES['picture'])) {
+            header('Location: /public/user/account/' . $userId);
+            exit;
+        }
+
+        $pictureService = new PictureService();
+        $result = $pictureService->uploadNewPicture($id, null, $_FILES['picture']);
+        
+        if ($result === false) {
+            header('Location: /public/book/' . $id);
+            exit;
+        }
+
+        // Redirection vers le livre après succès
+        header('Location: /public/book/' . $id);
+        exit;
     }
 }
